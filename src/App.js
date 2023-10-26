@@ -2,8 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './page/login/Login';
 import "./main.css"
-import Header from './page/header/Header';
-import Footer from './page/footer/Footer';
 import ListStudent from './page/listStudent/LIstStudent';
 import Evaluate from './page/evaluate/Evaluate';
 import Debate from './page/debate/Debate';
