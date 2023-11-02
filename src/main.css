@@ -128,3 +128,11 @@ th, td{
 .textaligncenter{
     text-align: center;
 }
+.mainPage{
+    width: 100%;
+    height: 500px;
+    background-image: url("../public/assets/img/sliderImg1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}

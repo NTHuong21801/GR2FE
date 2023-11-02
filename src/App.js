@@ -9,11 +9,14 @@ import Divide from './page/divide/Divide';
 import CreateDidive from './page/divide/CreateDivide';
 import CreateEvaluate from './page/evaluate/CreateEvaluate';
 import CreateDebate from './page/debate/CreateDebate';
+import MainPage from './page/mainPage/MainPage';
+import Test from './Test';
 function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login/>} />
+        <Route exact path="/" element={<Test/>} />
+        <Route exact path="/login" element={<Login/>} />
         <Route exact path="/divide" element={<Divide/>} />
         <Route exact path="/evaluate" element={<Evaluate/>} />
         <Route exact path="/debate" element={<Debate/>} />

@@ -15,7 +15,7 @@ export default function Login() {
             callback: handleCallbackResponse
         });
         google.accounts.id.renderButton(
-            document.getElementById("signInDiv"),
+            document.getElementById("google"),
             { theme: "outline", size: "large" }
         );
     }, []);
@@ -58,7 +58,9 @@ export default function Login() {
                     <div className="loginDetail">
                         <input type="text" placeholder='password' />
                     </div>
-                    <div id="signInDiv"></div>
+                    <div className="signIn">
+                        <div id="google"></div>
+                    </div>
                     <div className="loginBottom">
                         <p>Quên mật khẩu</p>
                         <button className='btn'>Login</button>
