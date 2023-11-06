@@ -185,7 +185,7 @@ export default function CreateDidive() {
     const mergeValue = Merge;
     const exportExcelFile = () => {
         const workbook = new ExcelJS.Workbook();
-        const sheet = workbook.addWorksheet('My Sheet', {
+        const sheet = workbook.addWorksheet('Phiếu phân công nhiệm vụ', {
             headerFooter: { firstHeader: "Hello Exceljs", firstFooter: "Hello World" }
         });
         if (rowsHeader.length > 0) {
