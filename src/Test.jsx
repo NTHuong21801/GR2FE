@@ -10,16 +10,16 @@ const fontSettings = {
     family: 4,
     size: 11,
     bold: true,
-  };
-  
-  const centerAlignment = {
+};
+
+const centerAlignment = {
     horizontal: 'center',
     vertical: 'middle',
-  };
-  
-  const wrapTextAlignment = {
+};
+
+const wrapTextAlignment = {
     wrapText: true,
-  };
+};
 export default function Test() {
     const mergeValue = Rows;
     const rowHeaderValue = Merge;
@@ -46,7 +46,7 @@ export default function Test() {
             });
         }
         sheet.columns = [{ width: 15 }]
-        if(mergeValue.length > 0){
+        if (mergeValue.length > 0) {
             mergeValue.forEach((r) => {
                 sheet.getCell(r.row).value = r.value;
             })

@@ -182,7 +182,42 @@ const Rows = [
     {
         "row": "J68",
         "value": "đến Tuần"
+    },
+    {
+        "row": "A18",
+        "value": "- Lựa chọn 1:"
+    },
+    {
+        "row": "A19",
+        "value": "- Lựa chọn 2:"
+    },
+    {
+        "row": "A20",
+        "value": "- Nếu lĩnh vực không nằm trong danh sách có sẵn, giáo viên hướng dẫn có thể đề xuất:"
+    },
+    {
+        "row": "A44",
+        "value": "Chi tiết:"
+    },
+    {
+        "row": "A49",
+        "value": "Chi tiết:"
+    },
+    {
+        "row": "A54",
+        "value": "Chi tiết:"
+    },
+    {
+        "row": "A59",
+        "value": "Chi tiết:"
+    },
+    {
+        "row": "A64",
+        "value": "Chi tiết:"
+    },
+    {
+        "row": "A69",
+        "value": "Chi tiết (Lưu ý: đây là nội dung bắt buộc với đồ án tốt nghiệp kỹ sư):"
     }
-
 ]
 export default Rows;

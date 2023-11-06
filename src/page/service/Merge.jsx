@@ -115,6 +115,118 @@ const Merge = [
     {
         "start": "A76",
         "end": "K76"
+    },
+    {
+        "start": "C8",
+        "end": "G8"
+    },
+    {
+        "start": "C9",
+        "end": "G9"
+    },
+    {
+        "start": "C10",
+        "end": "G10"
+    },
+    {
+        "start": "I8",
+        "end": "K8"
+    },
+    {
+        "start": "I9",
+        "end": "K9"
+    },
+    {
+        "start": "C12",
+        "end": "K12"
+    },
+    {
+        "start": "C13",
+        "end": "K13"
+    },
+    {
+        "start": "C19",
+        "end": "K19"
+    },
+    {
+        "start": "C18",
+        "end": "K18"
+    },
+    {
+        "start": "D14",
+        "end": "G14"
+    },
+    {
+        "start": "I14",
+        "end": "K14"
+    },
+    {
+        "start": "A16",
+        "end": "K16"
+    },
+    {
+        "start": "A28",
+        "end": "K30"
+    },
+    {
+        "start": "A24",
+        "end": "K25"
+    },
+    {
+        "start": "A21",
+        "end": "K21"
+    },
+    {
+        "start": "A32",
+        "end": "K32"
+    },
+    {
+        "start": "A34",
+        "end": "K36"
+    },
+    {
+        "start": "A38",
+        "end": "K40"
+    },
+    {
+        "start": "A45",
+        "end": "K47"
+    },
+    {
+        "start": "A50",
+        "end": "K52"
+    },
+    {
+        "start": "A55",
+        "end": "K57"
+    },
+    {
+        "start": "A60",
+        "end": "K62"
+    },
+    {
+        "start": "A65",
+        "end": "K67"
+    },
+    {
+        "start": "A70",
+        "end": "K71"
+    },
+    {
+        "start": "A20",
+        "end": "K20"
+    },
+    {
+        "start": "A18",
+        "end": "B18"
+    },
+    {
+        "start": "A19",
+        "end": "B19"
+    },
+    {
+        "start": "A69",
+        "end": "K69"
     }
 ]
 export default Merge;
