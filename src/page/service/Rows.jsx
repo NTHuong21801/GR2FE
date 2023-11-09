@@ -16,10 +16,6 @@ const Rows = [
         "value": "KỲ"
     },
     {
-        "row": "F5",
-        "value": 20222
-    },
-    {
         "row": "A7",
         "value": "Thông tin về sinh viên"
     },

@@ -10,7 +10,6 @@ import CreateDidive from './page/divide/CreateDivide';
 import CreateEvaluate from './page/evaluate/CreateEvaluate';
 import CreateDebate from './page/debate/CreateDebate';
 import MainPage from './page/mainPage/MainPage';
-import Test from './Test';
 function App() {
   return (
     <Router>
