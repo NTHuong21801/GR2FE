@@ -1,19 +1,11 @@
-
 import Footer from '../footer/Footer'
 import Header from '../header/Header'
-import Merge from '../service/Merge';
-import Rows from '../service/Rows';
 import FormDivide from './FormDivide';
-import InputData from './InputData';
 import './divide.css'
 import React from "react";
+import InputDataDivide from '../../service/InputDataDivide';
 const ExcelJS = require("exceljs");
 const Url = process.env.REACT_APP_API_URL;
-const rowsHeader = [1, 2, 4, 7, 11, 15, 17, 22, 41, 43, 48, 53, 58, 63, 68, 75, 85, 87, 92];
-const rowCenter = ['A1', 'A2', 'A3', 'A4', 'E5', 'F5', 'D14', 'I14']
-const rowWrap = ['A24', 'A28', 'A32', 'A34', 'A38', 'A45', 'A50', 'A55', 'A60', 'A65', 'A70'];
-const coloringGreen = ['C8', 'C9', 'C10', 'I8', 'I9', 'C12', 'C13', 'D14', 'I14', 'A16', 'A21', 'A24', 'A28', 'A32', 'A34', 'A38', 'A45', 'A50', 'A55', 'A60', 'A65', 'A70', 'F5'];
-const coloringOrange = ['C18', 'C19', 'I43', 'K43', 'I48', 'K48', 'I53', 'K53', 'I58', 'K58', 'I63', 'K63', 'I68', 'K68'];
 const fontSettings = {
     name: "Arial",
     family: 4,
@@ -29,11 +21,16 @@ const centerAlignment = {
 const wrapTextAlignment = {
     wrapText: true,
 };
+const rowHeaderValue = InputDataDivide.Rows();
+const mergeValue = InputDataDivide.Merge();
+const rowsHeader = InputDataDivide.RowHeader();
+const rowCenter = InputDataDivide.RowCenter();
+const rowWrap = InputDataDivide.RowWrap();
+const coloringGreen = InputDataDivide.ColoringGreen();
+const coloringOrange = InputDataDivide.ColoringOrange();
 export default function CreateDidive() {
-    const rowHeaderValue = Rows;
-    const mergeValue = Merge;
     const exportExcelFile = (myData) => {
-        const inputData = InputData(myData);
+        const inputData = InputDataDivide.InputData(myData);
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Phiếu phân công nhiệm vụ');
         if (rowsHeader.length > 0) {

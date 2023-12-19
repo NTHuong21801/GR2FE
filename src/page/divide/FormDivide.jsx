@@ -2,36 +2,24 @@ import { useForm } from "react-hook-form"
 import React from "react";
 import './divide.css'
 import { useEffect } from "react";
+import ApiService from "../../service/service";
 export default function FormDivide({handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
     const [choice, setChoice] = React.useState();
     const { register, handleSubmit } = useForm();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
-    };
-    var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-        headers: myHeaders
-    };
+    }; 
     useEffect(() => {
-        fetch(`http://localhost:2111/admin/choice/getAll`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                setChoice(result);
+        ApiService.getAllChoice()
+            .then(data => {
+                setChoice(data)
+            });
+        ApiService.getAllSemester()
+            .then(data => {
+                setSemesterList(data);
             })
-            .catch(error => console.log('error', error));
-    }, []);
-    useEffect(() => {
-        fetch(`http://localhost:2111/admin/semester/getAll`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                setSemesterList(result);
-            })
-            .catch(error => console.log('error', error));
-    }, []);
+    }, [])
     const clearAll = () => {
         window.location.reload();
     }
@@ -92,7 +80,7 @@ export default function FormDivide({handleExportExcelFile }) {
                             <select {...register("semester")} className='inputInfo' >
                                 <option value="">Chọn kỳ</option>
                                 {semesterList != null && semesterList.map(s => (
-                                    <option value={s.semesterName}>{s.semesterName}</option>
+                                    <option value={s.semesterName} key={s.semesterId}>{s.semesterName}</option>
                                 ))}
                             </select>
                         </div>
@@ -142,7 +130,7 @@ export default function FormDivide({handleExportExcelFile }) {
                             <select {...register("choice1")} id="" className='selectChoice'>
                                 <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
-                                    <option value={m.choiceName}>{m.choiceName}</option>
+                                    <option value={m.choiceName} key={m.choiceId}>{m.choiceName}</option>
                                 ))}
                             </select>
                         </div>
@@ -157,7 +145,7 @@ export default function FormDivide({handleExportExcelFile }) {
                             <select {...register("choice2")} id="" className='selectChoice'>
                             <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
-                                    <option value={m.choiceName}>{m.choiceName}</option>
+                                    <option value={m.choiceName} key={m.choiceId}>{m.choiceName}</option>
                                 ))}
                             </select>
                         </div>

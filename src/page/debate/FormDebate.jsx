@@ -1,27 +1,18 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
+import ApiService from "../../service/service";
 export default function FormDebate({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
     const { register, handleSubmit } = useForm();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
     };
-    var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-        headers: myHeaders
-    };
     useEffect(() => {
-        fetch(`http://localhost:2111/admin/semester/getAll`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                setSemesterList(result);
+        ApiService.getAllSemester()
+            .then(data => {
+                setSemesterList(data);
             })
-            .catch(error => console.log('error', error));
-    }, []);
+    }, [])
     const clearAll = () => {
         window.location.reload();
     }
@@ -86,7 +77,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <select {...register("semester")} className='inputInfo' >
                                 <option value="">Chọn kỳ</option>
                                 {semesterList != null && semesterList.map(s => (
-                                    <option value={s.semesterName}>{s.semesterName}</option>
+                                    <option value={s.semesterName} key={s.semesterId}>{s.semesterName}</option>
                                 ))}
                             </select>
                         </div>
@@ -370,7 +361,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                     <div className="row">
                         <div className="col-md-6"></div>
                         <div className="col-md-2">
-                            <div className="btn">Clear All</div>
+                            <div className="btn" onClick={clearAll}>Clear All</div>
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
