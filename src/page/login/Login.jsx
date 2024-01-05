@@ -7,6 +7,7 @@ export default function Login() {
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
         setUser(userObject);
+        console.log(userObject)
     }
     const google = window.google;
     useEffect(() => {
@@ -19,29 +20,29 @@ export default function Login() {
             { theme: "outline", size: "large" }
         );
     }, []);
-    useEffect(() => {
-        if (Object.keys(user).length !== 0) {
-            const data = {
-                "username": user.name,
-                "email": user.email,
-                "userAuth": user.aud
-            }
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            var requestOption = {
-                method: "POST",
-                redirect: "follow",
-                headers: myHeaders,
-                body: JSON.stringify(data)
-            }
-            fetch(`http://localhost:2111/user/register`, requestOption)
-                .then(response => response)
-                .then(data => {
-                    console.log(data)
-                })
-                .catch(err => console.error(err));
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (Object.keys(user).length !== 0) {
+    //         const data = {
+    //             "username": user.name,
+    //             "email": user.email,
+    //             "userAuth": user.aud
+    //         }
+    //         var myHeaders = new Headers();
+    //         myHeaders.append("Content-Type", "application/json");
+    //         var requestOption = {
+    //             method: "POST",
+    //             redirect: "follow",
+    //             headers: myHeaders,
+    //             body: JSON.stringify(data)
+    //         }
+    //         fetch(`http://localhost:8080/user/register`, requestOption)
+    //             .then(response => response)
+    //             .then(data => {
+    //                 console.log(data)
+    //             })
+    //             .catch(err => console.error(err));
+    //     }
+    // }, [user])
     return (
         <div className="main">
             <div className="loginPage">

@@ -1,0 +1,7 @@
+.registerSelect{
+    display: flex;
+    gap: 10px
+}
+.registerSelect select{
+    width: 50%;
+}
