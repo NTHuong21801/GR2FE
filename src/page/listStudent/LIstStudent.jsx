@@ -1,8 +1,18 @@
+import React, { useEffect, useState } from "react";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
-export default function ListStudent(){
-    return(
+import ApiService from "../../service/service";
+export default function ListStudent() {
+    const [list, setList] = useState();
+    const email = localStorage.getItem('email');
+    useEffect(() => {
+        ApiService.getStudentByTeacher(email)
+            .then(data => {
+                setList(data.body.listStudents);
+            });
+    }, [])
+    return (
         <>
             <Header />
             <div className="main">
@@ -25,63 +35,18 @@ export default function ListStudent(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20194775</td>
-                                        <td>Nguyễn Thu Hương</td>
-                                        <td>ICT03 - K64</td>
-                                        <td>Công nghệ thông tin Global ICT</td>
-                                    </tr>
+                                    {list && list.map(s => (
+                                        <tr key={s.studentId}>
+                                            <td>1</td>
+                                            <td>{s.mssv}</td>
+                                            <td>{s.studentName}</td>
+                                            <td>{s.className}</td>
+                                            <td>{s.studentMajor}</td>
+                                        </tr>
+                                    ))}
+
                                 </tbody>
+
                             </table>
                         </div>
                         <div className="col-md-1"></div>

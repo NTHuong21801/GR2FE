@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import axios from 'axios';
 const token = localStorage.getItem("access_token");
@@ -53,6 +54,14 @@ const ApiService = {
   async getStudentByMssv(mssv){
     try{
       const response = await axios.get(`http://localhost:8090/user/student/get-student-by-mssv/${mssv}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getStudentByTeacher(email){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/teacher/get-student-by-teacher-email/${email}`, configAuth);
       return response.data;
     }catch (error) {
       throw new Error(error.message);

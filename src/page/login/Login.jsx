@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css'
 import { useEffect, useState } from 'react';
@@ -59,6 +60,7 @@ export default function Login() {
                 localStorage.setItem("access_token", data.token.accessToken);
                 localStorage.setItem("accountId", data.accountId);
                 localStorage.setItem("roleId", data.roleId);
+                localStorage.setItem("email", data.token.userName);
                 setIsLoggedIn(true);
             })
             .catch(err => {

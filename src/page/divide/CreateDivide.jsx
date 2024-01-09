@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Footer from '../footer/Footer'
 import Header from '../header/Header'
 import FormDivide from './FormDivide';
