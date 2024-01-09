@@ -3,23 +3,38 @@ import React from "react";
 import './divide.css'
 import { useEffect } from "react";
 import ApiService from "../../service/service";
-export default function FormDivide({handleExportExcelFile }) {
+export default function FormDivide({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
     const [choice, setChoice] = React.useState();
-    const { register, handleSubmit } = useForm();
+    const [mssv, setMSSV] = React.useState();
+    const { register, setValue, handleSubmit } = useForm();
     const onSubmit = (d) => {
+        console.log(d);
         handleExportExcelFile(d);
-    }; 
+    };
     useEffect(() => {
         ApiService.getAllChoice()
             .then(data => {
-                setChoice(data)
+                setChoice(data);
             });
         ApiService.getAllSemester()
             .then(data => {
                 setSemesterList(data);
             })
     }, [])
+    const handleMSSVBlur = () => {
+        if(mssv){
+            ApiService.getStudentByMssv(mssv)
+            .then((data) => {
+                console.log(data);
+                setValue("mssv", data.body.mssv);
+                setValue("mail", data.body.studentEmail);
+                setValue("fullname", data.body.studentName);
+                setValue("phone", data.body.studentPhone);
+                setValue("grade", data.body.className);
+            })
+        }
+    }
     const clearAll = () => {
         window.location.reload();
     }
@@ -38,14 +53,19 @@ export default function FormDivide({handleExportExcelFile }) {
                             <label htmlFor="" className='label'>MSSV:</label>
                         </div>
                         <div className="col-md-3">
-                            <input {...register("mssv", { required: true, maxLength: 8 })} className='inputInfo' />
+                            <input
+                                {...register("mssv")}
+                                className='inputInfo'
+                                onChange={(e) => setMSSV(e.target.value)}
+                                onBlur={handleMSSVBlur}
+                            />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
                             <label htmlFor="" className='label'>Email:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="email" {...register("mail", { required: true })} className='inputInfo' />
+                            <input type="email" {...register("mail")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -54,14 +74,14 @@ export default function FormDivide({handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Họ và tên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input {...register("fullname", { required: true })} className='inputInfo' />
+                            <input {...register("fullname")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
                             <label htmlFor="" className='label'>Điện thoại liên lạc:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="tel" {...register("phone", { required: true, minLength: 10 })} className='inputInfo' />
+                            <input type="tel" {...register("phone")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -70,7 +90,7 @@ export default function FormDivide({handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Lớp sinh viên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text" {...register("grade", { required: true })} className='inputInfo' />
+                            <input type="text" {...register("grade")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
@@ -130,7 +150,7 @@ export default function FormDivide({handleExportExcelFile }) {
                             <select {...register("choice1")} id="" className='selectChoice'>
                                 <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
-                                    <option value={m.choiceName} key={m.choiceId}>{m.choiceName}</option>
+                                    <option value={m.topicName} key={m.choiceId}>{m.topicName}</option>
                                 ))}
                             </select>
                         </div>
@@ -143,9 +163,9 @@ export default function FormDivide({handleExportExcelFile }) {
                         </div>
                         <div className="col-md-8">
                             <select {...register("choice2")} id="" className='selectChoice'>
-                            <option value="">Chọn đề tài</option>
+                                <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
-                                    <option value={m.choiceName} key={m.choiceId}>{m.choiceName}</option>
+                                    <option value={m.topicName} key={m.choiceId}>{m.topicName}</option>
                                 ))}
                             </select>
                         </div>

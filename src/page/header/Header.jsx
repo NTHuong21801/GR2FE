@@ -8,6 +8,15 @@ export default function Header() {
         setState(item);
         console.log(state)
     }
+    const handleLogout = () => {
+        const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
+        if (shouldDelete) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('roleId');
+            localStorage.removeItem('accountId');
+            window.location.reload();
+        }
+    }
     return (
         <div className="header">
             <div className="headerTop">
@@ -16,18 +25,8 @@ export default function Header() {
                 </div>
                 <div className="header-right">
                     <div className="headerSearch">
-                        <div className="searchInfo">
-                            <input type="text" name="" id="" placeholder="Tìm kiếm" />
-                            <img src="assets/icon/search.png" alt="" className="searchIcon" />
-                        </div>
-                        <div className="headerInfo">
-                            <img src="assets/img/ava.jpg" alt="" className="ava" />
-                            <div className="infor">
-                                <strong>Xin chào</strong>
-                                <span>Nguyễn Thu Hương</span>
-                                <span>20194775</span>
-                            </div>
-                        </div>
+                
+                        <div className="btn" onClick={() => handleLogout()}>Đăng xuất</div>
                     </div>
                 </div>
             </div>

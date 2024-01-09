@@ -35,7 +35,7 @@ export default function Register() {
     //             headers: myHeaders,
     //             body: JSON.stringify(data)
     //         }
-    //         fetch(`http://localhost:8080/user/register`, requestOption)
+    //         fetch(`http://localhost:8090/user/register`, requestOption)
     //             .then(response => response)
     //             .then(data => {
     //                 console.log(data)

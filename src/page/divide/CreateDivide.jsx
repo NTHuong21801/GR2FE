@@ -28,7 +28,7 @@ const rowCenter = InputDataDivide.RowCenter();
 const rowWrap = InputDataDivide.RowWrap();
 const coloringGreen = InputDataDivide.ColoringGreen();
 const coloringOrange = InputDataDivide.ColoringOrange();
-export default function CreateDidive() {
+export default function CreateDivide() {
     const exportExcelFile = (myData) => {
         const inputData = InputDataDivide.InputData(myData);
         const workbook = new ExcelJS.Workbook();
