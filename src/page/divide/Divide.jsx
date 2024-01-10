@@ -31,10 +31,10 @@ export default function Divide() {
                             <div className="col-md-5 evaluateFile">
                                 <img src="assets/icon/excel.png" alt="" className='excelIcon' />
                                 <span>Phiếu phân công nhiệm vụ ĐANT Nguyễn Thu Hương</span>
-                                <a href='https://xuhuong-storage.s3.ap-southeast-2.amazonaws.com/1704795728467-download.xlsx' download className="btn">
+                                {/* <a href='https://xuhuong-storage.s3.ap-southeast-2.amazonaws.com/1704795728467-download.xlsx' download className="btn"> */}
                                     Download
                                     <img src="assets/icon/download.png" alt="" />
-                                </a>
+                                {/* </a> */}
                             </div>
                         </div>
                         <div className="col-md-1"></div>

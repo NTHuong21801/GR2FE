@@ -6,15 +6,19 @@ import jwtDecode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
 import Divide from '../divide/Divide';
+import { Link } from 'react-router-dom';
+import UpdateInforStudent from '../updateInfor/UpdateInforStudent';
+import UpdateInforTeacher from '../updateInfor/UpdateInforTeacher';
 export default function Login() {
-    const [user, setUser] = useState({});
-    function handleCallbackResponse(response) {
-        var userObject = jwtDecode(response.credential);
-        setUser(userObject);
-        console.log(userObject)
-    }
+    // const [user, setUser] = useState({});
+    // function handleCallbackResponse(response) {
+    //     var userObject = jwtDecode(response.credential);
+    //     setUser(userObject);
+    //     console.log(userObject)
+    // }
     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") != null);
-    const google = window.google;
+    const [isActive, setIsActive] = useState(localStorage.getItem("status") === "ACTIVE");
+    // const google = window.google;
     // useEffect(() => {
     //     google.accounts.id.initialize({
     //         client_id: "1056282068389-lrnjj5hicqoj4sr2aqd1mjmsptm4unck.apps.googleusercontent.com",
@@ -61,19 +65,33 @@ export default function Login() {
                 localStorage.setItem("accountId", data.accountId);
                 localStorage.setItem("roleId", data.roleId);
                 localStorage.setItem("email", data.token.userName);
+                localStorage.setItem("status", data.status);
                 setIsLoggedIn(true);
+                if(data.status === "ACTIVE"){
+                    setIsActive(true);
+                }else{
+                    setIsActive(false);
+                }
             })
             .catch(err => {
                 console.error(err);
                 setIsLoggedIn(false);
                 alert("Mật khẩu hoặc tên đăng nhập không đúng. Vui lòng kiểm tra lại!")
             });
-            ;
+        ;
 
 
     };
     if (isLoggedIn) {
-        return <Divide />
+        if(isActive){
+            return <Divide />
+        }else{
+            if(localStorage.getItem("roleId") === "2"){
+                return <UpdateInforStudent />
+            }else{
+                return <UpdateInforTeacher />
+            }
+        }
     } else {
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,7 +115,10 @@ export default function Login() {
                             </div> */}
                             <div className="loginBottom">
                                 <p>Quên mật khẩu</p>
-                                <button className='btn'>Login</button>
+                                <button className='btn'>Đăng nhập</button>
+                            </div>
+                            <div>
+                                <p>Bạn chưa có tài khoản - <Link to='/signUp' className='registerBtn'>Đăng ký</Link></p>
                             </div>
                         </div>
                     </div>

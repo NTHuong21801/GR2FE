@@ -12,6 +12,7 @@ export default function ListStudent() {
                 setList(data.body.listStudents);
             });
     }, [])
+    var count = 1;
     return (
         <>
             <Header />
@@ -37,7 +38,7 @@ export default function ListStudent() {
                                 <tbody>
                                     {list && list.map(s => (
                                         <tr key={s.studentId}>
-                                            <td>1</td>
+                                            <td>{count++}</td>
                                             <td>{s.mssv}</td>
                                             <td>{s.studentName}</td>
                                             <td>{s.className}</td>

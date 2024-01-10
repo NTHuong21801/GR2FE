@@ -14,6 +14,8 @@ export default function Header() {
             localStorage.removeItem('access_token');
             localStorage.removeItem('roleId');
             localStorage.removeItem('accountId');
+            localStorage.removeItem('email');
+            localStorage.removeItem('status');
             window.location.reload();
         }
     }

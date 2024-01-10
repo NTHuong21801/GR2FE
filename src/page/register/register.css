@@ -1,7 +1,24 @@
 .registerSelect{
     display: flex;
-    gap: 10px
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .registerSelect select{
+    padding-left: 10px;
     width: 50%;
+    border-radius: 10px;
+    height: 40px;
+}
+.register .btn{
+    width: 150px;
+}
+.register{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.validatePass{
+    color: red;
 }

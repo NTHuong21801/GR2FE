@@ -45,7 +45,7 @@ const ApiService = {
   },
   async register(data){
     try{
-      const response = await axios.post('http://localhost:8090/user/register', data, configHeader);
+      const response = await axios.post('http://localhost:8090/api/auth/signup', data, configHeader);
       return response.data;
     }catch (error) {
       throw new Error(error.message);
@@ -62,6 +62,30 @@ const ApiService = {
   async getStudentByTeacher(email){
     try{
       const response = await axios.get(`http://localhost:8090/user/teacher/get-student-by-teacher-email/${email}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getAllSchool(){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/get-all-school`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getAllClass(){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/get-all-class`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getMajorBySchoolId(id){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/get-major-by-school-id/${id}`, configAuth);
       return response.data;
     }catch (error) {
       throw new Error(error.message);
