@@ -8,7 +8,6 @@ import ApiService from "../../service/service";
 export default function UploadFile() {
     const { register, setValue, handleSubmit } = useForm();
     const [students, setStudents] = useState([]);
-    const [selectStudent, setSelectedStudent] = useState([]);
     useEffect(() => {
         const email = localStorage.getItem("email");
         ApiService.getStudentByTeacherEmail(email)
@@ -17,28 +16,35 @@ export default function UploadFile() {
             })
     }, [])
     const onSubmit = (d) => {
+        ApiService.generateFileUrl();
+        const formData = new FormData();
+        formData.append('file', d.fileUrl[0])
         ApiService.getStudentById(d.student)
-            .then((data) => {
-                const dataInput = {
-                    "excelUrl": "string",
-                    "excelName": `${d.fileType} ${data.body.studentName}`,
-                    "student": {
-                        "studentId": d.student
-                    }
-                }
-                console.log(dataInput)
+            .then((studentDataResponse) => {
+                const studentData = studentDataResponse.body.studentName;
+                return studentData;
+            })
+            .then((studentData) => {
+                ApiService.getFileUrl(formData)
+                    .then(data => {
+                        const dataInput = {
+                            "excelUrl": data.body.fileUrl,
+                            "excelName": `${d.fileType} ${studentData}`,
+                            "student": {
+                                "studentId": d.student
+                            }
+                        }
+                        return dataInput;
+                    })
+                    .then(dataInput => {
+                        console.log(dataInput);
+                        ApiService.createFile(dataInput)
+                            .then(res => {
+                                console.log(res);
+                            })
+                    })
             })
 
-        if (selectStudent) {
-            const data = {
-                "excelUrl": "string",
-                "excelName": `${d.fileType} ${selectStudent.studentName}`,
-                "student": {
-                    "studentId": d.student
-                }
-            }
-            console.log(data)
-        }
     }
     return (
         <>

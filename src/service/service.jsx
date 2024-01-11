@@ -138,7 +138,34 @@ const ApiService = {
     }catch (error) {
       throw new Error(error.message);
     }
-  }
+  },
+  async generateFileUrl(){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/generate-upload-url?type=xlsx`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getFileUrl(file){
+    try{
+      const response = await axios.post(`http://localhost:8090/user/uploadFile`, file, {headers: {
+        'Content-Type': file.type,
+        'Authorization':`Bearer ${token}`
+      }});
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async createFile(data){
+    try{
+      const response = await axios.post('http://localhost:8090/user/excel/create', data, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;
