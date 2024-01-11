@@ -10,10 +10,12 @@
     justify-content: center;
 }
 .update{
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 70%;
+    max-height: 500px;
     background-color: #fff;
     padding: 40px 65px;
 }

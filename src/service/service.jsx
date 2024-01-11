@@ -98,6 +98,30 @@ const ApiService = {
     }catch (error) {
       throw new Error(error.message);
     }
+  },
+  async updateStudentInfo(data){
+    try{
+      const response = await axios.post('http://localhost:8090/user/student/updateInfo', data, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getAllTeacher(){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/get-all-teacher`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getClassByMajorId(id){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/get-class-by-major-id/${id}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
   }
 };
 
