@@ -4,8 +4,10 @@ import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
+import { useNavigate } from "react-router-dom";
 
 export default function UploadFile() {
+    const navigate = useNavigate();
     const { register, setValue, handleSubmit } = useForm();
     const [students, setStudents] = useState([]);
     useEffect(() => {
@@ -18,7 +20,16 @@ export default function UploadFile() {
     const onSubmit = (d) => {
         ApiService.generateFileUrl();
         const formData = new FormData();
-        formData.append('file', d.fileUrl[0])
+        formData.append('file', d.fileUrl[0]);
+        var fileType;
+        if(d.fileType === "Phiếu đánh giá ĐATN"){
+            fileType = "EXCEL_EVALUATE";
+            console.log(true);
+        }else if(d.fileType === "Phiếu giao nhiệm vụ ĐATN" ){
+            fileType = "EXCEL_DIVIDE";
+        }else if(d.fileType === "Phiếu phản biện ĐATN" ){
+            fileType = "EXCEL_DEBATE";
+        }
         ApiService.getStudentById(d.student)
             .then((studentDataResponse) => {
                 const studentData = studentDataResponse.body.studentName;
@@ -30,6 +41,8 @@ export default function UploadFile() {
                         const dataInput = {
                             "excelUrl": data.body.fileUrl,
                             "excelName": `${d.fileType} ${studentData}`,
+                            "excelType":fileType,
+                            "emailTeacher": localStorage.getItem('email'),
                             "student": {
                                 "studentId": d.student
                             }
@@ -40,7 +53,12 @@ export default function UploadFile() {
                         console.log(dataInput);
                         ApiService.createFile(dataInput)
                             .then(res => {
-                                console.log(res);
+                                alert("Upload file thành công");
+                                navigate("/divide");
+                            })
+                            .catch(err => {
+                                alert("File đã tồn tại");
+                                window.location.reload();
                             })
                     })
             })
