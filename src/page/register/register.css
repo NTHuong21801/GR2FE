@@ -22,3 +22,6 @@
 .validatePass{
     color: red;
 }
+.validateInput{
+    border: 1px solid red;
+}

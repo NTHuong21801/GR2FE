@@ -3,9 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './register.css'
 import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
-import { Navigate, useHref } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 export default function Register() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigate = useNavigate();
     const onSubmit = (d) => {
         const data = {
             "username": d.email,
@@ -21,7 +22,7 @@ export default function Register() {
                     alert("Email đã tồn tại, vui lòng kiểm tra lại thông tin đăng ký của bạn");
                 }else{
                     alert("Đăng ký tài khoản thành công, vui lòng đăng nhập và cập nhật thông tin cá nhân của bạn");
-                    Navigate("/");
+                    navigate("/");
                 }
             })
             .catch(err => {

@@ -90,6 +90,14 @@ const ApiService = {
     }catch (error) {
       throw new Error(error.message);
     }
+  },
+  async updateTeacherInfo(data){
+    try{
+      const response = await axios.post('http://localhost:8090/user/teacher/updateInfo', data, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
   }
 };
 

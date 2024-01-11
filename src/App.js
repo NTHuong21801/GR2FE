@@ -39,7 +39,7 @@ function App() {
         <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["2"]} />}/>
         <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["2"]} />}/>
         <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["2"]} />}/>
-        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher}  />}/>
+        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher}  requiredRoleId={["2"]}/>}/>
         <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />}/>
       </Routes>
     </Router>

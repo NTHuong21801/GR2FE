@@ -86,7 +86,7 @@ export default function Login() {
         if(isActive){
             return <Divide />
         }else{
-            if(localStorage.getItem("roleId") === "2"){
+            if(localStorage.getItem("roleId") === "3"){
                 return <UpdateInforStudent />
             }else{
                 return <UpdateInforTeacher />
