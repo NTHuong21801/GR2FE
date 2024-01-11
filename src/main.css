@@ -136,3 +136,10 @@ th, td{
     background-size: 100%;
     background-position: center;
 }
+.marginBottom20{
+    margin-bottom: 20px;
+}
+.btnUpload .btn{
+    width: 70%;
+    margin-left: 15%;
+}

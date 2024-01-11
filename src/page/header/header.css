@@ -61,10 +61,13 @@
 .headerBottom span{
     color: #fff;
 }
-.headerBottom .col-md-3{
+.headerBottom .col-md-2{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.headerBottom .row{
+    justify-content: space-between;
 }
 .headerBottom .container{
     height: 100%;

@@ -35,17 +35,20 @@ export default function Header() {
             <div className="headerBottom">
                 <div className="container">
                     <div className="row">
-                        <Link to={'/divide'} className={`col-md-3 textNone ${state === 'divide' ? 'activeHeaader' : ''}`} onClick={() => handleClick('divide')}>
+                        <Link to={'/divide'} className={`col-md-2 textNone ${state === 'divide' ? 'activeHeaader' : ''}`} onClick={() => handleClick('divide')}>
                             <span>Phiếu giao nhiệm vụ</span>
                         </Link>
-                        <Link to={'/evaluate'} className={`col-md-3 textNone ${state === 'evaluate' ? 'activeHeaader' : ''}`} onClick={() => handleClick('evaluate')}>
+                        <Link to={'/evaluate'} className={`col-md-2 textNone ${state === 'evaluate' ? 'activeHeaader' : ''}`} onClick={() => handleClick('evaluate')}>
                             <span>Phiếu đánh giá ĐATN</span>
                         </Link>
-                        <Link to={'/debate'} className={`col-md-3 textNone ${state === 'debate' ? 'activeHeaader' : ''}`} onClick={() => handleClick('debate')}>
+                        <Link to={'/debate'} className={`col-md-2 textNone ${state === 'debate' ? 'activeHeaader' : ''}`} onClick={() => handleClick('debate')}>
                             <span>Phiếu phản biện ĐATN</span>
                         </Link>
-                        <Link to={'/student'} className={`col-md-3 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('student')}>
+                        <Link to={'/student'} className={`col-md-2 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('student')}>
                             <span>Danh sách sinh viên</span>
+                        </Link>
+                        <Link to={'/upload'} className={`col-md-2 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('student')}>
+                            <span>Upload file</span>
                         </Link>
                     </div>
                 </div>

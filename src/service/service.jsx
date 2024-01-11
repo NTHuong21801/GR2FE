@@ -59,6 +59,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async getStudentById(id){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/student/get-student-by-id/${id}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
   async getStudentByTeacher(email){
     try{
       const response = await axios.get(`http://localhost:8090/user/teacher/get-student-by-teacher-email/${email}`, configAuth);
@@ -118,6 +126,14 @@ const ApiService = {
   async getClassByMajorId(id){
     try{
       const response = await axios.get(`http://localhost:8090/user/get-class-by-major-id/${id}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getStudentByTeacherEmail(email){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/teacher/get-student-by-teacher-email/${email}`, configAuth);
       return response.data;
     }catch (error) {
       throw new Error(error.message);

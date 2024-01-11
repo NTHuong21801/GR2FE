@@ -14,6 +14,7 @@ import Register from './page/register/Register';
 import CreateDivide from './page/divide/CreateDivide';
 import UpdateInforTeacher from './page/updateInfor/UpdateInforTeacher';
 import UpdateInforStudent from './page/updateInfor/UpdateInforStudent';
+import UploadFile from './page/upload/UploadFile';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
   if (!isAuthenticated) {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["2"]} />}/>
         <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["2"]} />}/>
         <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["2"]} />}/>
+        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["2"]} />}/>
         <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher}  requiredRoleId={["2"]}/>}/>
         <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />}/>
       </Routes>
