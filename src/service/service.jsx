@@ -166,6 +166,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async getExcelType(data){
+    try{
+      const response = await axios.post(`http://localhost:8090/user/excel/get-file-by-email-and-type`,data, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;

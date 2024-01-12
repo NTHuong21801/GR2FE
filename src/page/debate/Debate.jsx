@@ -2,7 +2,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import ApiService from '../../service/service'
 export default function Debate() {
+    const [excel, setExcel] = useState([]);
+    useEffect(() => {
+        const data = {
+            "emailTeacher": localStorage.getItem("email"),
+            "excelType": "EXCEL_DEBATE"
+        }
+        ApiService.getExcelType(data)
+            .then(res => {
+                setExcel(res);
+            })
+    }, [])
     return (
         <>
             <Header />
@@ -28,46 +41,16 @@ export default function Debate() {
                     <div className="evaluateBottom row">
                         <div className="col-md-1"></div>
                         <div className="col-md-10 row">
-                            <div className="col-md-5 evaluateFile">
-                                <img src="assets/icon/excel.png" alt="" className='excelIcon' />
-                                <span>Phiếu phản biện ĐANT Nguyễn Thu Hương</span>
-                                <div className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
+                            {excel && excel.map(e => (
+                                <div className="col-md-5 evaluateFile">
+                                    <img src="assets/icon/excel.png" alt="" className='excelIcon' />
+                                    <span>{e.excelName}</span>
+                                    <a href={e.excelUrl} download className="btn">
+                                        Download
+                                        <img src="assets/icon/download.png" alt="" />
+                                    </a>
                                 </div>
-                            </div>
-                            <div className="col-md-5 evaluateFile">
-                                <img src="assets/icon/excel.png" alt="" className='excelIcon' />
-                                <span>Phiếu phản biện ĐANT Nguyễn Thu Hương</span>
-                                <div className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-5 evaluateFile">
-                                <img src="assets/icon/excel.png" alt="" className='excelIcon' />
-                                <span>Phiếu phản biện ĐANT Nguyễn Thu Hương</span>
-                                <div className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-5 evaluateFile">
-                                <img src="assets/icon/excel.png" alt="" className='excelIcon' />
-                                <span>Phiếu phản biện ĐANT Nguyễn Thu Hương</span>
-                                <div className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-5 evaluateFile">
-                                <img src="assets/icon/excel.png" alt="" className='excelIcon' />
-                                <span>Phiếu phản biện ĐANT Nguyễn Thu Hương</span>
-                                <div className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
-                                </div>
-                            </div>
+                            ))}
                         </div>
                         <div className="col-md-1"></div>
                     </div>
