@@ -3,8 +3,9 @@ import Footer from '../footer/Footer'
 import Header from '../header/Header'
 import FormDivide from './FormDivide';
 import './divide.css'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputDataDivide from '../../service/InputDataDivide';
+import ApiService from '../../service/service';
 const ExcelJS = require("exceljs");
 const Url = process.env.REACT_APP_API_URL;
 const fontSettings = {
@@ -30,9 +31,17 @@ const rowWrap = InputDataDivide.RowWrap();
 const coloringGreen = InputDataDivide.ColoringGreen();
 const coloringOrange = InputDataDivide.ColoringOrange();
 export default function CreateDivide() {
+    const [teacher, setTeacher] = useState();
+    useEffect(()=> {
+        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+            .then(res => {
+                setTeacher(res.body);
+            })
+    }, [])
     const exportExcelFile = (myData) => {
-        const inputData = InputDataDivide.InputData(myData);
-        const workbook = new ExcelJS.Workbook();
+        if(teacher){
+            const inputData = InputDataDivide.InputData(myData, teacher);
+            const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Phiếu phân công nhiệm vụ');
         if (rowsHeader.length > 0) {
             rowsHeader.forEach((r) => {
@@ -86,10 +95,12 @@ export default function CreateDivide() {
             const url = window.URL.createObjectURL(blob);
             const anchor = document.createElement("a");
             anchor.href = url;
-            anchor.download = "download.xlsx";
+            anchor.download = "Phiếu phân công nhiệm vụ ĐATN.xlsx";
             anchor.click();
             window.URL.revokeObjectURL(url);
         });
+        }
+        
     }
     return (
         <>

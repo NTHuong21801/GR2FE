@@ -139,6 +139,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async getTeacherByAccount(account){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/teacher/get-teacher-by-account/${account}`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
   async generateFileUrl(){
     try{
       const response = await axios.get(`http://localhost:8090/user/generate-upload-url?type=xlsx`, configAuth);

@@ -1,5 +1,5 @@
 const InputDataDivide = {
-    InputData(data){
+    InputData(data, teacher){
         const object = [
             {
                 "row": 'F5',
@@ -16,6 +16,14 @@ const InputDataDivide = {
             {
                 "row": 'C10',
                 "value": data.grade
+            },
+            {
+                "row": 'C12',
+                "value": teacher.teacherName
+            },
+            {
+                "row": 'C13',
+                "value": teacher.schoolName
             },
             {
                 "row": 'I8',
