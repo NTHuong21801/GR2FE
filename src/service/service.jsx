@@ -182,6 +182,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async getExcelByAccount(){
+    try{
+      const response = await axios.get(`http://localhost:8090/user/excel/get-file-by-account`, configAuth);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;

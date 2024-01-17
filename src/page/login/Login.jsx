@@ -9,6 +9,7 @@ import Divide from '../divide/Divide';
 import { Link } from 'react-router-dom';
 import UpdateInforStudent from '../updateInfor/UpdateInforStudent';
 import UpdateInforTeacher from '../updateInfor/UpdateInforTeacher';
+import Student from '../studentPage/Student';
 export default function Login() {
     // const [user, setUser] = useState({});
     // function handleCallbackResponse(response) {
@@ -84,7 +85,11 @@ export default function Login() {
     };
     if (isLoggedIn) {
         if(isActive){
-            return <Divide />
+            if(localStorage.getItem("roleId") === "2"){
+                return <Divide />
+            }else{
+                return <Student />
+            }
         }else{
             if(localStorage.getItem("roleId") === "3"){
                 return <UpdateInforStudent />

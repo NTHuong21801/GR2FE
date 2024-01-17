@@ -1,14 +1,14 @@
-/* eslint-disable no-unused-vars */
+
 import { useForm } from "react-hook-form";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
-import { useNavigate } from "react-router-dom";
+import Loading from "../component/Loading";
 
 export default function UploadFile() {
-    const navigate = useNavigate();
-    const { register, setValue, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = useState(false);
     const [students, setStudents] = useState([]);
     useEffect(() => {
         const email = localStorage.getItem("email");
@@ -32,6 +32,7 @@ export default function UploadFile() {
         }
         ApiService.getStudentById(d.student)
             .then((studentDataResponse) => {
+                setLoading(true);
                 const studentData = studentDataResponse.body.studentName;
                 return studentData;
             })
@@ -54,18 +55,21 @@ export default function UploadFile() {
                         ApiService.createFile(dataInput)
                             .then(res => {
                                 alert("Upload file thành công");
-                                navigate("/divide");
+                                setLoading(true);
+                                window.location.reload();
                             })
                             .catch(err => {
                                 alert("File đã tồn tại");
+                                setLoading(true);
                                 window.location.reload();
                             })
                     })
             })
-
+        setLoading(false);
     }
     return (
         <>
+            {loading && <Loading />}
             <Header />
             <div className="main">
                 <div className="container">

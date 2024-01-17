@@ -20,10 +20,6 @@ export default function ListStudent() {
             <Header />
             <div className="main">
                 <div className="container">
-                    <div className="search">
-                        <input type="text" placeholder="Tìm kiếm theo tên hoặc MSSV" />
-                        <img src="assets/icon/search.png" alt="" />
-                    </div>
                     <div className="row">
                         <div className="col-md-1"></div>
                         <div className="col-md-10">

@@ -43,7 +43,7 @@ export default function Evaluate() {
                         <div className="col-md-1"></div>
                         <div className="col-md-10 row">
                             {excel && excel.map(e => (
-                                <div className="col-md-5 evaluateFile">
+                                <div key={e.excelId} className="col-md-5 evaluateFile">
                                     <img src="assets/icon/excel.png" alt="" className='excelIcon' />
                                     <span>{e.excelName}</span>
                                     <a href={e.excelUrl} download className="btn">
