@@ -7,15 +7,20 @@ import { useEffect, useState } from 'react';
 import ApiService from '../../service/service';
 export default function Evaluate() {
     const [excel, setExcel] = useState([]);
-    useEffect(() => {
-        const data = {
-            "emailTeacher": localStorage.getItem("email"),
-            "excelType": "EXCEL_EVALUATE"
+    const fetchData = async() => {
+        try{
+            const data = {
+                "emailTeacher": localStorage.getItem("email"),
+                "excelType": "EXCEL_EVALUATE"
+            }
+            const res = await ApiService.getExcelType(data);
+            setExcel(res);
+        }catch(e){
+            console.log(e)
         }
-        ApiService.getExcelType(data)
-            .then(res => {
-                setExcel(res);
-            })
+    }
+    useEffect(() => {
+       fetchData();
     }, [])
     return (
         <>

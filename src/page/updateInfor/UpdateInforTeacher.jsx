@@ -11,35 +11,45 @@ export default function UpdateInforTeacher() {
     const schoolValue = useWatch({ control, name: 'school' });
     const navigate = useNavigate();
     useEffect(() => {
-        ApiService.getAllSchool()
-            .then(data => {
-                setSchools(data);
-            });
+        const fetchData = async () => {
+            try {
+                const res = await ApiService.getAllSchool();
+                setSchools(res);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
     }, [])
     useEffect(() => {
-        if (schoolValue) {
-            ApiService.getMajorBySchoolId(schoolValue)
-                .then(data => {
-                    setMajors(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching majors:', error);
-                });
+        const fetchData = async () => {
+            try {
+                if (schoolValue) {
+                    const res = await ApiService.getMajorBySchoolId(schoolValue);
+                    setMajors(res);
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
+        fetchData();
     }, [schoolValue]);
-    const onSubmit = (d) => {
-        const data = {
-            "teacherEmail": localStorage.getItem("email"),
-            "teacherName": d.name,
-            "teacherPhone": d.phone,
-            "schoolId": parseInt(d.school),
-            "locatedId": parseInt(d.locate)
+    const onSubmit = async (d) => {
+        try {
+            const data = {
+                "teacherEmail": localStorage.getItem("email"),
+                "teacherName": d.name,
+                "teacherPhone": d.phone,
+                "schoolId": parseInt(d.school),
+                "locatedId": parseInt(d.locate)
+            }
+            await ApiService.updateTeacherInfo(data);
+            alert("Update thành công");
+            navigate("/divide");
+        } catch (e) {
+            console.log(e);
+            alert("Update thất bại. Vui lòng kiểm tra lại");
         }
-        ApiService.updateTeacherInfo(data)
-            .then((res) => {
-                alert("Update thành công");
-                navigate("/divide");
-            })
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,7 +66,7 @@ export default function UpdateInforTeacher() {
                         {errors.name && <p className='validatePass'>{errors.name.message}</p>}
                         <div className="infoDetail">
                             <label>Số điện thoại: </label>
-                            <input type="tel" {...register("phone", { required: "This field is required"  })} placeholder='Số điện thoại' className={errors.name ? 'validateInput' : ''} />
+                            <input type="tel" {...register("phone", { required: "This field is required" })} placeholder='Số điện thoại' className={errors.name ? 'validateInput' : ''} />
                         </div>
                         <div className="infoDetail">
                             <label>Đơn vị trực thuộc: </label>

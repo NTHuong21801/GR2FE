@@ -8,10 +8,15 @@ export default function ListStudent() {
     const [list, setList] = useState();
     const email = localStorage.getItem('email');
     useEffect(() => {
-        ApiService.getStudentByTeacher(email)
-            .then(data => {
-                setList(data.body.listStudents);
-            });
+        const fetchData = async () => {
+            try{
+                const res = await ApiService.getStudentByTeacher(email);
+                setList(res.body.listStudents);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        fetchData();
     }, [])
     var count = 1;
     return (

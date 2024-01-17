@@ -11,24 +11,30 @@ export default function FormEvaluate({ handleExportExcelFile }) {
         handleExportExcelFile(d);
     };
     useEffect(() => {
-        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
-            .then(res => {
+        const fetchData = async () => {
+            try{
+                const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
                 setTeacher(res.body);
                 setValue("teacher", res.body.teacherName);
                 setValue("school", res.body.schoolName);
-            })
-        ApiService.getAllSemester()
-            .then(data => {
-                setSemesterList(data);
-            })
+                const res1 = await ApiService.getAllSemester();
+                setSemesterList(res1);
+            }catch(e){
+                console.log(e)
+            }
+        }
+        fetchData();
     }, [])
-    const handleMSSVBlur = () => {
+    const handleMSSVBlur = async () => {
         if(mssv){
-            ApiService.getStudentByMssv(mssv)
-            .then((data) => {
-                setValue("mssv", data.body.mssv);
-                setValue("student", data.body.studentName);
-            })
+            try{
+                const res = await ApiService.getStudentByMssv(mssv);
+                setValue("mssv", res.body.mssv);
+                setValue("student", res.body.studentName);
+
+            }catch(e){
+                console.log(e)
+            }
         }
     }
     const clearAll = () => {

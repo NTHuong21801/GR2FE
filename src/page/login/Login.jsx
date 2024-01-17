@@ -55,32 +55,27 @@ export default function Login() {
     //     }
     // }, [user])
     const { register, handleSubmit } = useForm();
-    const onSubmit = (d) => {
+    const onSubmit = async (d) => {
         try {
-            async function fetchData(){
-                const data = {
-                    "username": d.email,
-                    "password": d.pass
-                }
-                await ApiService.login(data)
-                    .then(data => {
-                        localStorage.setItem("access_token", data.token.accessToken);
-                        localStorage.setItem("accountId", data.accountId);
-                        localStorage.setItem("roleId", data.roleId);
-                        localStorage.setItem("email", data.token.userName);
-                        localStorage.setItem("status", data.status);
-                        localStorage.setItem("refresh_token", data.token.refreshToken);
-                        localStorage.setItem("accessExpiredTime", data.token.accessExpiredTime);
-                        localStorage.setItem("refreshExpiredTime", data.token.refreshExpiredTime);
-                        setIsLoggedIn(true);
-                        if (data.status === "ACTIVE") {
-                            setIsActive(true);
-                        } else {
-                            setIsActive(false);
-                        }
-                    })
+            const data = {
+                "username": d.email,
+                "password": d.pass
             }
-            fetchData();
+            const res = await ApiService.login(data);
+            localStorage.setItem("access_token", res.token.accessToken);
+            localStorage.setItem("accountId", res.accountId);
+            localStorage.setItem("roleId", res.roleId);
+            localStorage.setItem("email", res.token.userName);
+            localStorage.setItem("status", res.status);
+            localStorage.setItem("refresh_token", res.token.refreshToken);
+            localStorage.setItem("accessExpiredTime", res.token.accessExpiredTime);
+            localStorage.setItem("refreshExpiredTime", res.token.refreshExpiredTime);
+            setIsLoggedIn(true);
+            if (res.status === "ACTIVE") {
+                setIsActive(true);
+            } else {
+                setIsActive(false);
+            }
         } catch (error) {
             console.error(error);
             setIsLoggedIn(false);
@@ -90,7 +85,7 @@ export default function Login() {
     if (isLoggedIn) {
         if (isActive) {
             if (localStorage.getItem("roleId") === "2") {
-                return <CreateDivide />
+                return <Divide />
             } else {
                 return <Student />
             }

@@ -6,15 +6,20 @@ import { useEffect, useState } from 'react';
 import ApiService from '../../service/service'
 export default function Debate() {
     const [excel, setExcel] = useState([]);
-    useEffect(() => {
-        const data = {
-            "emailTeacher": localStorage.getItem("email"),
-            "excelType": "EXCEL_DEBATE"
+    const fetchData = async () => {
+        try{
+            const data = {
+                "emailTeacher": localStorage.getItem("email"),
+                "excelType": "EXCEL_DEBATE"
+            }
+            const res = await ApiService.getExcelType(data)
+            setExcel(res);
+        }catch(err){
+            console.log(err);
         }
-        ApiService.getExcelType(data)
-            .then(res => {
-                setExcel(res);
-            })
+    }
+    useEffect(() => {
+        fetchData()
     }, [])
     return (
         <>

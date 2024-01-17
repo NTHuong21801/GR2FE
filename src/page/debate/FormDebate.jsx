@@ -6,29 +6,32 @@ export default function FormDebate({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
     const [teacher, setTeacher] = useState();
     const [mssv, setMSSV] = React.useState();
-    const { register,setValue, handleSubmit } = useForm();
+    const { register, setValue, handleSubmit } = useForm();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
     };
     useEffect(() => {
-        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
-            .then(res => {
-                setTeacher(res.body);
-                setValue("teacher", res.body.teacherName);
-                setValue("school", res.body.schoolName);
-            })
-        ApiService.getAllSemester()
-            .then(data => {
-                setSemesterList(data);
-            })
+        const fetchData = async () => {
+            try {
+                const res1 = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'));
+                const res2 = await ApiService.getAllSemester();
+                setTeacher(res1.body);
+                setValue("teacher", res1.body.teacherName);
+                setValue("school", res1.body.schoolName);
+                setSemesterList(res2);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchData();
     }, [])
     const handleMSSVBlur = () => {
-        if(mssv){
+        if (mssv) {
             ApiService.getStudentByMssv(mssv)
-            .then((data) => {
-                setValue("mssv", data.body.mssv);
-                setValue("student", data.body.studentName);
-            })
+                .then((data) => {
+                    setValue("mssv", data.body.mssv);
+                    setValue("student", data.body.studentName);
+                })
         }
     }
     const clearAll = () => {
@@ -61,11 +64,11 @@ export default function FormDebate({ handleExportExcelFile }) {
                         <div className="col-md-1"></div>
                     </div>
                     <div className="row">
-                    <div className="col-md-2">
+                        <div className="col-md-2">
                             <label htmlFor="" className='label'>MSSV:</label>
                         </div>
                         <div className="col-md-3">
-                        <input
+                            <input
                                 {...register("mssv")}
                                 className='inputInfo'
                                 onChange={(e) => setMSSV(e.target.value)}
@@ -135,7 +138,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính độc đáo hoặc tính thời sự của đề tài</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("originally", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("originally", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
@@ -186,7 +189,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Khả năng ứng dụng hoặc giá trị khoa học của giải pháp đề xuất</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("skill", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("skill", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
@@ -203,7 +206,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Độ hoàn thiện của sản phẩm</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("complete", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("complete", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
@@ -250,7 +253,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính đầy đủ và đúng đắn về các nội dung cần trình bày </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("accuracy", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("accuracy", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">2.0</label>
@@ -267,7 +270,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Văn phong và hình thức trình bày (chính tả, hình vẽ, bảng biểu, thuật ngữ...)</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("style", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("style", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
@@ -284,7 +287,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Mức độ tin cậy về nội dung (có đầy đủ tài liệu tham khảo và tham chiếu tới tài liệu)</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("reality", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("reality", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
@@ -314,7 +317,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính hợp lý, đúng đắn và đầy đủ khi trả lời câu hỏi trong phiên phản biện </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("accuracyInDebaate", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("accuracyInDebaate", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
@@ -331,7 +334,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Kỹ năng trình bày, demo sản phẩm làm nổi bật được kết quả </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("demo", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("demo", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
@@ -356,7 +359,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="">Thưởng 5 điểm cho đối tượng là tác giả chính của công bố khoa học là kết quả của đồ án (tối thiểu đã được chấp nhận đăng); hoặc sản phẩm ứng dụng của đồ án đã được triển khai thành công trong thực tế. </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("point", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("point", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1</label>

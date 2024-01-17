@@ -12,25 +12,31 @@ export default function FormDivide({ handleExportExcelFile }) {
         handleExportExcelFile(d);
     };
     useEffect(() => {
-        ApiService.getAllChoice()
-            .then(data => {
-                setChoice(data);
-            });
-        ApiService.getAllSemester()
-            .then(data => {
-                setSemesterList(data);
-            })
+        const fetchData = async () => {
+            try {
+                const res = await ApiService.getAllChoice();
+                setChoice(res);
+                const res1 = await ApiService.getAllSemester();
+                setSemesterList(res1);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
     }, [])
-    const handleMSSVBlur = () => {
-        if(mssv){
-            ApiService.getStudentByMssv(mssv)
-            .then((data) => {
+    const handleMSSVBlur = async () => {
+        if (mssv) {
+            try {
+                const data = await ApiService.getStudentByMssv(mssv);
                 setValue("mssv", data.body.mssv);
                 setValue("mail", data.body.studentEmail);
                 setValue("fullname", data.body.studentName);
                 setValue("phone", data.body.studentPhone);
                 setValue("grade", data.body.className);
-            })
+
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
     const clearAll = () => {

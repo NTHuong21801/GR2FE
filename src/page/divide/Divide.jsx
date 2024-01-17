@@ -6,15 +6,20 @@ import { useEffect, useState } from 'react';
 import ApiService from '../../service/service';
 export default function Divide() {
     const [excel, setExcel] = useState([]);
-    useEffect( () => {
-        const data = {
-            "emailTeacher": localStorage.getItem("email"),
-            "excelType": "EXCEL_DIVIDE"
+    const fetchData = async () => {
+        try {
+            const data = {
+                "emailTeacher": localStorage.getItem("email"),
+                "excelType": "EXCEL_DIVIDE"
+            }
+            const res = await ApiService.getExcelType(data);
+            setExcel(res);
+        } catch (err) {
+            console.log(err);
         }
-        ApiService.getExcelType(data)
-            .then(res => {
-                setExcel(res);
-            })
+    }
+    useEffect(() => {
+        fetchData();
     }, [])
     return (
         <>
@@ -46,8 +51,8 @@ export default function Divide() {
                                     <img src="assets/icon/excel.png" alt="" className='excelIcon' />
                                     <span>{e.excelName}</span>
                                     <a href={e.excelUrl} download className="btn">
-                                    Download
-                                    <img src="assets/icon/download.png" alt="" />
+                                        Download
+                                        <img src="assets/icon/download.png" alt="" />
                                     </a>
                                 </div>
                             ))}

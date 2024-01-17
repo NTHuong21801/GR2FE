@@ -9,7 +9,6 @@ import Debate from './page/debate/Debate';
 import Divide from './page/divide/Divide';
 import CreateEvaluate from './page/evaluate/CreateEvaluate';
 import CreateDebate from './page/debate/CreateDebate';
-import MainPage from './page/mainPage/MainPage';
 import Register from './page/register/Register';
 import CreateDivide from './page/divide/CreateDivide';
 import UpdateInforTeacher from './page/updateInfor/UpdateInforTeacher';
@@ -32,38 +31,40 @@ function App() {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh_token'));
   useEffect(() => {
-    const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
-    const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
+    const fetchData = async () => {
+      const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
+      const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
 
-    const currentTimeInSeconds = Math.floor(Date.now());
-    if (accessToken && accessExpiredTime > currentTimeInSeconds) {
-    } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
-      const data = {
-        "refreshToken": refreshToken
-      }
-      ApiService.getRefreshToken(data)
-        .then(res => {
+      const currentTimeInSeconds = Math.floor(Date.now());
+      if (accessToken && accessExpiredTime > currentTimeInSeconds) {
+      } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
+        try {
+          const data = {
+            "refreshToken": refreshToken
+          }
+          const res = await ApiService.getRefreshToken(data);
           localStorage.setItem("access_token", res.accessToken);
           localStorage.setItem("refresh_token", res.refreshToken);
           localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
           localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
           setAccessToken(res.accessToken)
           setRefreshToken(res.refreshToken)
-        })
-        .catch(error => {
-          console.error('Error refreshing token:', error);
-        });
-    } else {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('roleId');
-      localStorage.removeItem('accountId');
-      localStorage.removeItem('email');
-      localStorage.removeItem('status');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('refreshExpiredTime');
-      localStorage.removeItem('accessExpiredTime');
-    }
 
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('roleId');
+        localStorage.removeItem('accountId');
+        localStorage.removeItem('email');
+        localStorage.removeItem('status');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('refreshExpiredTime');
+        localStorage.removeItem('accessExpiredTime');
+      }
+    }
+    fetchData();
   }, [accessToken, refreshToken]);
   return (
     <Router>

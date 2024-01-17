@@ -19,10 +19,15 @@ export default function Student() {
     }
     const [excel, setExcel] = useState([]);
     useEffect(() => {
-        ApiService.getExcelByAccount()
-            .then(res => {
+        const fetchData = async () => {
+            try{
+                const res = await ApiService.getExcelByAccount();
                 setExcel(res);
-            })
+            }catch(e){
+                console.log(e);
+            }
+        }
+        fetchData();
     }, [])
     return (
         <>

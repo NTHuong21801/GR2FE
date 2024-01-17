@@ -14,54 +14,61 @@ export default function UpdateInforStudent() {
     const majorValue = useWatch({ control, name: 'major' });
     const navigate = useNavigate();
     useEffect(() => {
-        ApiService.getAllSchool()
-            .then(data => {
-                setSchools(data);
-            });
-        ApiService.getAllTeacher()
-            .then(data => {
-                setTeacher(data);
-            })
+        const fetchData = async () => {
+            try {
+                const res = await ApiService.getAllSchool();
+                setSchools(res);
+                const res1 = await ApiService.getAllTeacher();
+                setTeacher(res1);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
     }, [])
     useEffect(() => {
-        if (schoolValue) {
-            ApiService.getMajorBySchoolId(schoolValue)
-                .then(data => {
-                    setMajors(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching majors:', error);
-                });
+        const fetchData = async () => {
+            try {
+                if (schoolValue) {
+                    const res = await ApiService.getMajorBySchoolId(schoolValue);
+                    setMajors(res);
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
+        fetchData();
     }, [schoolValue]);
     useEffect(() => {
-        if (majorValue) {
-            ApiService.getClassByMajorId(majorValue)
-                .then(data => {
-                    setGrade(data);
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching classes:', error);
-                });
+        const fetchData = async () => {
+            try {
+                if (majorValue) {
+                    const res = await ApiService.getClassByMajorId(majorValue);
+                    setGrade(res);
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
+        fetchData();
     }, [majorValue]);
-    const onSubmit = (d) => {
-        console.log(d);
-        const data = {
-            "studentEmail": localStorage.getItem("email"),
-            "studentName": d.name,
-            "studentPhone": d.phone,
-            "studentMajor": parseInt(d.major),
-            "teacherId": parseInt(d.teacher),
-            "mssv": d.mssv,
-            "classId": parseInt(d.grade)
+    const onSubmit = async (d) => {
+        try {
+            const data = {
+                "studentEmail": localStorage.getItem("email"),
+                "studentName": d.name,
+                "studentPhone": d.phone,
+                "studentMajor": parseInt(d.major),
+                "teacherId": parseInt(d.teacher),
+                "mssv": d.mssv,
+                "classId": parseInt(d.grade)
+            }
+            await ApiService.updateStudentInfo(data);
+            alert("Update thành công");
+            navigate("/studentPage");
+        } catch (e) {
+            console.log(e);
         }
-        ApiService.updateStudentInfo(data)
-            .then((res) => {
-                alert("Update thành công");
-                navigate("/divide");
-            })
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
