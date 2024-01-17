@@ -42,6 +42,7 @@ export default function CreateDivide() {
             const inputData = InputDataDivide.InputData(myData, teacher);
             const workbook = new ExcelJS.Workbook();
             const sheet = workbook.addWorksheet('Phiếu phân công nhiệm vụ');
+            sheet.getRow(32).height = 70
             if (rowsHeader.length > 0) {
                 rowsHeader.forEach((r) => {
                     sheet.getRow(r).font = fontSettings;

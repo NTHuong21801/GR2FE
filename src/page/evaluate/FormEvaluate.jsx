@@ -397,7 +397,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <input type="number" className="textaligncenter" {...register("point", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
-                            <label htmlFor="">0.5</label>
+                            <label htmlFor="">1</label>
                         </div>
 
                     </div>
