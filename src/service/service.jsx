@@ -190,6 +190,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async getRefreshToken(data){
+    try{
+      const response = await axios.post(`http://localhost:8090/api/auth/refresh-token`,data, configHeader);
+      return response.data;
+    }catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;

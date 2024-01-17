@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useRoutes } from "react-router-dom";
 import Login from './page/login/Login';
 import "./main.css"
@@ -16,6 +16,7 @@ import UpdateInforTeacher from './page/updateInfor/UpdateInforTeacher';
 import UpdateInforStudent from './page/updateInfor/UpdateInforStudent';
 import UploadFile from './page/upload/UploadFile';
 import Student from './page/studentPage/Student';
+import ApiService from './service/service';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
   if (!isAuthenticated) {
@@ -28,23 +29,64 @@ const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, .
 };
 
 function App() {
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
+  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh_token'));
+  useEffect(() => {
+    const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
+    const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
+   
+      const currentTimeInSeconds = Math.floor(Date.now());
+      console.log(currentTimeInSeconds);
+      console.log(accessExpiredTime);
+      if (accessToken && accessExpiredTime > currentTimeInSeconds) {
+        console.log("Còn hẹn");
+      } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
+        console.log("Hết hẹn");
+        const data = {
+          "refreshToken": refreshToken
+        }
+         ApiService.getRefreshToken(data)
+          .then(res => {
+            console.log(res);
+            localStorage.setItem("access_token", res.accessToken);
+            localStorage.setItem("refresh_token", res.refreshToken);
+            localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
+            localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
+            setAccessToken(res.accessToken)
+            setRefreshToken(res.refreshToken)
+          })
+          .catch(error => {
+            console.error('Error refreshing token:', error);
+          });
+      } else {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('roleId');
+        localStorage.removeItem('accountId');
+        localStorage.removeItem('email');
+        localStorage.removeItem('status');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('refreshExpiredTime');
+        localStorage.removeItem('accessExpiredTime');
+      }
+    
+  }, [accessToken, refreshToken]);
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login/>} />
+        <Route exact path="/" element={<Login />} />
         {/* <Route exact path="/login" element={<Login/>} /> */}
-        <Route path="/signup" element={<Register/>} />
+        <Route path="/signup" element={<Register />} />
         <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["2"]} />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["2"]} />} />
-        <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["2"]} />}/>
-        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} requiredRoleId={["2"]} />}/>
-        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["2"]} />}/>
-        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["2"]} />}/>
-        <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["2"]} />}/>
-        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["2"]} />}/>
-        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher}  requiredRoleId={["2"]}/>}/>
-        <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />}/>
-        <Route path="/studentPage" element={<PrivateRoute component={Student} requiredRoleId={["3"]} />}/>
+        <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["2"]} />} />
+        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} requiredRoleId={["2"]} />} />
+        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["2"]} />} />
+        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["2"]} />} />
+        <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["2"]} />} />
+        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["2"]} />} />
+        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher} requiredRoleId={["2"]} />} />
+        <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />} />
+        <Route path="/studentPage" element={<PrivateRoute component={Student} requiredRoleId={["3"]} />} />
       </Routes>
     </Router>
   )

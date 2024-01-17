@@ -11,6 +11,9 @@ export default function Student() {
             localStorage.removeItem('accountId');
             localStorage.removeItem('email');
             localStorage.removeItem('status');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('refreshExpiredTime');
+            localStorage.removeItem('accessExpiredTime');
             window.location.reload();
         }
     }

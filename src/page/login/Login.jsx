@@ -61,12 +61,14 @@ export default function Login() {
         }
         ApiService.login(data)
             .then(data => {
-                console.log(data);
                 localStorage.setItem("access_token", data.token.accessToken);
                 localStorage.setItem("accountId", data.accountId);
                 localStorage.setItem("roleId", data.roleId);
                 localStorage.setItem("email", data.token.userName);
                 localStorage.setItem("status", data.status);
+                localStorage.setItem("refresh_token", data.token.refreshToken);
+                localStorage.setItem("accessExpiredTime", data.token.accessExpiredTime);
+                localStorage.setItem("refreshExpiredTime", data.token.refreshExpiredTime);
                 setIsLoggedIn(true);
                 if(data.status === "ACTIVE"){
                     setIsActive(true);
