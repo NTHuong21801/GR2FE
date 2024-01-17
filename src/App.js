@@ -34,41 +34,36 @@ function App() {
   useEffect(() => {
     const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
     const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
-   
-      const currentTimeInSeconds = Math.floor(Date.now());
-      console.log(currentTimeInSeconds);
-      console.log(accessExpiredTime);
-      if (accessToken && accessExpiredTime > currentTimeInSeconds) {
-        console.log("Còn hẹn");
-      } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
-        console.log("Hết hẹn");
-        const data = {
-          "refreshToken": refreshToken
-        }
-         ApiService.getRefreshToken(data)
-          .then(res => {
-            console.log(res);
-            localStorage.setItem("access_token", res.accessToken);
-            localStorage.setItem("refresh_token", res.refreshToken);
-            localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
-            localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
-            setAccessToken(res.accessToken)
-            setRefreshToken(res.refreshToken)
-          })
-          .catch(error => {
-            console.error('Error refreshing token:', error);
-          });
-      } else {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('roleId');
-        localStorage.removeItem('accountId');
-        localStorage.removeItem('email');
-        localStorage.removeItem('status');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('refreshExpiredTime');
-        localStorage.removeItem('accessExpiredTime');
+
+    const currentTimeInSeconds = Math.floor(Date.now());
+    if (accessToken && accessExpiredTime > currentTimeInSeconds) {
+    } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
+      const data = {
+        "refreshToken": refreshToken
       }
-    
+      ApiService.getRefreshToken(data)
+        .then(res => {
+          localStorage.setItem("access_token", res.accessToken);
+          localStorage.setItem("refresh_token", res.refreshToken);
+          localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
+          localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
+          setAccessToken(res.accessToken)
+          setRefreshToken(res.refreshToken)
+        })
+        .catch(error => {
+          console.error('Error refreshing token:', error);
+        });
+    } else {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('roleId');
+      localStorage.removeItem('accountId');
+      localStorage.removeItem('email');
+      localStorage.removeItem('status');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('refreshExpiredTime');
+      localStorage.removeItem('accessExpiredTime');
+    }
+
   }, [accessToken, refreshToken]);
   return (
     <Router>

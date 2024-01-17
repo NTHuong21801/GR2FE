@@ -11,7 +11,6 @@ export default function ListStudent() {
         ApiService.getStudentByTeacher(email)
             .then(data => {
                 setList(data.body.listStudents);
-                console.log(data.body.listStudents);
             });
     }, [])
     var count = 1;

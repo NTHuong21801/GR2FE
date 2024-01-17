@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import ApiService from '../../service/service';
 export default function Divide() {
     const [excel, setExcel] = useState([]);
-    useEffect(() => {
+    useEffect( () => {
         const data = {
             "emailTeacher": localStorage.getItem("email"),
             "excelType": "EXCEL_DIVIDE"

@@ -51,7 +51,6 @@ export default function UploadFile() {
                         return dataInput;
                     })
                     .then(dataInput => {
-                        console.log(dataInput);
                         ApiService.createFile(dataInput)
                             .then(res => {
                                 alert("Upload file thành công");
