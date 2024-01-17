@@ -1,18 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ApiService from "../../service/service";
 export default function FormDebate({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
-    const { register, handleSubmit } = useForm();
+    const [teacher, setTeacher] = useState();
+    const [mssv, setMSSV] = React.useState();
+    const { register,setValue, handleSubmit } = useForm();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
     };
     useEffect(() => {
+        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+            .then(res => {
+                setTeacher(res.body);
+                setValue("teacher", res.body.teacherName);
+                setValue("school", res.body.schoolName);
+            })
         ApiService.getAllSemester()
             .then(data => {
                 setSemesterList(data);
             })
     }, [])
+    const handleMSSVBlur = () => {
+        if(mssv){
+            ApiService.getStudentByMssv(mssv)
+            .then((data) => {
+                setValue("mssv", data.body.mssv);
+                setValue("student", data.body.studentName);
+            })
+        }
+    }
     const clearAll = () => {
         window.location.reload();
     }
@@ -43,18 +60,23 @@ export default function FormDebate({ handleExportExcelFile }) {
                         <div className="col-md-1"></div>
                     </div>
                     <div className="row">
+                    <div className="col-md-2">
+                            <label htmlFor="" className='label'>MSSV:</label>
+                        </div>
+                        <div className="col-md-3">
+                        <input
+                                {...register("mssv")}
+                                className='inputInfo'
+                                onChange={(e) => setMSSV(e.target.value)}
+                                onBlur={handleMSSVBlur}
+                            />
+                        </div>
+                        <div className="col-md-1"></div>
                         <div className="col-md-2">
                             <label htmlFor="" className='label'>Họ và tên sinh viên:</label>
                         </div>
                         <div className="col-md-3">
                             <input type="text" {...register("student", { required: true })} className='inputInfo' />
-                        </div>
-                        <div className="col-md-1"></div>
-                        <div className="col-md-2">
-                            <label htmlFor="" className='label'>MSSV:</label>
-                        </div>
-                        <div className="col-md-3">
-                            <input type="text" {...register("mssv", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -336,7 +358,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <input type="number" className="textaligncenter" {...register("point", { required: true })}/>
                         </div>
                         <div className="col-md-2 textaligncenter">
-                            <label htmlFor="">0.5</label>
+                            <label htmlFor="">1</label>
                         </div>
                     </div>
                     <div className="infoHeader">

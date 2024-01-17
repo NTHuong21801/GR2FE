@@ -6,7 +6,6 @@ export default function Header() {
     const [state, setState] = React.useState('divide');
     const handleClick = (item) => {
         setState(item);
-        console.log(state)
     }
     const handleLogout = () => {
         const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");

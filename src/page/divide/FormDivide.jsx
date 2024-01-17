@@ -9,7 +9,6 @@ export default function FormDivide({ handleExportExcelFile }) {
     const [mssv, setMSSV] = React.useState();
     const { register, setValue, handleSubmit } = useForm();
     const onSubmit = (d) => {
-        console.log(d);
         handleExportExcelFile(d);
     };
     useEffect(() => {
@@ -26,7 +25,6 @@ export default function FormDivide({ handleExportExcelFile }) {
         if(mssv){
             ApiService.getStudentByMssv(mssv)
             .then((data) => {
-                console.log(data);
                 setValue("mssv", data.body.mssv);
                 setValue("mail", data.body.studentEmail);
                 setValue("fullname", data.body.studentName);

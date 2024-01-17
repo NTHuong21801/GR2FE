@@ -6,7 +6,7 @@ const InputDataDebate = {
         'F30', 'F31', 'F32', 'F33', 'D17', 'D18', 'D19', 'D20',
         'D21', 'E17', 'E18', 'E19', 'E20', 'E21', 'D23', 'D24',
         'D25', 'D26', 'E23', 'E24', 'E25', 'E26', 'E27', 'E28',
-        'E29', 'D27', 'D28', 'D31', 'E31', 'D46', 'D47', 'D48'];
+        'E29', 'D27', 'D28', 'D29', 'D31', 'E31', 'D46', 'D47', 'D48'];
         return arr;
     },
     RowHeader(){
@@ -28,7 +28,7 @@ const InputDataDebate = {
         return arr;
     },
     HeightFix(){
-        const arr = [1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19,
+        const arr = [1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
             20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 39, 47, 48];
         return arr;    
     },
@@ -408,6 +408,167 @@ const InputDataDebate = {
                 "value" :"(ký và ghi rõ họ tên)"
             }
         ]
+        return object;
+    },
+    InputData(data){
+        const object = [
+            {
+                "row": 'D7',
+                "value": data.teacher
+            },
+            {
+                "row": 'D8',
+                "value": data.school
+            },
+            {
+                "row": 'D9',
+                "value": data.student
+            },
+            {
+                "row": 'D10',
+                "value": data.mssv
+            },
+            {
+                "row": 'A12',
+                "value": data.topic
+            },
+            {
+                "row": 'D13',
+                "value": data.type
+            },
+            {
+                "row": 'D17',
+                "value": data.originally
+            },
+            {
+                "row": 'D18',
+                "value": data.scale
+            },
+            {
+                "row": 'D19',
+                "value": data.difficult
+            },
+            {
+                "row": 'D20',
+                "value": data.skill
+            },
+            {
+                "row": 'D21',
+                "value": data.complete
+            },
+            {
+                "row": 'D23',
+                "value": data.rational
+            },
+            {
+                "row": 'D24',
+                "value": data.accuracy
+            },
+            {
+                "row": 'D25',
+                "value": data.style
+            },
+            {
+                "row": 'D26',
+                "value": data.reality
+            },
+            {
+                "row": 'D28',
+                "value": data.accuracyInDebaate
+            },
+            {
+                "row": 'D29',
+                "value": data.demo
+            },
+            {
+                "row": 'D31',
+                "value": data.point
+            },
+            {
+                "row": 'A36',
+                "value": data.comment
+            },
+            {
+                "row": 'D40',
+                "value": data.conclusion
+            },
+            {
+                "row": 'F17',
+                "value": data.originally * 0.5
+            },
+            {
+                "row": 'F18',
+                "value": data.scale
+            },
+            {
+                "row": 'F19',
+                "value": data.difficult
+            },
+            {
+                "row": 'F20',
+                "value": data.skill * 0.5
+            },
+            {
+                "row": 'F21',
+                "value": data.complete
+            },
+            {
+                "row": 'F23',
+                "value": data.rational * 0.5
+            },
+            {
+                "row": 'F24',
+                "value": data.accuracy * 2
+            },
+            {
+                "row": 'F25',
+                "value": data.style
+            },
+            {
+                "row": 'F26',
+                "value": data.reality * 0.5
+            },
+            {
+                "row": 'F28',
+                "value": data.accuracyInDebaate
+            },
+            {
+                "row": 'F29',
+                "value": data.demo
+            },
+            {
+                "row": 'F31',
+                "value": data.point
+            },
+            {
+                "row": 'F30',
+                "value": data.point
+            },
+            {
+                "row": 'F16',
+                "value":  parseFloat(data.originally * 0.5) +  parseFloat(data.scale) +  parseFloat(data.difficult) +  parseFloat(data.skill * 0.5) +  parseFloat(data.complete)
+            },
+            {
+                "row": 'F22',
+                "value":  parseFloat(data.rational * 0.5) +  parseFloat(data.accuracy * 2) +  parseFloat(data.style) +  parseFloat(data.reality * 0.5)
+            },
+            {
+                "row": 'F27',
+                "value":  parseFloat(data.accuracyInDebaate) +  parseFloat(data.demo)
+            },
+            {
+                "row": 'F32',
+                "value": parseFloat(data.point) +  parseFloat(data.originally * 0.5) +  parseFloat(data.scale) +  parseFloat(data.difficult) +  parseFloat(data.skill * 0.5) +  parseFloat(data.complete) +  parseFloat(data.rational * 0.5) +  parseFloat(data.accuracy * 2) +  parseFloat(data.style) +  parseFloat(data.reality * 0.5) +  parseFloat(data.accuracyInDebaate) +  parseFloat(data.demo)
+            },
+            {
+                "row": 'F33',
+                "value": (parseFloat(data.point) +  parseFloat(data.originally * 0.5) +  parseFloat(data.scale) +  parseFloat(data.difficult) +  parseFloat(data.skill * 0.5) +  parseFloat(data.complete) +  parseFloat(data.rational * 0.5) +  parseFloat(data.accuracy * 2) +  parseFloat(data.style) +  parseFloat(data.reality * 0.5) +  parseFloat(data.accuracyInDebaate) +  parseFloat(data.demo)) / 10
+            },
+        ]
+        return object;
+    },
+    Border(){
+        const object = ['A', 'D', 'E', 'F']
         return object;
     }
 };

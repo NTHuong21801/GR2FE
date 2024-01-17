@@ -1,18 +1,36 @@
-import React, { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ApiService from "../../service/service";
 export default function FormEvaluate({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
-    const { register, handleSubmit } = useForm();
+    const { register, setValue, handleSubmit } = useForm();
+    const [mssv, setMSSV] = React.useState();
+    const [teacher, setTeacher] = useState();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
     };
     useEffect(() => {
+        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+            .then(res => {
+                setTeacher(res.body);
+                setValue("teacher", res.body.teacherName);
+                setValue("school", res.body.schoolName);
+            })
         ApiService.getAllSemester()
             .then(data => {
                 setSemesterList(data);
             })
     }, [])
+    const handleMSSVBlur = () => {
+        if(mssv){
+            ApiService.getStudentByMssv(mssv)
+            .then((data) => {
+                setValue("mssv", data.body.mssv);
+                setValue("student", data.body.studentName);
+            })
+        }
+    }
     const clearAll = () => {
         window.location.reload();
     }
@@ -44,17 +62,22 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                     </div>
                     <div className="row">
                         <div className="col-md-2">
+                            <label htmlFor="" className='label'>MSSV:</label>
+                        </div>
+                        <div className="col-md-3">
+                            <input
+                                {...register("mssv")}
+                                className='inputInfo'
+                                onChange={(e) => setMSSV(e.target.value)}
+                                onBlur={handleMSSVBlur}
+                            />
+                        </div>
+                        <div className="col-md-1"></div>
+                        <div className="col-md-2">
                             <label htmlFor="" className='label'>Họ và tên sinh viên:</label>
                         </div>
                         <div className="col-md-3">
                             <input type="text" {...register("student", { required: true })} className='inputInfo' />
-                        </div>
-                        <div className="col-md-1"></div>
-                        <div className="col-md-2">
-                            <label htmlFor="" className='label'>MSSV:</label>
-                        </div>
-                        <div className="col-md-3">
-                            <input type="text" {...register("mssv", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -105,7 +128,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="" className="label2">Trọng số</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -113,12 +136,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính độc đáo hoặc tính thời sự của đề tài</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("originally", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("originally", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -131,12 +154,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Quy mô, đối tượng công việc đã thực hiện</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("scale", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("scale", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -149,12 +172,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Độ khó, độ phức tạp của vấn đề </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("difficult", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("difficult", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -167,12 +190,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Khả năng ứng dụng hoặc giá trị khoa học của giải pháp đề xuất</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("skill", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("skill", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -185,12 +208,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Độ hoàn thiện của sản phẩm</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("complete", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("complete", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -209,7 +232,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="" className="label2">Trọng số</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -217,12 +240,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính hợp lý của bố cục </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("rational", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("rational", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -235,12 +258,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Tính đầy đủ và đúng đắn về các nội dung cần trình bày </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("accuracy", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("accuracy", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">2.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -253,12 +276,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Văn phong và hình thức trình bày (chính tả, hình vẽ, bảng biểu, thuật ngữ...)</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("style", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("style", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -271,12 +294,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Mức độ tin cậy về nội dung (có đầy đủ tài liệu tham khảo và tham chiếu tới tài liệu)</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("reality", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("reality", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -295,7 +318,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="" className="label2">Trọng số</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -303,12 +326,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Tinh thần trách nhiệm, thái độ nghiêm túc </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("response", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("response", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -321,12 +344,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Khả năng làm chủ kiến thức, công nghệ </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("owns", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("owns", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">1.0</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -339,12 +362,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Sự chủ động, sáng tạo, chấp nhận thách thức trong công việc</label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("creative", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("creative", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -363,7 +386,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="" className="label2">Trọng số</label>
                         </div>
-                        
+
                     </div>
                     <div className="row">
                         <div className="col-md-1"></div>
@@ -371,12 +394,12 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="">Thưởng 5 điểm cho đối tượng là tác giả chính của công bố khoa học là kết quả của đồ án (tối thiểu đã được chấp nhận đăng); hoặc sản phẩm ứng dụng của đồ án đã được triển khai thành công trong thực tế. </label>
                         </div>
                         <div className="col-md-3 textaligncenter">
-                            <input type="number" className="textaligncenter" {...register("point", { required: true })}/>
+                            <input type="number" className="textaligncenter" {...register("point", { required: true })} />
                         </div>
                         <div className="col-md-2 textaligncenter">
                             <label htmlFor="">0.5</label>
                         </div>
-                        
+
                     </div>
                     <div className="infoHeader">
                         Tổng kết
