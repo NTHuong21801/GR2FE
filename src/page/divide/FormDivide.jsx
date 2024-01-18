@@ -35,6 +35,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                 setValue("grade", data.body.className);
 
             } catch (e) {
+                alert("Mã số sinh viên không tồn tại");
                 console.log(e);
             }
         }

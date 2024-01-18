@@ -34,6 +34,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                 setValue("student", res.body.studentName);
 
             }catch(e){
+                alert("Mã số sinh viên không tồn tại");
                 console.log(e)
             }
         }

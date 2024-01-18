@@ -26,13 +26,16 @@ export default function FormDebate({ handleExportExcelFile }) {
         }
         fetchData();
     }, [])
-    const handleMSSVBlur = () => {
+    const handleMSSVBlur =async () => {
         if (mssv) {
-            ApiService.getStudentByMssv(mssv)
-                .then((data) => {
-                    setValue("mssv", data.body.mssv);
-                    setValue("student", data.body.studentName);
-                })
+            try {
+                const data = await ApiService.getStudentByMssv(mssv);
+                setValue("mssv", data.body.mssv);
+                setValue("student", data.body.studentName);
+            } catch (e) {
+                alert("Mã số sinh viên không tồn tại");
+                console.log(e);
+            }
         }
     }
     const clearAll = () => {

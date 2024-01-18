@@ -18,7 +18,7 @@ export default function UploadFile() {
             })
     }, [])
     const onSubmit = (d) => {
-        ApiService.generateFileUrl();
+        // ApiService.generateFileUrl();
         const formData = new FormData();
         formData.append('file', d.fileUrl[0]);
         var fileType;
