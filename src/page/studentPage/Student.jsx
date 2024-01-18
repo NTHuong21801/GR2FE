@@ -22,6 +22,7 @@ export default function Student() {
         const fetchData = async () => {
             try{
                 const res = await ApiService.getExcelByAccount();
+                console.log(res);
                 setExcel(res);
             }catch(e){
                 console.log(e);
@@ -59,6 +60,7 @@ export default function Student() {
                                     </a>
                                 </div>
                             ))}
+                            {excel.length == 0 && <h4>Không có file excel nào được update</h4>}
                         </div>
                         <div className="col-md-1"></div>
                     </div>
