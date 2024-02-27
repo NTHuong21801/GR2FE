@@ -16,6 +16,7 @@ import UpdateInforStudent from './page/updateInfor/UpdateInforStudent';
 import UploadFile from './page/upload/UploadFile';
 import Student from './page/studentPage/Student';
 import ApiService from './service/service';
+import ExcelReader from './page/excelReader/ExelReader';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
   if (!isAuthenticated) {
@@ -72,6 +73,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         {/* <Route exact path="/login" element={<Login/>} /> */}
         <Route path="/signup" element={<Register />} />
+        <Route path="/excel" element={<ExcelReader />} />
         <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["2"]} />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["2"]} />} />
         <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["2"]} />} />
