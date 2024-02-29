@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
-import { Search } from "@mui/icons-material";
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, FormControl, IconButton, InputBase, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 export default function PopupExport({ onClose }) {
     const [typeFile, setTypeFile] = useState('');
