@@ -20,13 +20,13 @@
     color: #fff;
 }
 .main{
-    background-color: #fff;
+    background-color: rgba(204, 204, 204, 0.4);
 }
 .mainForm{
     background-color: #E4E2E2;
 }
 .main .container{
-    background-color: #E4E2E2 ;
+    /* background-color: #E4E2E2 ; */
     padding: 20px 0;
 }
 .mainForm .container{
@@ -59,13 +59,13 @@
     height: 20px;
 }
 .table{
-    margin-top: 20px;
+    font-size: 14px;
     border-collapse: collapse;
     text-align: center;
     margin-bottom: 50px;
 }
 th, td{
-    border: 1px solid #000
+    border: 1px solid #000;
 }
 .evaluateFile{
     display: flex;
@@ -142,4 +142,62 @@ th, td{
 .btnUpload .btn{
     width: 70%;
     margin-left: 15%;
+}
+
+.popupTable {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* z-index: 9999; */
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    position: absolute;
+    background-color:#fff;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+.popup-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.popup-header p{
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 550;
+}
+.displayFlex{
+    display: flex;
+    align-items: center;
+    float: right;
+    gap: 20px
+}
+.popup-btn .btn{
+    width: 100px;
+}
+.popup-body{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+.marginTop20{
+    margin-top: 20px;
+}
+.maxHeight300{
+    max-height: 300px;
+    overflow-y: auto;
 }

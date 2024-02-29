@@ -37,7 +37,7 @@ export default function Header() {
             <div className="headerBottom">
                 <div className="container">
                     <div className="row">
-                        <Link to={'/divide'} className={`col-md-2 textNone ${state === 'divide' ? 'activeHeaader' : ''}`} onClick={() => handleClick('divide')}>
+                        <Link to={'/divide'} className={`col-md-2 activeHeader textNone ${state === 'divide' ? 'activeHeaader' : ''}`} onClick={() => handleClick('divide')}>
                             <span>Phiếu giao nhiệm vụ</span>
                         </Link>
                         <Link to={'/evaluate'} className={`col-md-2 textNone ${state === 'evaluate' ? 'activeHeaader' : ''}`} onClick={() => handleClick('evaluate')}>

@@ -4,15 +4,24 @@ import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApiService from "../../service/service";
+import PopupExport from "./PopupExport";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 export default function ListStudent() {
     const [list, setList] = useState();
+    const [isPopup, setIsPopup] = useState(false);
     const email = localStorage.getItem('email');
+    const handleClosePopup = () => {
+        setIsPopup(false);
+    }
+    const handleOpenPopup = () => {
+        setIsPopup(true)
+    }
     useEffect(() => {
         const fetchData = async () => {
-            try{
+            try {
                 const res = await ApiService.getStudentByTeacher(email);
                 setList(res.body.listStudents);
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -25,38 +34,60 @@ export default function ListStudent() {
             <div className="main">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-10">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>MSSV</th>
-                                        <th>Họ và tên</th>
-                                        <th>Lớp</th>
-                                        <th>Khoa - Viện</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {list && list.map(s => (
-                                        <tr key={s.studentId}>
-                                            <td>{count++}</td>
-                                            <td>{s.mssv}</td>
-                                            <td>{s.studentName}</td>
-                                            <td>{s.className}</td>
-                                            <td>{s.studentMajor}</td>
-                                        </tr>
-                                    ))}
-
-                                </tbody>
-
-                            </table>
+                        <div className="col-md-9"></div>
+                        <div className="btn col-md-2" onClick={handleOpenPopup}>
+                            Export Student List
                         </div>
                         <div className="col-md-1"></div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <Paper className="table marginTop20">
+                                <TableContainer>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>STT</TableCell>
+                                                <TableCell>Sinh viên</TableCell>
+                                                <TableCell>Hệ</TableCell>
+                                                <TableCell>Lĩnh vực chuyên môn</TableCell>
+                                                <TableCell>Lớp</TableCell>
+                                                <TableCell>GVHD</TableCell>
+                                                <TableCell>GVPB</TableCell>
+                                                <TableCell>Điểm GVHD</TableCell>
+                                                <TableCell>Điểm quá trình</TableCell>
+                                                <TableCell>Điểm cuối kỳ</TableCell>
+                                                <TableCell>File</TableCell>
+                                                <TableCell>Ghi chú</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {list != null && list.map(s => (
+                                                <TableRow key={s.studentId}>
+                                                    <TableCell>{count++}</TableCell>
+                                                    <TableCell>{s.studentName} - {s.mssv}</TableCell>
+                                                    <TableCell>{s.studentMajor}</TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell>{s.className}</TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Paper>
+                        </div>
                     </div>
                 </div>
             </div>
             <Footer />
+            {isPopup && <PopupExport onClose={handleClosePopup} />}
         </>
     )
 }
