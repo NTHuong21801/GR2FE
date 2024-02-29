@@ -4,12 +4,15 @@ import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/
 import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 export default function PopupExport({ onClose }) {
     const [typeFile, setTypeFile] = useState('');
-
+    const [searchText, setSearchText] = useState();
     const handleChange = (event) => {
         setTypeFile(event.target.value);
     };
     const [list, setList] = useState();
     const email = localStorage.getItem('email');
+    const handleSearchChange = (event) => {
+        setSearchText(event.target.value);
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -21,6 +24,11 @@ export default function PopupExport({ onClose }) {
         }
         fetchData();
     }, [])
+    const filterStudent = list != null ? list.filter((e) => {
+        return (
+            e.mssv.toLowerCase().includes(searchText)
+        );
+    }) : [];
     return (
         <div className="popupTable">
             <div className="popup-content">
@@ -48,7 +56,13 @@ export default function PopupExport({ onClose }) {
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField id="outlined-basic" label="Tìm kiếm theo MSSV" variant="outlined" />
+                        <TextField
+                            id="outlined-basic"
+                            label="Tìm kiếm theo MSSV"
+                            variant="outlined"
+                            value={searchText}
+                            onChange={handleSearchChange}
+                        />
                     </Box>
                     <Paper className="table maxHeight300">
                         <TableContainer>
@@ -62,18 +76,33 @@ export default function PopupExport({ onClose }) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {list != null && list.map(s => (
-                                        <TableRow key={s.studentId}>
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                />
-                                            </TableCell>
-                                            <TableCell>{s.mssv}</TableCell>
-                                            <TableCell>{s.studentName}</TableCell>
-                                            <TableCell>{s.className}</TableCell>
-                                        </TableRow>
-                                    ))}
+                                    {searchText != null ? (
+                                        filterStudent != null && filterStudent.map(s => (
+                                            <TableRow key={s.studentId}>
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        color="primary"
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{s.mssv}</TableCell>
+                                                <TableCell>{s.studentName}</TableCell>
+                                                <TableCell>{s.className}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        list != null && list.map(s => (
+                                            <TableRow key={s.studentId}>
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        color="primary"
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{s.mssv}</TableCell>
+                                                <TableCell>{s.studentName}</TableCell>
+                                                <TableCell>{s.className}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    )}
                                 </TableBody>
                             </Table>
                         </TableContainer>
