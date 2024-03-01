@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
@@ -5,8 +6,14 @@ import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead
 export default function PopupExport({ onClose }) {
     const [typeFile, setTypeFile] = useState('');
     const [searchText, setSearchText] = useState();
+    const [checkboxState, setCheckboxState] = useState({});
     const handleChange = (event) => {
         setTypeFile(event.target.value);
+    };
+    const handleCheckboxChange = (event, studentId) => {
+        const newState = { ...checkboxState };
+        newState[studentId] = event.target.checked;
+        setCheckboxState(newState);
     };
     const [list, setList] = useState();
     const email = localStorage.getItem('email');
@@ -29,6 +36,23 @@ export default function PopupExport({ onClose }) {
             e.mssv.toLowerCase().includes(searchText)
         );
     }) : [];
+    const getSelectedStudentIds = () => {
+        const selectedStudentIds = Object.keys(checkboxState).filter(studentId => checkboxState[studentId]);
+        return selectedStudentIds;
+    };
+    const handleExportFile = () => {
+        const selectedStudentIds = getSelectedStudentIds();
+        const selectedList = [];
+        if(list){
+            selectedStudentIds.forEach(s => {
+                console.log(s)
+                const check = list.filter(l => l.studentId == s );
+                selectedList.push(check);
+            })
+        }
+        console.log(selectedList);
+        console.log(typeFile);
+    }
     return (
         <div className="popupTable">
             <div className="popup-content">
@@ -45,9 +69,9 @@ export default function PopupExport({ onClose }) {
                             label="Dạng file"
                             onChange={handleChange}
                         >
-                            <MenuItem value="Đánh giá ĐATN">Đánh giá ĐATN</MenuItem>
-                            <MenuItem value="Phản biện ĐATN">Phản biện ĐATN</MenuItem>
-                            <MenuItem value="Phân công nhiệm vụ ĐATN">Phân công nhiệm vụ ĐATN</MenuItem>
+                            <MenuItem value="evaluate">Đánh giá ĐATN</MenuItem>
+                            <MenuItem value="debate">Phản biện ĐATN</MenuItem>
+                            <MenuItem value="divide">Phân công nhiệm vụ ĐATN</MenuItem>
                         </Select>
                     </FormControl>
                     <Box
@@ -82,6 +106,8 @@ export default function PopupExport({ onClose }) {
                                                 <TableCell padding="checkbox">
                                                     <Checkbox
                                                         color="primary"
+                                                        checked={checkboxState[s.studentId] || false}
+                                                        onChange={(event) => handleCheckboxChange(event, s.studentId)}
                                                     />
                                                 </TableCell>
                                                 <TableCell>{s.mssv}</TableCell>
@@ -95,6 +121,8 @@ export default function PopupExport({ onClose }) {
                                                 <TableCell padding="checkbox">
                                                     <Checkbox
                                                         color="primary"
+                                                        checked={checkboxState[s.studentId] || false}
+                                                        onChange={(event) => handleCheckboxChange(event, s.studentId)}
                                                     />
                                                 </TableCell>
                                                 <TableCell>{s.mssv}</TableCell>
@@ -110,7 +138,7 @@ export default function PopupExport({ onClose }) {
                 </div>
                 <div className="displayFlex popup-btn">
                     <div className="btn" onClick={onClose}>Đóng</div>
-                    <div className="btn">Export</div>
+                    <div className="btn" onClick={handleExportFile}>Export</div>
                     <div className="btn">Export All</div>
                 </div>
             </div>

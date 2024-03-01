@@ -195,6 +195,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async exportEvaluate(data) {
+    try {
+      const response = await axios.post(`${api}/user/excel/exportEvaluate`, data, ApiService.getToken());
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;
