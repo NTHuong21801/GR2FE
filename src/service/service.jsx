@@ -203,6 +203,27 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async readFileUpload(file) {
+    try {
+      const response = await axios.post(`${api}/user/excel/readFile`, file, {
+        headers: {
+          'Content-Type': file.type,
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async writeDataToFile(data) {
+    try {
+      const response = await axios.post(`${api}/user/excel/writeFile`, data, ApiService.getToken());
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;

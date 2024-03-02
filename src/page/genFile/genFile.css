@@ -38,12 +38,12 @@
     gap: 10px;
     background-color: #fff;
     border: 2px solid var(--main-color);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 20px;
 }
 .checkBlock{
-    background: rgba(3, 70, 148, 0.06);
-    border-radius: 10px;
+    background: #fff;
+    border-radius: 20px;
     padding: 30px 0;
 }
 .checkSign_body_button .btn{
