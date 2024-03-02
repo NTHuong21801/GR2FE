@@ -49,6 +49,9 @@ export default function Header() {
                         <Link to={'/student'} className={`col-md-2 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('student')}>
                             <span>Danh sách sinh viên</span>
                         </Link>
+                        <Link to={'/genFile'} className={`col-md-2 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('genfile')}>
+                            <span>Generate file</span>
+                        </Link>
                         <Link to={'/upload'} className={`col-md-2 textNone ${state === 'student' ? 'activeHeaader' : ''}`} onClick={() => handleClick('student')}>
                             <span>Upload file</span>
                         </Link>
