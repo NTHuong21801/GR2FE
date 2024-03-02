@@ -106,7 +106,7 @@ export default function GenFile() {
                             <div className="checkSign_body_icon">
                                 <img src="assets/img/upload.png" alt="" />
                             </div>
-                            <div className="checkSign_body_detail">Vui lòng tải file excel</div>
+                            <div className="checkSign_body_detail">Vui lòng tải file (.xlsx, .xls) của bạn lên</div>
                             {selectedFile && <span id="fileName">{selectedFile.name}</span>}
                             <div className="checkSign_body_button">
                                 <div className="input-area btn">

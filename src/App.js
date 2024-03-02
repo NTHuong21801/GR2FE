@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useRoutes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useRoutes, useParams } from "react-router-dom";
 import Login from './page/login/Login';
 import "./main.css"
 import ListStudent from './page/listStudent/LIstStudent';
@@ -16,7 +16,6 @@ import UpdateInforStudent from './page/updateInfor/UpdateInforStudent';
 import UploadFile from './page/upload/UploadFile';
 import Student from './page/studentPage/Student';
 import ApiService from './service/service';
-import ExcelReader from './page/excelReader/ExelReader';
 import GenFile from './page/genFile/GenFile';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
@@ -74,7 +73,6 @@ function App() {
         <Route exact path="/" element={<Login />} />
         {/* <Route exact path="/login" element={<Login/>} /> */}
         <Route path="/signup" element={<Register />} />
-        <Route path="/excel" element={<ExcelReader />} />
         <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["2"]} />} />
         <Route path="/genFile" element={<PrivateRoute component={GenFile} requiredRoleId={["2"]} />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["2"]} />} />
