@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
@@ -22,7 +23,10 @@ async function createEvaluateFile(student, teacher) {
             "json": lists
         });
         const res = await ApiService.writeDataToListFile(data);
-        console.log(res);
+        const anchor = document.createElement("a");
+        anchor.href = res;
+        anchor.download = "Danh sách sinh viên làm ĐATN.xlsx";
+        anchor.click();
     }catch(e) {
         console.error(e);
     }
