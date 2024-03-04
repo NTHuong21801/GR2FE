@@ -233,6 +233,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async writeDataToListFile(data) {
+    try {
+      const response = await axios.post(`${api}/user/excel/listDSSV`, data, ApiService.getTokenJson());
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;
