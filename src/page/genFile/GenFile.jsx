@@ -4,6 +4,7 @@ import Footer from "../footer/Footer";
 import "./genFile.css"
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import ApiService from "../../service/service";
+import Loading from "../component/Loading";
 async function downloadFiles(fileName) {
     const token = localStorage.getItem("access_token");
     await fetch('http://localhost:8090/user/downloadMultiFile', {
@@ -35,46 +36,53 @@ async function downloadFiles(fileName) {
             console.error('There was a problem with the download:', error);
         });
 };
-async function genFileEvaluate(selectedFile) {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    try {
-        const json = await ApiService.readFileUpload(formData);
-        const listUrl = await ApiService.writeDataToFile(json);
-        listUrl.forEach(l => {
-            const fileName = l.split('/')[3];
-            downloadFiles(fileName);
-        })
-    } catch (e) {
-        console.error(e)
-    }
-}
 export default function GenFile() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [typeFile, setTypeFile] = useState('');
+    const [loading, setLoading] = useState(false);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);
         setSelectedFile(file);
     };
     const handleChange = (event) => {
         setTypeFile(event.target.value);
     };
+    const genFileEvaluate = async (selectedFile, fileType) => {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        try {
+            const json = await ApiService.readFileUpload(formData);
+            var jsonInput = [];
+            json.forEach(j => {
+                jsonInput.push(JSON.stringify(j));
+            })
+            const data = JSON.stringify(
+                {
+                    "fileType": fileType,
+                    "json": jsonInput
+                }
+            );
+            const listUrl = await ApiService.writeDataToFile(data);
+            listUrl.forEach(l => {
+                const fileName = l.split('/')[3];
+                downloadFiles(fileName);
+            })
+            setLoading(false);
+        } catch (e) {
+            console.error(e)
+        }
+    }
     const handleGenFile = async () => {
         if (selectedFile && typeFile) {
-            if (typeFile == 'evaluate') {
-                genFileEvaluate(selectedFile);
-            } else if (typeFile == 'debate') {
-                genFileEvaluate(selectedFile);
-            } else {
-                genFileEvaluate(selectedFile);
-            }
+            genFileEvaluate(selectedFile, typeFile);
         } else {
             alert("Bạn cần tải file lên và chọn dạng file cần xuất ra!")
         }
     }
     return (
         <>
+            {loading && <Loading />}
             <Header />
             <div className="main">
                 <div className="container">
@@ -94,9 +102,9 @@ export default function GenFile() {
                                         label="Dạng file"
                                         onChange={handleChange}
                                     >
-                                        <MenuItem value="evaluate">Đánh giá ĐATN</MenuItem>
-                                        <MenuItem value="debate">Phản biện ĐATN</MenuItem>
-                                        <MenuItem value="divide">Phân công nhiệm vụ ĐATN</MenuItem>
+                                        <MenuItem value="EXCEL_EVALUATE">Đánh giá ĐATN</MenuItem>
+                                        <MenuItem value="EXCEL_DEBATE">Phản biện ĐATN</MenuItem>
+                                        <MenuItem value="EXCEL_DIVIDE">Phân công nhiệm vụ ĐATN</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>

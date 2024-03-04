@@ -50,13 +50,16 @@ export default function ListStudent() {
                                                 <TableCell>STT</TableCell>
                                                 <TableCell>Sinh viên</TableCell>
                                                 <TableCell>Hệ</TableCell>
+                                                <TableCell>Class</TableCell>
+                                                <TableCell>Mã lớp / Học phần</TableCell>
+                                                <TableCell>Báo cáo</TableCell>
                                                 <TableCell>Lĩnh vực chuyên môn</TableCell>
-                                                <TableCell>Lớp</TableCell>
+                                                <TableCell>GV đồng ý bảo vệ</TableCell>
                                                 <TableCell>GVHD</TableCell>
-                                                <TableCell>GVPB</TableCell>
                                                 <TableCell>Điểm GVHD</TableCell>
-                                                <TableCell>Điểm quá trình</TableCell>
-                                                <TableCell>Điểm cuối kỳ</TableCell>
+                                                <TableCell>Điểm QT</TableCell>
+                                                <TableCell>Điểm CK</TableCell>
+                                                <TableCell>Hội đồng / GVPB</TableCell>
                                                 <TableCell>File</TableCell>
                                                 <TableCell>Ghi chú</TableCell>
                                             </TableRow>
@@ -67,8 +70,11 @@ export default function ListStudent() {
                                                     <TableCell>{count++}</TableCell>
                                                     <TableCell>{s.studentName} - {s.mssv}</TableCell>
                                                     <TableCell>{s.studentMajor}</TableCell>
-                                                    <TableCell></TableCell>
                                                     <TableCell>{s.className}</TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
                                                     <TableCell></TableCell>
                                                     <TableCell></TableCell>
                                                     <TableCell></TableCell>

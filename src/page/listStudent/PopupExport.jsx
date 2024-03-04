@@ -64,13 +64,9 @@ function createEvaluateFile(student, teacher) {
       });
 }
 export default function PopupExport({ onClose }) {
-    const [typeFile, setTypeFile] = useState('');
     const [searchText, setSearchText] = useState();
     const [teacher, setTeacher] = useState();
     const [checkboxState, setCheckboxState] = useState({});
-    const handleChange = (event) => {
-        setTypeFile(event.target.value);
-    };
     const handleCheckboxChange = (event, studentId) => {
         const newState = { ...checkboxState };
         newState[studentId] = event.target.checked;
@@ -106,29 +102,18 @@ export default function PopupExport({ onClose }) {
     const handleExportFile = () => {
         const selectedStudentIds = getSelectedStudentIds();
         var selectedList = [];
-        if (list && typeFile && teacher) {
+        if (list  && teacher) {
             selectedStudentIds.forEach(s => {
                 const check = list.filter(l => l.studentId == s);
                 selectedList.push(check[0]);
             })
-            if (typeFile === 'evaluate') {
-                createEvaluateFile(selectedList, teacher);
-            } else if (typeFile === 'debate') {
-
-            } else {
-
-            }
+            createEvaluateFile(selectedList, teacher);
+           
         }
     }
     const handleExportAll = (type) => {
         if(list && type && teacher){
-            if (typeFile === 'evaluate') {
-                createEvaluateFile(list, teacher);
-            } else if (typeFile === 'debate') {
-
-            } else {
-
-            }
+           createEvaluateFile(list, teacher);
         }
     }
     return (
@@ -138,20 +123,6 @@ export default function PopupExport({ onClose }) {
                     <p>Danh sách sinh viên</p>
                 </div>
                 <div className="popup-body">
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Dạng file</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={typeFile}
-                            label="Dạng file"
-                            onChange={handleChange}
-                        >
-                            <MenuItem value="evaluate">Đánh giá ĐATN</MenuItem>
-                            <MenuItem value="debate">Phản biện ĐATN</MenuItem>
-                            <MenuItem value="divide">Phân công nhiệm vụ ĐATN</MenuItem>
-                        </Select>
-                    </FormControl>
                     <Box
                         component="form"
                         fullWidth={true}

@@ -2,12 +2,31 @@
 
 import axios from 'axios';
 const api = 'http://localhost:8090';
-const token = localStorage.getItem("access_token");
 const ApiService = {
    getToken(){
     const token =  localStorage.getItem("access_token");
     const configAuth = {
       headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }
+    return configAuth;
+  },
+  getTokenType(file){
+    const token =  localStorage.getItem("access_token");
+    const configAuth = {
+      headers: {
+        'Content-Type': file.type,
+        'Authorization': `Bearer ${token}`
+      }
+    }
+    return configAuth;
+  },
+  getTokenJson(){
+    const token =  localStorage.getItem("access_token");
+    const configAuth = {
+      headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     }
@@ -152,12 +171,7 @@ const ApiService = {
   },
   async getFileUrl(file) {
     try {
-      const response = await axios.post(`${api}/user/uploadFile`, file, {
-        headers: {
-          'Content-Type': file.type,
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.post(`${api}/user/uploadFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
       throw new Error(error.message);
@@ -205,12 +219,7 @@ const ApiService = {
   },
   async readFileUpload(file) {
     try {
-      const response = await axios.post(`${api}/user/excel/readFile`, file, {
-        headers: {
-          'Content-Type': file.type,
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.post(`${api}/user/excel/readFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
       throw new Error(error.message);
@@ -218,7 +227,7 @@ const ApiService = {
   },
   async writeDataToFile(data) {
     try {
-      const response = await axios.post(`${api}/user/excel/writeFile`, data, ApiService.getToken());
+      const response = await axios.post(`${api}/user/excel/writeFile`, data, ApiService.getTokenJson());
       return response.data;
     } catch (error) {
       throw new Error(error.message);
