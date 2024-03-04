@@ -19,7 +19,6 @@ async function createEvaluateFile(student, teacher) {
             }
             lists.push(JSON.stringify(item));
         })
-        console.log(lists);
         const data = JSON.stringify({
             "json": lists
         });
@@ -74,12 +73,13 @@ export default function PopupExport({ onClose }) {
                 selectedList.push(check[0]);
             })
             createEvaluateFile(selectedList, teacher);
-           
+            onClose();
         }
     }
     const handleExportAll = (type) => {
         if(list && type && teacher){
            createEvaluateFile(list, teacher);
+           onClose();
         }
     }
     return (

@@ -22,7 +22,6 @@ export default function Student() {
         const fetchData = async () => {
             try{
                 const res = await ApiService.getExcelByAccount();
-                console.log(res);
                 setExcel(res);
             }catch(e){
                 console.log(e);

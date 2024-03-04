@@ -24,7 +24,6 @@ export default function UploadFile() {
         var fileType;
         if(d.fileType === "Phiếu đánh giá ĐATN"){
             fileType = "EXCEL_EVALUATE";
-            console.log(true);
         }else if(d.fileType === "Phiếu giao nhiệm vụ ĐATN" ){
             fileType = "EXCEL_DIVIDE";
         }else if(d.fileType === "Phiếu phản biện ĐATN" ){

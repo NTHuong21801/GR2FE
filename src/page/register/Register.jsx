@@ -17,7 +17,6 @@ export default function Register() {
         }
         ApiService.register(data)
             .then(data => {
-                console.log(data);
                 if(data.responseCode === '401'){
                     alert("Email đã tồn tại, vui lòng kiểm tra lại thông tin đăng ký của bạn");
                 }else{
