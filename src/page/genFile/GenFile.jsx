@@ -5,37 +5,7 @@ import "./genFile.css"
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import ApiService from "../../service/service";
 import Loading from "../component/Loading";
-async function downloadFiles(fileName) {
-    const token = localStorage.getItem("access_token");
-    await fetch('http://localhost:8090/user/downloadMultiFile', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            fileName: fileName,
-        }),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        })
-        .catch(error => {
-            console.error('There was a problem with the download:', error);
-        });
-};
+import ExportFile from "../component/ExportFile";
 export default function GenFile() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [typeFile, setTypeFile] = useState('');
@@ -63,10 +33,9 @@ export default function GenFile() {
                     "json": jsonInput
                 }
             );
-            const listUrl = await ApiService.writeDataToFile(data);
+            const listUrl = await ApiService.writeDataToFile(data)
             listUrl.forEach(l => {
-                const fileName = l.split('/')[3];
-                downloadFiles(fileName);
+                ExportFile.downloadExcelFromBase64(l.base64, l.fileName);
             })
             setLoading(false);
         } catch (e) {

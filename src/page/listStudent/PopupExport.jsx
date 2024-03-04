@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ApiService from "../../service/service";
 import { Box, TextField } from "@mui/material";
 import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
+import ExportFile from "../component/ExportFile";
 
 async function createEvaluateFile(student, teacher) {
     try{
@@ -23,10 +24,7 @@ async function createEvaluateFile(student, teacher) {
             "json": lists
         });
         const res = await ApiService.writeDataToListFile(data);
-        const anchor = document.createElement("a");
-        anchor.href = res;
-        anchor.download = "Danh sách sinh viên làm ĐATN.xlsx";
-        anchor.click();
+        ExportFile.downloadExcelFromBase64(res.base64, res.fileName)
     }catch(e) {
         console.error(e);
     }
