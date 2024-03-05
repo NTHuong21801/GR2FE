@@ -69,7 +69,7 @@ export default function ListStudent() {
                         <div className="col-md-12">
                             <Paper className="table marginTop20">
                                 <TableContainer>
-                                    <Table>
+                                    <Table className="backgroundMint">
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell>STT</TableCell>
@@ -107,11 +107,19 @@ export default function ListStudent() {
                                                         {isPopupReport && <PopupReport onClose={handleClosePopupReport} data={report}/>}
                                                     </TableCell>
                                                     <TableCell></TableCell>
-                                                    <TableCell></TableCell>
+                                                    <TableCell>
+                                                        {
+                                                            <select value={s.studentStatus} className="selectStatus">
+                                                                <option value="">N/A</option>
+                                                                <option value="APPROVE">Đồng ý</option>
+                                                                <option value="REJECT">Không đồng ý</option>
+                                                            </select>
+                                                        }
+                                                    </TableCell>
                                                     <TableCell>{teacher.teacherName}</TableCell>
-                                                    <TableCell></TableCell>
-                                                    <TableCell></TableCell>
-                                                    <TableCell></TableCell>
+                                                    <TableCell><p className="colorBlue">{s.teacherPoint}</p></TableCell>
+                                                    <TableCell><p className="colorBlue">{s.midtermPoint}</p></TableCell>
+                                                    <TableCell><p className="colorBlue">{s.finalPoint}</p></TableCell>
                                                     <TableCell></TableCell>
                                                     <TableCell>
                                                         {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFileList)}>File</p>}

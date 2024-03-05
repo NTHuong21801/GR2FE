@@ -7,6 +7,7 @@ export default function PopupFile({ onClose, data }) {
                 <div className="popup-content width40">
                     <div className="popup-header">
                         <p>Danh sách file</p>
+                        <img src="assets/icon/close.png" alt="" className='closeIcon' onClick={onClose}/>
                     </div>
                     <div className="popup-body">
                         {data == '' ? (
@@ -25,9 +26,6 @@ export default function PopupFile({ onClose, data }) {
                                 ))}
                             </>
                         )}
-                    </div>
-                    <div className="displayFlex popup-btn">
-                        <div className="btn" onClick={onClose}>Đóng</div>
                     </div>
                 </div>
             </div>

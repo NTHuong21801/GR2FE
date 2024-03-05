@@ -10,6 +10,9 @@ async function createEvaluateFile(student, teacher) {
     try{
         var lists = [];
         student.forEach(s => {
+            let studentStatus = s.studentStatus == null ? "N/A" : s.studentStatus;
+            let thesisName = s.thesisName == null ? "" : s.thesisName;
+            let thesisType = s.thesisType == null ? "" : s.thesisType;
             const item = {
                 "studentID": s.mssv,
                 "studentName": s.studentName,
@@ -20,8 +23,16 @@ async function createEvaluateFile(student, teacher) {
                 "BM": teacher.schoolName,
                 "birthdate": s.studentBirth,
                 "classid": s.classCode,
-                "courseid": s.courseId
+                "courseid": s.courseId,
+                "Điểm hướng dẫn": s.teacherPoint,
+                "Điểm quá trình": s.midtermPoint,
+                "Điểm cuối kỳ": s.finalPoint,
+                "Đồng ý bảo vệ": studentStatus,
+                "name": thesisName,
+                "SectionType": thesisType,
+                "note": thesisName
             }
+            console.log(item);
             lists.push(JSON.stringify(item));
         })
         console.log(teacher);
@@ -93,6 +104,7 @@ export default function PopupExport({ onClose }) {
             <div className="popup-content">
                 <div className="popup-header">
                     <p>Danh sách sinh viên</p>
+                    <img src="assets/icon/close.png" alt="" className='closeIcon' onClick={onClose}/>
                 </div>
                 <div className="popup-body">
                     <Box
@@ -158,7 +170,6 @@ export default function PopupExport({ onClose }) {
                     </Paper>
                 </div>
                 <div className="displayFlex popup-btn">
-                    <div className="btn" onClick={onClose}>Đóng</div>
                     <div className="btn" onClick={handleExportFile}>Export</div>
                     <div className="btn" onClick={handleExportAll}>Export All</div>
                 </div>
