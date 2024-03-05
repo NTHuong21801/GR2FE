@@ -1,0 +1,11 @@
+.listFile{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+.nonFile{
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    color: var(--main-color);
+}

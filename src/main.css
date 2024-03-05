@@ -167,6 +167,7 @@ th, td{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 .popup-header{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -200,4 +201,20 @@ th, td{
 .maxHeight300{
     max-height: 300px;
     overflow-y: auto;
+}
+.backgroundGray{
+    background-color: rgba(204, 204, 204, 0.5);
+}
+.width40{
+    width: 40%;
+}
+.closeIcon{
+    width: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+.closeIcon:hover{
+    scale: 1.2;
 }

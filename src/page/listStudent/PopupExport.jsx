@@ -15,10 +15,16 @@ async function createEvaluateFile(student, teacher) {
                 "studentName": s.studentName,
                 "Email": s.studentEmail,
                 "GVHD": teacher.teacherName,
-                "Lớp": s.className
+                "Lớp": s.className,
+                "Tên đề tài": s.topicName,
+                "BM": teacher.schoolName,
+                "birthdate": s.studentBirth,
+                "classid": s.classCode,
+                "courseid": s.courseId
             }
             lists.push(JSON.stringify(item));
         })
+        console.log(teacher);
         const data = JSON.stringify({
             "json": lists
         });
