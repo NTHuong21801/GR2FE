@@ -1,0 +1,10 @@
+.positionRelative{
+    position: relative;
+}
+.positionAbsolute{
+    position: absolute;
+    top: 0;
+    left: 70px;
+    cursor: pointer;
+    opacity: 0;
+}

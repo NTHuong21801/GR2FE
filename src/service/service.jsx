@@ -241,6 +241,14 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
+  async readFileToDB(file, fileType) {
+    try {
+      const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}`, file, ApiService.getTokenType(file));
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
 
 export default ApiService;

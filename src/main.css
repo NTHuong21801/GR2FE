@@ -226,3 +226,9 @@ th, td{
     font-weight: 700;
     text-align: center;
 }
+.height40{
+    height: 40px;
+}
+.bold{
+    font-weight: 600;
+}
