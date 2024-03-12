@@ -41,11 +41,9 @@ export default function ListStudent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res1 = await ApiService.getStudentByTeacher(email);
                 const res = await ApiService.getStudentByTeacher(email);
-                setTeacher(res1.body);
+                setTeacher(res.body);
                 setList(res.body.listStudents);
-                console.log(res.body.listStudents);
             } catch (err) {
                 console.log(err);
             }

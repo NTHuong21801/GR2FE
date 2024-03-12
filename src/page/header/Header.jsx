@@ -1,18 +1,21 @@
 /* eslint-disable no-const-assign */
 import { Link } from "react-router-dom";
 import "./header.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ApiService from "../../service/service";
 export default function Header() {
+    const [teacher, setTeacher] = useState();
+    const email = localStorage.getItem('email');
     const currentURL = window.location.href;
     var state = currentURL.split("/")[3];
-    if(state === "createDivide"){
+    if (state === "createDivide") {
         state = 'divide';
     }
-    if(state === "createEvaluate"){
+    if (state === "createEvaluate") {
         state = 'evaluate';
     }
-    if(state === "createDebate"){
+    if (state === "createDebate") {
         state = 'debate';
     }
     const handleLogout = () => {
@@ -29,6 +32,17 @@ export default function Header() {
             window.location.reload();
         }
     }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await ApiService.getStudentByTeacher(email);
+                setTeacher(res.body);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchData();
+    }, [])
     return (
         <div className="header">
             <div className="headerTop">
@@ -37,7 +51,19 @@ export default function Header() {
                 </div>
                 <div className="header-right">
                     <div className="headerSearch">
-                        <div className="btn" onClick={() => handleLogout()}>Đăng xuất</div>
+                        {teacher && (
+                            <div className="headerInfo">
+                                <img src="assets/img/ava.jpg" alt="" className="ava" />
+                                <div className="infor">
+                                    <strong>Xin chào</strong>
+                                    <span>{teacher.teacherName}</span>
+                                    <span>{teacher.teacherEmail}</span>
+                                </div>
+                            </div>
+                        )}
+                        <div className="headerSearch">
+                            <div className="btn" onClick={() => handleLogout()}>Đăng xuất</div>
+                        </div>
                     </div>
                 </div>
             </div>
