@@ -84,7 +84,7 @@ export default function Login() {
     };
     if (isLoggedIn) {
         if (isActive) {
-            if (localStorage.getItem("roleId") === "2") {
+            if (localStorage.getItem("roleId") === "1") {
                 return <Divide />
             } else {
                 return <Student />

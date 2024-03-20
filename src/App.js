@@ -73,16 +73,16 @@ function App() {
         <Route exact path="/" element={<Login />} />
         {/* <Route exact path="/login" element={<Login/>} /> */}
         <Route path="/signup" element={<Register />} />
-        <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["2"]} />} />
-        <Route path="/genFile" element={<PrivateRoute component={GenFile} requiredRoleId={["2"]} />} />
-        <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["2"]} />} />
-        <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["2"]} />} />
-        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} requiredRoleId={["2"]} />} />
-        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["2"]} />} />
-        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["2"]} />} />
-        <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["2"]} />} />
-        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["2"]} />} />
-        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher} requiredRoleId={["2"]} />} />
+        <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["1"]} />} />
+        <Route path="/genFile" element={<PrivateRoute component={GenFile} requiredRoleId={["1"]} />} />
+        <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["1"]} />} />
+        <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["1"]} />} />
+        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} requiredRoleId={["1"]} />} />
+        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["1"]} />} />
+        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["1"]} />} />
+        <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["1"]} />} />
+        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["1"]} />} />
+        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher} requiredRoleId={["1"]} />} />
         <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />} />
         <Route path="/studentPage" element={<PrivateRoute component={Student} requiredRoleId={["3"]} />} />
       </Routes>

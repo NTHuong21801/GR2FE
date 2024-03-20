@@ -4,26 +4,30 @@ import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApiService from "../../service/service";
-import PopupExport from "./PopupExport";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import "./list.css"
 import PopupFile from "./PopupFile";
 import PopupReport from "./PopupReport";
+import ExportFile from "../component/ExportFile";
 export default function ListStudent() {
     const [list, setList] = useState();
-    const [isPopup, setIsPopup] = useState(false);
     const [isPopupFile, setIsPopupFile] = useState(false);
     const [isPopupReport, setIsPopupReport] = useState(false);
     const [listExcel, setListExcel] = useState();
     const [report, setReport] = useState();
-    const [teacher, setTeacher] = useState();
     const email = localStorage.getItem('email');
-    const handleClosePopup = () => {
-        setIsPopup(false);
-    }
-    const handleOpenPopup = () => {
-        setIsPopup(true)
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await ApiService.getStudentByTeacher(email);
+                console.log(res.body);
+                setList(res.body);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchData();
+    }, [])
     const handleClosePopupFile = () => {
         setIsPopupFile(false);
     }
@@ -38,27 +42,24 @@ export default function ListStudent() {
         setIsPopupReport(true);
         setReport(data);
     }
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await ApiService.getStudentByTeacher(email);
-                setTeacher(res.body);
-                setList(res.body.listStudents);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchData();
-    }, [])
     var count = 1;
+    const handleExportAll = () => {
+        if(list){
+            ExportFile.writeDataToListFile(list);
+        }
+    }
     return (
         <>
             <Header />
             <div className="main">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-9"></div>
-                        <div className="btn col-md-2" onClick={handleOpenPopup}>
+                        <div className="col-md-6"></div>
+                        <div className="btn col-md-2">
+                            Import Student List
+                        </div>
+                        <div className="col-md-1"></div>
+                        <div className="btn col-md-2" onClick={handleExportAll}>
                             Export Student List
                         </div>
                         <div className="col-md-1"></div>
@@ -114,13 +115,13 @@ export default function ListStudent() {
                                                             </select>
                                                         }
                                                     </TableCell>
-                                                    <TableCell>{teacher.teacherName}</TableCell>
+                                                    <TableCell>{s.teacherName}</TableCell>
                                                     <TableCell><p className="colorBlue">{s.teacherPoint}</p></TableCell>
                                                     <TableCell><p className="colorBlue">{s.midtermPoint}</p></TableCell>
                                                     <TableCell><p className="colorBlue">{s.finalPoint}</p></TableCell>
                                                     <TableCell></TableCell>
                                                     <TableCell>
-                                                        {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFileList)}>File</p>}
+                                                        {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFiles)}>File</p>}
                                                         {isPopupFile && listExcel && <PopupFile onClose={handleClosePopupFile} data = {listExcel}/>}
                                                     </TableCell>
                                                     <TableCell></TableCell>
@@ -135,7 +136,6 @@ export default function ListStudent() {
                 </div>
             </div>
             <Footer />
-            {isPopup && <PopupExport onClose={handleClosePopup} />}
         </>
     )
 }

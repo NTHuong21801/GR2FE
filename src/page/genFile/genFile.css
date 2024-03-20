@@ -38,7 +38,7 @@
     gap: 10px;
     background-color: #fff;
     border: 2px solid var(--main-color);
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 20px;
 }
 .checkBlock{

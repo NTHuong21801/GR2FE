@@ -8,21 +8,18 @@ import Loading from "../component/Loading";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import "./upload.css";
+import Noti from "../component/Noti";
 export default function UploadFile() {
     const [loading, setLoading] = useState(false);
-    const [students, setStudents] = useState([]);
     const [typeFile, setTypeFile] = useState('');
     const [listFile, setListFile] = useState({});
+    const [noti, setNoti] = useState(false);
+    const handCloseNoti = () => {
+        setNoti(false)
+    }
     const handleChange = (event) => {
         setTypeFile(event.target.value);
     };
-    useEffect(() => {
-        const email = localStorage.getItem("email");
-        ApiService.getStudentByTeacherEmail(email)
-            .then(data => {
-                setStudents(data.body.listStudents);
-            })
-    }, [])
     const handleFileChange = (event) => {
         const files = event.target.files;
         setListFile(files);
@@ -37,18 +34,12 @@ export default function UploadFile() {
             });
             try {
                 const json = await ApiService.readFileToDB(formData, typeFile);
-                console.log(json);
+                setLoading(false);
+                setNoti(true);
             } catch (e) {
-                console.error(e)
+                console.error(e);
+                setLoading(false);
             }
-            Array.from(listFile).forEach(file => {
-                ApiService.generateFileUrl();
-                const formData1 = new FormData();
-                formData1.append('file', file);
-                
-            });
-            setLoading(false);
-            alert("Upload file successfully");
             if(typeFile == "EXCEL_DIVIDE"){
                 window.location.href = "divide";
             }else if(typeFile == "EXCEL_EVALUATE"){
@@ -61,6 +52,7 @@ export default function UploadFile() {
     return (
         <>
             {loading && <Loading />}
+            {noti && <Noti mess={"Upload file successfully"}/>}
             <Header />
             <div className="main">
                 <div className="container">
@@ -84,8 +76,8 @@ export default function UploadFile() {
                                             onChange={handleChange}
                                         >
                                             <MenuItem value="EXCEL_EVALUATE">Phiếu đánh giá ĐATN</MenuItem>
-                                            <MenuItem value="EXCEL_DEBATE">Phản biện ĐATN</MenuItem>
-                                            <MenuItem value="EXCEL_DIVIDE">Phân công nhiệm vụ ĐATN</MenuItem>
+                                            <MenuItem value="EXCEL_DEBATE">Phiếu phản biện ĐATN</MenuItem>
+                                            <MenuItem value="EXCEL_DIVIDE">Phiếu phân công nhiệm vụ ĐATN</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>

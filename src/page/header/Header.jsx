@@ -32,17 +32,18 @@ export default function Header() {
             window.location.reload();
         }
     }
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await ApiService.getStudentByTeacher(email);
-                setTeacher(res.body);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchData();
-    }, [])
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const res = await ApiService.getStudentByTeacher(email);
+    //             console.log(res.body);
+    //             setTeacher(res.body[0]);
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     }
+    //     fetchData();
+    // }, )
     return (
         <div className="header">
             <div className="headerTop">
@@ -51,7 +52,7 @@ export default function Header() {
                 </div>
                 <div className="header-right">
                     <div className="headerSearch">
-                        {teacher && (
+                        {/* {teacher && (
                             <div className="headerInfo">
                                 <img src="assets/img/ava.jpg" alt="" className="ava" />
                                 <div className="infor">
@@ -60,7 +61,7 @@ export default function Header() {
                                     <span>{teacher.teacherEmail}</span>
                                 </div>
                             </div>
-                        )}
+                        )} */}
                         <div className="headerSearch">
                             <div className="btn" onClick={() => handleLogout()}>Đăng xuất</div>
                         </div>

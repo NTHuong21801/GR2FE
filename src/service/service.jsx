@@ -225,9 +225,9 @@ const ApiService = {
       throw new Error(error.message);
     }
   },
-  async writeDataToFile(data) {
+  async writeDataToFile(file) {
     try {
-      const response = await axios.post(`${api}/user/excel/writeFile`, data, ApiService.getTokenJson());
+      const response = await axios.post(`${api}/user/excel/writeFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
       throw new Error(error.message);
