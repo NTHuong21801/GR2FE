@@ -9,10 +9,12 @@ import "./list.css"
 import PopupFile from "./PopupFile";
 import PopupReport from "./PopupReport";
 import ExportFile from "../component/ExportFile";
+import PopupImport from "./PopupImport";
 export default function ListStudent() {
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
     const [isPopupReport, setIsPopupReport] = useState(false);
+    const [isPopupImport, setIsPopupImport] = useState(false);
     const [listExcel, setListExcel] = useState();
     const [report, setReport] = useState();
     const email = localStorage.getItem('email');
@@ -32,8 +34,15 @@ export default function ListStudent() {
         setIsPopupFile(false);
     }
     const handleOpenPopupFile = (data) => {
+        console.log(data);
         setIsPopupFile(true);
         setListExcel(data);
+    }
+    const handleClosePopupImport = () => {
+        setIsPopupImport(false);
+    }
+    const handleOpenPopupImport = (data) => {
+        setIsPopupImport(true);
     }
     const handleClosePopupReport = () => {
         setIsPopupReport(false);
@@ -55,7 +64,7 @@ export default function ListStudent() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6"></div>
-                        <div className="btn col-md-2">
+                        <div className="btn col-md-2" onClick={handleOpenPopupImport}>
                             Import Student List
                         </div>
                         <div className="col-md-1"></div>
@@ -76,7 +85,7 @@ export default function ListStudent() {
                                                 <TableCell>Hệ</TableCell>
                                                 <TableCell>Mã lớp / Học phần</TableCell>
                                                 <TableCell>Báo cáo</TableCell>
-                                                <TableCell>Lĩnh vực chuyên môn</TableCell>
+                                                <TableCell>Tên đề tài</TableCell>
                                                 <TableCell>GV đồng ý bảo vệ</TableCell>
                                                 <TableCell>GVHD</TableCell>
                                                 <TableCell>Điểm GVHD</TableCell>
@@ -105,7 +114,7 @@ export default function ListStudent() {
                                                         {<p className="listFile" onClick={() => handleOpenPopupReport(s.report)}>File</p>}
                                                         {isPopupReport && <PopupReport onClose={handleClosePopupReport} data={report}/>}
                                                     </TableCell>
-                                                    <TableCell></TableCell>
+                                                    <TableCell>{s.topicName}</TableCell>
                                                     <TableCell>
                                                         {
                                                             <select value={s.studentStatus} className="selectStatus">
@@ -121,7 +130,7 @@ export default function ListStudent() {
                                                     <TableCell><p className="colorBlue">{s.finalPoint}</p></TableCell>
                                                     <TableCell></TableCell>
                                                     <TableCell>
-                                                        {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFiles)}>File</p>}
+                                                        {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFileList)}>File</p>}
                                                         {isPopupFile && listExcel && <PopupFile onClose={handleClosePopupFile} data = {listExcel}/>}
                                                     </TableCell>
                                                     <TableCell></TableCell>
@@ -135,6 +144,7 @@ export default function ListStudent() {
                     </div>
                 </div>
             </div>
+            {isPopupImport && <PopupImport onClose={handleClosePopupImport}/>}
             <Footer />
         </>
     )

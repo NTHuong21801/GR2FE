@@ -145,7 +145,7 @@ th, td{
     margin-left: 15%;
 }
 
-.popupTable {
+.popupTable, .popupTableNoti {
     position: fixed;
     top: 0;
     left: 0;
@@ -156,7 +156,10 @@ th, td{
     justify-content: center;
     align-items: center;
 }
-.popup-content {
+.popupTableNoti{
+    z-index: 99999 !important;
+}
+.popup-content, .popup-contentNoti {
     position: absolute;
     background-color:#fff;
     width: 70%;
@@ -235,4 +238,7 @@ th, td{
 }
 .width30{
     width: 30%;
+}
+.width50{
+    width: 50%;
 }

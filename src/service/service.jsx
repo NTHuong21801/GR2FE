@@ -37,7 +37,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-all-topic`, ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getAllSemester() {
@@ -45,7 +45,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-all-semester`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async login(data) {
@@ -53,7 +53,7 @@ const ApiService = {
       const response = await axios.post(`${api}/api/auth/signin`, data);
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async register(data) {
@@ -61,7 +61,7 @@ const ApiService = {
       const response = await axios.post(`${api}/api/auth/signup`, data);
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getStudentByMssv(mssv) {
@@ -69,7 +69,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getStudentById(id) {
@@ -77,7 +77,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/student/get-student-by-id/${id}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getStudentByTeacher(email) {
@@ -85,7 +85,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getAllSchool() {
@@ -93,7 +93,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-all-school`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getAllClass() {
@@ -101,7 +101,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-all-class`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getMajorBySchoolId(id) {
@@ -109,7 +109,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-major-by-school-id/${id}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async updateTeacherInfo(data) {
@@ -117,7 +117,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/teacher/updateInfo`, data,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async updateStudentInfo(data) {
@@ -125,7 +125,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/student/updateInfo`, data,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getAllTeacher() {
@@ -133,7 +133,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-all-teacher`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getClassByMajorId(id) {
@@ -141,7 +141,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/get-class-by-major-id/${id}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getStudentByTeacherEmail(email) {
@@ -150,7 +150,7 @@ const ApiService = {
       return response.data;
 
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getTeacherByAccount(account) {
@@ -158,7 +158,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/teacher/get-teacher-by-account/${account}`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async generateFileUrl() {
@@ -166,7 +166,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/generate-upload-url?type=xlsx`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getFileUrl(file) {
@@ -174,7 +174,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/uploadFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async createFile(data) {
@@ -182,7 +182,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/create`, data,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getExcelType(data) {
@@ -190,7 +190,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/get-file-by-email-and-type`, data,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getExcelByAccount() {
@@ -198,7 +198,7 @@ const ApiService = {
       const response = await axios.get(`${api}/user/excel/get-file-by-account`,  ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async getRefreshToken(data) {
@@ -206,7 +206,7 @@ const ApiService = {
       const response = await axios.post(`${api}/api/auth/refresh-token`, data);
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async exportEvaluate(data) {
@@ -214,7 +214,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/exportEvaluate`, data, ApiService.getToken());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async readFileUpload(file) {
@@ -222,7 +222,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/readFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async writeDataToFile(file) {
@@ -230,7 +230,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/writeFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async writeDataToListFile(data) {
@@ -238,7 +238,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/listDSSV`, data, ApiService.getTokenJson());
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error)
     }
   },
   async readFileToDB(file, fileType) {
@@ -246,7 +246,15 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      return error.response.data;
+    }
+  },
+  async readListFileAndStoreDB(file) {
+    try {
+      const response = await axios.post(`${api}/user/excel/readFileAndStoreDB`, file, ApiService.getTokenType(file));
+      return response.data;
+    } catch (error) {
+      return error.response.data;
     }
   },
 };

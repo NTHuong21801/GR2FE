@@ -1,11 +1,11 @@
-export default function Noti({onClose, mess}){
+export default function Noti({onCloseNoti, mess}){
     return(
         <>
-            <div className="popupTable">
-                <div className="popup-content width30">
+            <div className="popupTableNoti">
+                <div className="popup-contentNoti width30">
                     <div className="popup-header">
                         <p>Thông báo</p>
-                        <img src="assets/icon/close.png" alt="" className='closeIcon' onClick={onClose}/>
+                        <img src="assets/icon/close.png" alt="" className='closeIcon' onClick={onCloseNoti}/>
                     </div>
                     <div className="popup-body">
                         <p className="nonFile">{mess}</p>

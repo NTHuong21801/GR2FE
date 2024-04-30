@@ -55,7 +55,7 @@ export default function GenFile() {
     return (
         <>
             {loading && <Loading />}
-            {noti && <Noti onClose={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"}/>}
+            {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"}/>}
             <Header />
             <div className="main">
                 <div className="container">

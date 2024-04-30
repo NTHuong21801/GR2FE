@@ -12,3 +12,14 @@
 .selectStatus{
     height: 30px;
 }
+.popup-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.popup-button .btn{
+    width: 200px;
+}

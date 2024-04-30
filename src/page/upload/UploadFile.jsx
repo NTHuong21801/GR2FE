@@ -78,6 +78,7 @@ export default function UploadFile() {
                                             <MenuItem value="EXCEL_EVALUATE">Phiếu đánh giá ĐATN</MenuItem>
                                             <MenuItem value="EXCEL_DEBATE">Phiếu phản biện ĐATN</MenuItem>
                                             <MenuItem value="EXCEL_DIVIDE">Phiếu phân công nhiệm vụ ĐATN</MenuItem>
+                                            <MenuItem value="Other">Phiếu khác</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
