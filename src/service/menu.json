@@ -1,0 +1,14 @@
+[
+    {
+        "text": "Phiếu đánh giá ĐATN",
+        "icon": "<SummarizeIcon />"
+    },
+    {
+        "text": "Phiếu giao nhiệm vụ ĐATN",
+        "icon": "<SummarizeIcon />"
+    },
+    {
+        "text": "Phiếu phản biện ĐATN",
+        "icon": "<SummarizeIcon />"
+    }
+]

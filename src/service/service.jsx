@@ -88,6 +88,14 @@ const ApiService = {
       console.log(error)
     }
   },
+  async getStudentByTeacherPaginate(email, page) {
+    try {
+      const response = await axios.get(`${api}/user/teacher?email=${email}&page=${page}&size=5`,  ApiService.getToken());
+      return response.data;
+    } catch (error) {
+      console.log(error)
+    }
+  },
   async getAllSchool() {
     try {
       const response = await axios.get(`${api}/user/get-all-school`,  ApiService.getToken());

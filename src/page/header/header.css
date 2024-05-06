@@ -14,6 +14,10 @@
 .header-left, .header-right{
     flex: 1;
 }
+.header-left img{
+    width: 200px;
+    object-fit: contain;
+}
 .headerInfo .ava{
     width: 70px;
     height: 70px;

@@ -7,6 +7,11 @@ import ApiService from "../../service/service";
 import Loading from "../component/Loading";
 import ExportFile from "../component/ExportFile";
 import Noti from "../component/Noti";
+import MiniDrawer from "../navbar/Navbar";
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Topbar from '../topbar/Topbar';
+import DrawerHeader from "../component/DrawerHeader";
 export default function GenFile() {
     const [selectedFileDSSV, setSelectedFileDSSV] = useState(null);
     const [selectedFileTemp, setSelectedFileTemp] = useState(null);
@@ -52,75 +57,89 @@ export default function GenFile() {
             setNoti(true)
         }
     }
+    const [open, setOpen] = useState(false);
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    }
     return (
         <>
             {loading && <Loading />}
-            {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"}/>}
-            <Header />
-            <div className="main">
-                <div className="container">
-                    <div className="formHeader">
-                        GENERATE FILE
-                    </div>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <div className="checkSign_body">
-                                <div className="checkSign_body_icon">
-                                    <img src="assets/img/upload.png" alt="" />
+            {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"} />}
+            <Box sx={{ display: 'flex' }}>
+                <CssBaseline />
+                <Topbar open={open} handleOpen={handleDrawerOpen} />
+                <MiniDrawer open={open} handClose={handleDrawerClose} />
+                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <DrawerHeader />
+                    <div className="main">
+                        <div className="container">
+                            <div className="formHeader">
+                                GENERATE FILE
+                            </div>
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="checkSign_body">
+                                        <div className="checkSign_body_icon">
+                                            <img src="assets/img/upload.png" alt="" />
+                                        </div>
+                                        <div className="checkSign_body_detail">Vui lòng tải lên file DSSV</div>
+                                        {selectedFileDSSV && <span id="fileName">{selectedFileDSSV.name}</span>}
+                                        <div className="checkSign_body_button">
+                                            <div className="input-area btn">
+                                                <img src="/assets/img/Scroll Up.png" alt="" />
+                                                <span>Chọn file tải lên</span>
+                                                <input type="file" name="files" accept=".xlsx, .xls" onChange={handleFileChangeList} />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="checkSign_body_detail">Vui lòng tải lên file DSSV</div>
-                                {selectedFileDSSV && <span id="fileName">{selectedFileDSSV.name}</span>}
-                                <div className="checkSign_body_button">
-                                    <div className="input-area btn">
-                                        <img src="/assets/img/Scroll Up.png" alt="" />
-                                        <span>Chọn file tải lên</span>
-                                        <input type="file" name="files" accept=".xlsx, .xls" onChange={handleFileChangeList} />
+                                <div className="col-md-4">
+                                    <div className="checkSign_body">
+                                        <div className="checkSign_body_icon">
+                                            <img src="assets/img/upload.png" alt="" />
+                                        </div>
+                                        <div className="checkSign_body_detail">Vui lòng tải file Excel template</div>
+                                        {selectedFileTemp && <span id="fileName">{selectedFileTemp.name}</span>}
+                                        <div className="checkSign_body_button">
+                                            <div className="input-area btn">
+                                                <img src="/assets/img/Scroll Up.png" alt="" />
+                                                <span>Chọn file tải lên</span>
+                                                <input type="file" name="files" accept=".xlsx, .xls" onChange={handleFileChangeTemp} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="checkSign_body">
+                                        <div className="checkSign_body_icon">
+                                            <img src="assets/img/upload.png" alt="" />
+                                        </div>
+                                        <div className="checkSign_body_detail">Vui lòng tải file Json template</div>
+                                        {selectedFileJson && <span id="fileName">{selectedFileJson.name}</span>}
+                                        <div className="checkSign_body_button">
+                                            <div className="input-area btn">
+                                                <img src="/assets/img/Scroll Up.png" alt="" />
+                                                <span>Chọn file tải lên</span>
+                                                <input type="file" name="files" accept=".json" onChange={handleFileChangeJson} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="checkSign_body">
-                                <div className="checkSign_body_icon">
-                                    <img src="assets/img/upload.png" alt="" />
+                            <div className="row">
+                                <div className="col-md-4"></div>
+                                <div className="col-md-4">
+                                    <div className="btn marginTop20" onClick={handleGenFile}>Generate File</div>
                                 </div>
-                                <div className="checkSign_body_detail">Vui lòng tải file Excel template</div>
-                                {selectedFileTemp && <span id="fileName">{selectedFileTemp.name}</span>}
-                                <div className="checkSign_body_button">
-                                    <div className="input-area btn">
-                                        <img src="/assets/img/Scroll Up.png" alt="" />
-                                        <span>Chọn file tải lên</span>
-                                        <input type="file" name="files" accept=".xlsx, .xls" onChange={handleFileChangeTemp} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="checkSign_body">
-                                <div className="checkSign_body_icon">
-                                    <img src="assets/img/upload.png" alt="" />
-                                </div>
-                                <div className="checkSign_body_detail">Vui lòng tải file Json template</div>
-                                {selectedFileJson && <span id="fileName">{selectedFileJson.name}</span>}
-                                <div className="checkSign_body_button">
-                                    <div className="input-area btn">
-                                        <img src="/assets/img/Scroll Up.png" alt="" />
-                                        <span>Chọn file tải lên</span>
-                                        <input type="file" name="files" accept=".json" onChange={handleFileChangeJson} />
-                                    </div>
-                                </div>
+                                <div className="col-md-4"></div>
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-4"></div>
-                        <div className="col-md-4">
-                            <div className="btn marginTop20" onClick={handleGenFile}>Generate File</div>
-                        </div>
-                        <div className="col-md-4"></div>
-                    </div>
-                </div>
-            </div>
+                </Box>
+            </Box>
             <Footer />
         </>
     )
