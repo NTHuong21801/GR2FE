@@ -18,7 +18,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                 const res2 = await ApiService.getAllSemester();
                 setTeacher(res1.body);
                 setValue("teacher", res1.body.teacherName);
-                setValue("school", res1.body.schoolName);
+                setValue("school", res1.body.locatedName);
                 setSemesterList(res2);
             } catch (err) {
                 console.log(err);

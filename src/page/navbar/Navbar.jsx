@@ -65,14 +65,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer({open, handClose}) {
     const currentURL = window.location.href;
     var state = currentURL.split("/")[3];
-    if (state === "createDivide") {
-        state = 'divide';
-    }
-    if (state === "createEvaluate") {
-        state = 'evaluate';
-    }
-    if (state === "createDebate") {
-        state = 'debate';
+    if (state === "createDivide" || state === "divide" || state === "") {
+        state = '/divide';
+    }else if (state === "createEvaluate" || state === "evaluate") {
+        state = '/evaluate';
+    }else if (state === "createDebate" || state === "debate") {
+        state = '/debate';
+    }else if(state === "student"){
+        state = '/student'
+    }else if(state === "genFile"){
+        state = '/genFile'
+    }else if(state === "upload"){
+        state = '/upload'
     }
     const theme = useTheme();
     const menuModel = MenuModel.menu();

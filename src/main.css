@@ -21,6 +21,20 @@
     background-color: var(--button-hover);
     color: #fff;
 }
+.btn-logout{
+    background-color: #fff;
+    color: var(--main-color);
+    /* padding: 5px 20px; */
+    cursor: pointer;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    z-index: 0;
+
+}
 /* .main{
     background-color: rgba(204, 204, 204, 0.4);
 } */
@@ -42,6 +56,7 @@
 }
 .search{
     position: relative;
+    margin-bottom: 50px;
 }
 .search input{
     position: absolute;
@@ -265,6 +280,10 @@ th, td{
     color: #fff;
     border-radius: 50%;
 }
-.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
-    background-color: #d8d8d8 !important;
+.css-h4y409-MuiList-root{
+    padding-top: 0 !important;
+}
+.flexCenter{
+    width: 100%;
+    display: flex;
 }

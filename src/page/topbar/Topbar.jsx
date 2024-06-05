@@ -75,7 +75,7 @@ export default function Topbar({open, handleOpen}) {
                         HUST
                     </Typography>
                 </div>
-                <Button variant="contained" onClick={() => handleLogout()} endIcon={<SendIcon />}>Đăng xuất</Button>
+                <div className="btn-logout btn"onClick={() => handleLogout()}>Đăng xuất <SendIcon /></div>
             </Toolbar>
         </AppBar>
     )

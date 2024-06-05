@@ -16,7 +16,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                 const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
                 setValue("gvhd", res.body.teacherName);
                 setValue("sign", res.body.teacherName);
-                setValue("teacherPos", res.body.schoolName);
+                setValue("teacherPos", res.body.locaatedName);
                 const res1 = await ApiService.getAllSemester();
                 setSemesterList(res1);
             }catch(e){

@@ -3,8 +3,8 @@
 import axios from 'axios';
 const api = 'http://localhost:8090';
 const ApiService = {
-   getToken(){
-    const token =  localStorage.getItem("access_token");
+  getToken() {
+    const token = localStorage.getItem("access_token");
     const configAuth = {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -12,8 +12,8 @@ const ApiService = {
     }
     return configAuth;
   },
-  getTokenType(file){
-    const token =  localStorage.getItem("access_token");
+  getTokenType(file) {
+    const token = localStorage.getItem("access_token");
     const configAuth = {
       headers: {
         'Content-Type': file.type,
@@ -22,8 +22,8 @@ const ApiService = {
     }
     return configAuth;
   },
-  getTokenJson(){
-    const token =  localStorage.getItem("access_token");
+  getTokenJson() {
+    const token = localStorage.getItem("access_token");
     const configAuth = {
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const ApiService = {
   },
   async getAllSemester() {
     try {
-      const response = await axios.get(`${api}/user/get-all-semester`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-semester`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -66,7 +66,7 @@ const ApiService = {
   },
   async getStudentByMssv(mssv) {
     try {
-      const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -74,7 +74,7 @@ const ApiService = {
   },
   async getStudentById(id) {
     try {
-      const response = await axios.get(`${api}/user/student/get-student-by-id/${id}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/student/get-student-by-id/${id}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -82,7 +82,7 @@ const ApiService = {
   },
   async getStudentByTeacher(email) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -90,7 +90,7 @@ const ApiService = {
   },
   async getStudentByTeacherPaginate(email, page) {
     try {
-      const response = await axios.get(`${api}/user/teacher?email=${email}&page=${page}&size=5`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher?email=${email}&page=${page}&size=5`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -98,7 +98,7 @@ const ApiService = {
   },
   async getAllSchool() {
     try {
-      const response = await axios.get(`${api}/user/get-all-school`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-school`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -106,7 +106,7 @@ const ApiService = {
   },
   async getAllClass() {
     try {
-      const response = await axios.get(`${api}/user/get-all-class`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-class`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -114,7 +114,7 @@ const ApiService = {
   },
   async getMajorBySchoolId(id) {
     try {
-      const response = await axios.get(`${api}/user/get-major-by-school-id/${id}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-major-by-school-id/${id}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -122,7 +122,7 @@ const ApiService = {
   },
   async updateTeacherInfo(data) {
     try {
-      const response = await axios.post(`${api}/user/teacher/updateInfo`, data,  ApiService.getToken());
+      const response = await axios.post(`${api}/user/teacher/updateInfo`, data, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -130,7 +130,7 @@ const ApiService = {
   },
   async updateStudentInfo(data) {
     try {
-      const response = await axios.post(`${api}/user/student/updateInfo`, data,  ApiService.getToken());
+      const response = await axios.post(`${api}/user/student/updateInfo`, data, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -138,7 +138,7 @@ const ApiService = {
   },
   async getAllTeacher() {
     try {
-      const response = await axios.get(`${api}/user/get-all-teacher`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-teacher`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -146,7 +146,7 @@ const ApiService = {
   },
   async getClassByMajorId(id) {
     try {
-      const response = await axios.get(`${api}/user/get-class-by-major-id/${id}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-class-by-major-id/${id}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -154,7 +154,7 @@ const ApiService = {
   },
   async getStudentByTeacherEmail(email) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken());
       return response.data;
 
     } catch (error) {
@@ -163,15 +163,33 @@ const ApiService = {
   },
   async getTeacherByAccount(account) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-teacher-by-account/${account}`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-teacher-by-account/${account}`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
+  async updateStatus(id, status) {
+    try {
+      const token = localStorage.getItem("access_token");; // Assume this returns the token string
+      const response = await axios.post(
+        `${api}/user/teacher/updateStatus/${id}?status=${status}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}` // Include the tsoken in the Authorization header
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error; // Rethrow the error to be caught in handleChangeStatus
+    }
+  },
   async generateFileUrl() {
     try {
-      const response = await axios.get(`${api}/user/generate-upload-url?type=xlsx`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/generate-upload-url?type=xlsx`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -187,7 +205,7 @@ const ApiService = {
   },
   async createFile(data) {
     try {
-      const response = await axios.post(`${api}/user/excel/create`, data,  ApiService.getToken());
+      const response = await axios.post(`${api}/user/excel/create`, data, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -195,7 +213,7 @@ const ApiService = {
   },
   async getExcelType(data) {
     try {
-      const response = await axios.post(`${api}/user/excel/get-file-by-email-and-type`, data,  ApiService.getToken());
+      const response = await axios.post(`${api}/user/excel/get-file-by-email-and-type`, data, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)
@@ -203,7 +221,7 @@ const ApiService = {
   },
   async getExcelByAccount() {
     try {
-      const response = await axios.get(`${api}/user/excel/get-file-by-account`,  ApiService.getToken());
+      const response = await axios.get(`${api}/user/excel/get-file-by-account`, ApiService.getToken());
       return response.data;
     } catch (error) {
       console.log(error)

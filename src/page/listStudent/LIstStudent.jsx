@@ -52,9 +52,12 @@ export default function ListStudent() {
         setIsPopupImport(true);
     }
     var count = 1;
-    const handleExportAll = () => {
-        if (list) {
-            ExportFile.writeDataToListFile(list);
+    const handleExportAll = async () => {
+        try {
+            const res = await ApiService.getStudentByTeacherEmail(email);
+            ExportFile.writeDataToListFile(res.body);
+        } catch (err) {
+            console.log(err);
         }
     }
     const [open, setOpen] = React.useState(false);
@@ -63,6 +66,16 @@ export default function ListStudent() {
     };
     const handleDrawerOpen = () => {
         setOpen(true);
+    }
+    const handleChangeStatus = async (event, id) => {
+        var status = event.target.value;
+        try {
+            const res = await ApiService.updateStatus(id, status);
+            setList(res);
+        } catch (err) {
+            console.log(err);
+        }
+        window.location.reload();
     }
     return (
         <>
@@ -75,7 +88,9 @@ export default function ListStudent() {
                     <div className="main">
                         <div className="container">
                             <div className="row">
-                                <div className="col-md-6"></div>
+                                <div className="col-md-6">
+                                    <h2><strong>Danh sách sinh viên</strong></h2>
+                                </div>
                                 <div className="btn col-md-2" onClick={handleOpenPopupImport}>
                                     Import Student List
                                 </div>
@@ -94,7 +109,7 @@ export default function ListStudent() {
                                                     <TableRow>
                                                         <TableCell>STT</TableCell>
                                                         <TableCell>Sinh viên</TableCell>
-                                                        <TableCell>Hệ</TableCell>
+                                                        <TableCell>Lớp sinh viên</TableCell>
                                                         <TableCell>Mã lớp / Học phần</TableCell>
                                                         <TableCell>Tên đề tài</TableCell>
                                                         <TableCell>GV đồng ý bảo vệ</TableCell>
@@ -104,7 +119,6 @@ export default function ListStudent() {
                                                         <TableCell>Điểm CK</TableCell>
                                                         <TableCell>Hội đồng / GVPB</TableCell>
                                                         <TableCell>File</TableCell>
-                                                        <TableCell>Ghi chú</TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -112,7 +126,7 @@ export default function ListStudent() {
                                                         <TableRow key={s.studentId}>
                                                             <TableCell>{count++}</TableCell>
                                                             <TableCell>{s.studentName} - {s.mssv}</TableCell>
-                                                            <TableCell>{s.studentMajor}</TableCell>
+                                                            <TableCell>{s.className}</TableCell>
                                                             <TableCell>
                                                                 {
                                                                     <>
@@ -123,7 +137,7 @@ export default function ListStudent() {
                                                             <TableCell>{s.topicName}</TableCell>
                                                             <TableCell>
                                                                 {
-                                                                    <select value={s.studentStatus} className="selectStatus">
+                                                                    <select value={s.studentStatus} className="selectStatus" onChange={(e) => handleChangeStatus(e, s.studentId)}>
                                                                         <option value="">N/A</option>
                                                                         <option value="APPROVE">Đồng ý</option>
                                                                         <option value="REJECT">Không đồng ý</option>
@@ -139,23 +153,54 @@ export default function ListStudent() {
                                                                 {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFileList)}>File</p>}
                                                                 {isPopupFile && listExcel && <PopupFile onClose={handleClosePopupFile} data={listExcel} />}
                                                             </TableCell>
-                                                            <TableCell></TableCell>
                                                         </TableRow>
                                                     ))}
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>
                                     </Paper>
-                                    {list != null && <div className="pagination">
-                                        {currentPage > 0 && <div onClick={() => handlePageChange(currentPage - 1)}><ArrowBackIosIcon className="paginationIcon" /></div>}
-                                        {Array.from({ length: list.totalPage }).map((_, index) => (
-                                            <div onClick={() => handlePageChange(index)} className={currentPage === index ? "active" : ""} >
-                                                {index + 1}
-                                            </div>
-                                        ))}
-                                        {currentPage < list.totalPage - 1 && <div onClick={() => handlePageChange(currentPage)}><ArrowForwardIosIcon className="paginationIcon" /></div>}
+                                    {list != null && (
+                                        <div className="pagination">
+                                            {currentPage > 0 && (
+                                                <div onClick={() => handlePageChange(currentPage - 1)}>
+                                                    <ArrowBackIosIcon className="paginationIcon" />
+                                                </div>
+                                            )}
 
-                                    </div>}
+                                            {Array.from({ length: list.totalPage }).map((_, index) => {
+                                                if (
+                                                    index === 0 || // Trang đầu tiên
+                                                    index === currentPage || // Trang hiện tại
+                                                    index === list.totalPage - 1 || // Trang cuối cùng
+                                                    (index >= currentPage - 1 && index <= currentPage + 1) // 3 trang liền kề
+                                                ) {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => handlePageChange(index)}
+                                                            className={currentPage === index ? "active" : ""}
+                                                        >
+                                                            {index + 1}
+                                                        </div>
+                                                    );
+                                                } else if (
+                                                    index === currentPage - 2 || // Trang trước 2 trang hiện tại
+                                                    index === currentPage + 2 // Trang sau 2 trang hiện tại
+                                                ) {
+                                                    return <div key={index}>...</div>; // Dấu ba chấm
+                                                } else {
+                                                    return null; // Trang không được hiển thị
+                                                }
+                                            })}
+
+                                            {currentPage < list.totalPage - 1 && (
+                                                <div onClick={() => handlePageChange(currentPage + 1)}>
+                                                    <ArrowForwardIosIcon className="paginationIcon" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
                                 </div>
                             </div>
                         </div>

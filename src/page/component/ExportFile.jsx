@@ -23,7 +23,14 @@ const ExportFile = {
         try{
             var lists = [];
             student.forEach(s => {
-                let studentStatus = s.studentStatus == null ? "N/A" : s.studentStatus;
+                var status = "";
+                if(s.studentStatus == "APPROVE"){
+                    status = "Đồng ý bảo vệ";
+                }else if(s.studentStatus == "APPROVE"){
+                    status = "Không đồng ý bảo vệ";
+                }else{
+                    status = "N/A"
+                }
                 let thesisName = s.thesisName == null ? "" : s.thesisName;
                 let thesisType = s.thesisType == null ? "" : s.thesisType;
                 const item = {
@@ -39,11 +46,12 @@ const ExportFile = {
                     "Điểm hướng dẫn": s.teacherPoint,
                     "Điểm quá trình": s.midtermPoint,
                     "Điểm cuối kỳ": s.finalPoint,
-                    "Đồng ý bảo vệ": studentStatus,
+                    "Đồng ý bảo vệ": status,
                     "name": thesisName,
                     "SectionType": thesisType,
                     "note": thesisName,
-                    "Địa điểm": s.studentLocated
+                    "Địa điểm": s.studentLocated,
+                    "phone": s.studentPhone
                 }
                 console.log(item);
                 lists.push(JSON.stringify(item));
