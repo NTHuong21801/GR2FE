@@ -287,3 +287,26 @@ th, td{
     width: 100%;
     display: flex;
 }
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+    color: #fff !important;
+}
+.currentPass{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.currentPass label{
+    flex: 1
+}
+.inputPass{
+    height: 30px;
+    flex: 3;
+}
+.btn-changepass{
+    width: 200px;
+    margin-top: 30px;
+}
+.errorMessage{
+    color: #AA261B;
+}

@@ -283,6 +283,14 @@ const ApiService = {
       return error.response.data;
     }
   },
+  async changePassword(data) {
+    try {
+      const response = await axios.put(`${api}/user/teacher/change-password`, data, ApiService.getToken());
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  },
 };
 
 export default ApiService;

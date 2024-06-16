@@ -17,6 +17,7 @@ import UploadFile from './page/upload/UploadFile';
 import Student from './page/studentPage/Student';
 import ApiService from './service/service';
 import GenFile from './page/genFile/GenFile';
+import ChangePass from './page/changePass/ChangePass';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
   if (!isAuthenticated) {
@@ -83,6 +84,7 @@ function App() {
         <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["1"]} />} />
         <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["1"]} />} />
         <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher} requiredRoleId={["1"]} />} />
+        <Route path="/changePass" element={<PrivateRoute component={ChangePass} requiredRoleId={["1"]} />} />
         <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />} />
         <Route path="/studentPage" element={<PrivateRoute component={Student} requiredRoleId={["3"]} />} />
       </Routes>

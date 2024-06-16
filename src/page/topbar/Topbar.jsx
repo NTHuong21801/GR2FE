@@ -1,26 +1,16 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuModel from '../../model/menu.model';
-import { Link } from 'react-router-dom';
-import ListStudent from '../listStudent/LIstStudent';
-import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Link } from 'react-router-dom';
 const drawerWidth = 300;
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -39,7 +29,7 @@ const AppBar = styled(MuiAppBar, {
         }),
     }),
 }));
-export default function Topbar({open, handleOpen}) {
+export default function Topbar({ open, handleOpen }) {
     const handleLogout = () => {
         const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
         if (shouldDelete) {
@@ -54,6 +44,14 @@ export default function Topbar({open, handleOpen}) {
             window.location.reload();
         }
     }
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const openDropDown = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <AppBar position="fixed" open={open}>
@@ -75,7 +73,33 @@ export default function Topbar({open, handleOpen}) {
                         HUST
                     </Typography>
                 </div>
-                <div className="btn-logout btn"onClick={() => handleLogout()}>Đăng xuất <SendIcon /></div>
+                <div className='settingbtn'>
+                    <Button
+                        id="basic-button"
+                        aria-controls={openDropDown ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openDropDown ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        Setting <ArrowDropDownIcon />
+                    </Button>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={openDropDown}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Link to={'/changePass'} className={`col-md-2 textNone`}>
+                            <MenuItem onClick={handleClose}>Change Password</MenuItem>
+                        </Link>
+                        <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+                    </Menu>
+                </div>
+                {/* <div className="btn-logout btn" onClick={() => handleLogout()}>Đăng xuất <SendIcon /></div> */}
             </Toolbar>
         </AppBar>
     )
