@@ -18,6 +18,7 @@ import Student from './page/studentPage/Student';
 import ApiService from './service/service';
 import GenFile from './page/genFile/GenFile';
 import ChangePass from './page/changePass/ChangePass';
+import ForgotPass from './page/forgotPass/ForgotPass';
 const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
   const userRole = localStorage.getItem('roleId');
   if (!isAuthenticated) {
@@ -74,6 +75,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         {/* <Route exact path="/login" element={<Login/>} /> */}
         <Route path="/signup" element={<Register />} />
+        <Route path="/forgotPass" element={<ForgotPass />} />
         <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["1"]} />} />
         <Route path="/genFile" element={<PrivateRoute component={GenFile} requiredRoleId={["1"]} />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["1"]} />} />

@@ -64,6 +64,14 @@ const ApiService = {
       console.log(error)
     }
   },
+  async forgotPass(email) {
+    try {
+      const response = await axios.post(`${api}/api/auth/forgotPass/${email}`);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  },
   async getStudentByMssv(mssv) {
     try {
       const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`, ApiService.getToken());

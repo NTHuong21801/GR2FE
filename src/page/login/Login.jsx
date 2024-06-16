@@ -118,7 +118,9 @@ export default function Login() {
                                 <div id="google"></div>
                             </div> */}
                             <div className="loginBottom">
-                                <p>Quên mật khẩu</p>
+                                <Link to="/forgotPass">
+                                    <p>Quên mật khẩu</p>
+                                </Link>
                                 <button className='btn'>Đăng nhập</button>
                             </div>
                             <div>
