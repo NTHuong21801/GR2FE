@@ -264,7 +264,7 @@ const ApiService = {
       const response = await axios.post(`${api}/user/excel/writeFile`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
-      console.log(error)
+      return error.response.data;
     }
   },
   async writeDataToListFile(data) {

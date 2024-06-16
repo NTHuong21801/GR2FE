@@ -51,7 +51,8 @@ const ExportFile = {
                     "SectionType": thesisType,
                     "note": thesisName,
                     "Địa điểm": s.studentLocated,
-                    "phone": s.studentPhone
+                    "phone": s.studentPhone,
+                    "termid":s.semester
                 }
                 console.log(item);
                 lists.push(JSON.stringify(item));

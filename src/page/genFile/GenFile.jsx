@@ -17,9 +17,13 @@ export default function GenFile() {
     const [selectedFileTemp, setSelectedFileTemp] = useState(null);
     const [selectedFileJson, setSelectedFileJson] = useState(null);
     const [noti, setNoti] = useState(false);
+    const [notiErr, setNotiErr] = useState(false);
     const [loading, setLoading] = useState(false);
     const handCloseNoti = () => {
         setNoti(false)
+    }
+    const handCloseNotiErr = () => {
+        setNotiErr(false)
     }
     const handleFileChangeList = (event) => {
         const file = event.target.files[0];
@@ -42,10 +46,19 @@ export default function GenFile() {
         try {
 
             const listUrl = await ApiService.writeDataToFile(formData)
-            listUrl.forEach(l => {
-                ExportFile.downloadExcelFromBase64(l.base64, l.fileName);
-            })
-            setLoading(false);
+            console.log(listUrl);
+            if(listUrl.responseMessage == "FILE NOT MATCH"){
+                setNotiErr(true);
+                setLoading(false);
+            }else if(listUrl.responseMessage == "File not found"){
+                setNoti(true);
+                setLoading(false);
+            }else{
+                listUrl.forEach(l => {
+                    ExportFile.downloadExcelFromBase64(l.base64, l.fileName);
+                })
+                setLoading(false);
+            }
         } catch (e) {
             console.error(e)
         }
@@ -68,6 +81,7 @@ export default function GenFile() {
         <>
             {loading && <Loading />}
             {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"} />}
+            {notiErr && <Noti onCloseNoti={handCloseNotiErr} mess={"Bạn cần chọn file template và file json đúng cấu hình!"} />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />
