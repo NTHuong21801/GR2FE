@@ -11,16 +11,15 @@ export default function Register() {
         const data = {
             "username": d.email,
             "password": d.password,
-            "role": {
-                "name": d.role
-            }
         }
         ApiService.register(data)
             .then(data => {
                 if(data.responseCode === '401'){
                     alert("Email đã tồn tại, vui lòng kiểm tra lại thông tin đăng ký của bạn");
+                }else if(data.responseCode === '400'){
+                    alert("Email của bạn phải là email của giảng viên!");
                 }else{
-                    alert("Đăng ký tài khoản thành công, vui lòng đăng nhập và cập nhật thông tin cá nhân của bạn");
+                    alert("Đăng ký tài khoản thành công");
                     navigate("/");
                 }
             })
@@ -35,13 +34,6 @@ export default function Register() {
                     <div className="login">
                         <div className="logoHeader">
                             Đăng ký bằng tài khoản của bạn
-                        </div>
-                        <div className='registerSelect'>
-                            <label>Đăng ký với vai trò:</label>
-                            <select {...register("role", { required: true })}>
-                                <option value="ROLE_TEACHER">Giáo viên</option>
-                                <option value="ROLE_STUDENT">Sinh viên</option>
-                            </select>
                         </div>
                         <div className="loginDetail">
                             <input type="text" {...register("email", { required: true })} placeholder='Email' />

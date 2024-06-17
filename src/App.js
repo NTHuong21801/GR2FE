@@ -19,17 +19,22 @@ import ApiService from './service/service';
 import GenFile from './page/genFile/GenFile';
 import ChangePass from './page/changePass/ChangePass';
 import ForgotPass from './page/forgotPass/ForgotPass';
-const PrivateRoute = ({ component: Component, isAuthenticated, requiredRoleId, ...rest }) => {
-  const userRole = localStorage.getItem('roleId');
-  if (!isAuthenticated) {
-    if (requiredRoleId && !requiredRoleId.includes(userRole)) {
-      return <Navigate to="/" />;
-    }
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/" />;
   }
-
   return <Component {...rest} />;
 };
+const isAuthenticated = () => {
+  const accessToken = localStorage.getItem('access_token');
+  const expiresAt = localStorage.getItem('accessExpiredTime');
 
+  if (!accessToken || !expiresAt) {
+    return false;
+  }
+  const expiresAtTime = parseInt(expiresAt, 10);
+  return Date.now() < expiresAtTime;
+};
 function App() {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh_token'));
@@ -58,10 +63,8 @@ function App() {
         }
       } else {
         localStorage.removeItem('access_token');
-        localStorage.removeItem('roleId');
         localStorage.removeItem('accountId');
         localStorage.removeItem('email');
-        localStorage.removeItem('status');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('refreshExpiredTime');
         localStorage.removeItem('accessExpiredTime');
@@ -73,22 +76,18 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        {/* <Route exact path="/login" element={<Login/>} /> */}
         <Route path="/signup" element={<Register />} />
         <Route path="/forgotPass" element={<ForgotPass />} />
-        <Route path="/divide" element={<PrivateRoute component={Divide} requiredRoleId={["1"]} />} />
-        <Route path="/genFile" element={<PrivateRoute component={GenFile} requiredRoleId={["1"]} />} />
-        <Route path="/evaluate" element={<PrivateRoute component={Evaluate} requiredRoleId={["1"]} />} />
-        <Route path="/debate" element={<PrivateRoute component={Debate} requiredRoleId={["1"]} />} />
-        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} requiredRoleId={["1"]} />} />
-        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} requiredRoleId={["1"]} />} />
-        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} requiredRoleId={["1"]} />} />
-        <Route path="/student" element={<PrivateRoute component={ListStudent} requiredRoleId={["1"]} />} />
-        <Route path="/upload" element={<PrivateRoute component={UploadFile} requiredRoleId={["1"]} />} />
-        <Route path="/updateTeacher" element={<PrivateRoute component={UpdateInforTeacher} requiredRoleId={["1"]} />} />
-        <Route path="/changePass" element={<PrivateRoute component={ChangePass} requiredRoleId={["1"]} />} />
-        <Route path="/updateStudent" element={<PrivateRoute component={UpdateInforStudent} requiredRoleId={["3"]} />} />
-        <Route path="/studentPage" element={<PrivateRoute component={Student} requiredRoleId={["3"]} />} />
+        <Route path="/divide" element={<PrivateRoute component={Divide}  />} />
+        <Route path="/genFile" element={<PrivateRoute component={GenFile}  />} />
+        <Route path="/evaluate" element={<PrivateRoute component={Evaluate} />} />
+        <Route path="/debate" element={<PrivateRoute component={Debate} />} />
+        <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} />} />
+        <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} />} />
+        <Route path="/createEvaluate" element={<PrivateRoute component={CreateEvaluate} />} />
+        <Route path="/student" element={<PrivateRoute component={ListStudent} />} />
+        <Route path="/upload" element={<PrivateRoute component={UploadFile} />} />
+        <Route path="/changePass" element={<PrivateRoute component={ChangePass} />} />
       </Routes>
     </Router>
   )

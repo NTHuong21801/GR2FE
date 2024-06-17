@@ -33,10 +33,8 @@ export default function Topbar({ open, handleOpen }) {
         const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
         if (shouldDelete) {
             localStorage.removeItem('access_token');
-            localStorage.removeItem('roleId');
             localStorage.removeItem('accountId');
             localStorage.removeItem('email');
-            localStorage.removeItem('status');
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('refreshExpiredTime');
             localStorage.removeItem('accessExpiredTime');
