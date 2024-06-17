@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css'
-import {useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
 import Divide from '../divide/Divide';
 import { Link } from 'react-router-dom';
 export default function Login() {
+    const [showErr, setShowErr] = useState(false);
+    const [errMes, setErrMes] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") != null);
     const { register, handleSubmit } = useForm();
     const onSubmit = async (d) => {
@@ -26,7 +28,8 @@ export default function Login() {
         } catch (error) {
             console.error(error);
             setIsLoggedIn(false);
-            alert("Mật khẩu hoặc tên đăng nhập không đúng. Vui lòng kiểm tra lại!");
+            setShowErr(true);
+            setErrMes("Mật khẩu hoặc tên đăng nhập không đúng. Vui lòng kiểm tra lại!");
         }
     };
     if (isLoggedIn) {
@@ -49,9 +52,7 @@ export default function Login() {
                             <div className="loginDetail">
                                 <input type="password" {...register("pass", { required: true })} placeholder='password' />
                             </div>
-                            {/* <div className="signIn">
-                                <div id="google"></div>
-                            </div> */}
+                            {showErr && <span className='errorMessage'>{errMes}</span>}
                             <div className="loginBottom">
                                 <Link to="/forgotPass">
                                     <p>Quên mật khẩu</p>

@@ -32,6 +32,9 @@
     border-bottom: 1px solid #000;
     margin-bottom: 15px;
 }
+.loginDetailRes{
+    margin-bottom: 15px;
+}
 .loginBottom{
     display: flex;
     width: 100%;
