@@ -18,6 +18,10 @@ export default function FormDivide({ handleExportExcelFile }) {
                 setChoice(res);
                 const res1 = await ApiService.getAllSemester();
                 setSemesterList(res1);
+                const re2 = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+                setValue("GVHD", re2.body.teacherName);
+                setValue("sign", re2.body.teacherName);
+                setValue("Địa điểm", re2.body.locatedName);
             } catch (e) {
                 console.log(e);
             }
@@ -28,11 +32,11 @@ export default function FormDivide({ handleExportExcelFile }) {
         if (mssv) {
             try {
                 const data = await ApiService.getStudentByMssv(mssv);
-                setValue("mssv", data.body.mssv);
-                setValue("mail", data.body.studentEmail);
-                setValue("fullname", data.body.studentName);
+                setValue("studentID", data.body.mssv);
+                setValue("Email", data.body.studentEmail);
+                setValue("studentName", data.body.studentName);
                 setValue("phone", data.body.studentPhone);
-                setValue("grade", data.body.className);
+                setValue("Lớp", data.body.className);
 
             } catch (e) {
                 alert("Mã số sinh viên không tồn tại");
@@ -55,11 +59,27 @@ export default function FormDivide({ handleExportExcelFile }) {
                     </div>
                     <div className="row">
                         <div className="col-md-2">
+                            <label htmlFor="" className='label'>Giảng viên hướng dẫn:</label>
+                        </div>
+                        <div className="col-md-3">
+                        <input type="text"{...register("GVHD", { required: true })} className='inputInfo' />
+                        </div>
+                        <div className="col-md-1"></div>
+                        <div className="col-md-2">
+                            <label htmlFor="" className='label'>Đơn vị công tác:</label>
+                        </div>
+                        <div className="col-md-3">
+                            <input type="text" {...register("Địa điểm", { required: true })} className='inputInfo' />
+                        </div>
+                        <div className="col-md-1"></div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-2">
                             <label htmlFor="" className='label'>MSSV:</label>
                         </div>
                         <div className="col-md-3">
                             <input
-                                {...register("mssv")}
+                                {...register("studentID")}
                                 className='inputInfo'
                                 onChange={(e) => setMSSV(e.target.value)}
                                 onBlur={handleMSSVBlur}
@@ -70,7 +90,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Email:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="email" {...register("mail")} className='inputInfo' />
+                            <input type="email" {...register("Email")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -79,7 +99,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Họ và tên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input {...register("fullname")} className='inputInfo' />
+                            <input {...register("studentName")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
@@ -95,7 +115,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Lớp sinh viên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text" {...register("grade")} className='inputInfo' />
+                            <input type="text" {...register("Lớp")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
@@ -122,13 +142,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="date" {...register("from", { required: true })} className='inputInfo' />
+                            <input type="date" {...register("Thời gian làm ĐATN từ", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1">
                             <span>đến</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="date" {...register("to", { required: true })} className='inputInfo' />
+                            <input type="date" {...register("Thời gian làm ĐATN đến", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -137,7 +157,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="" className='label1'>Tên đồ án:</label>
                         </div>
                         <div className="col-md-8">
-                            <input type="text" {...register("topic", { required: true })} id="" className='inputInfo' />
+                            <input type="text" {...register("Tên đề tài", { required: true })} id="" className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -152,7 +172,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Lựa chọn 1:</label>
                         </div>
                         <div className="col-md-8">
-                            <select {...register("choice1")} id="" className='selectChoice'>
+                            <select {...register("LV")} id="" className='selectChoice'>
                                 <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
                                     <option value={m.topicName} key={m.choiceId}>{m.topicName}</option>
@@ -167,7 +187,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Lựa chọn 2:</label>
                         </div>
                         <div className="col-md-8">
-                            <select {...register("choice2")} id="" className='selectChoice'>
+                            <select {...register("LV1")} id="" className='selectChoice'>
                                 <option value="">Chọn đề tài</option>
                                 {choice != null && choice.map(m => (
                                     <option value={m.topicName} key={m.choiceId}>{m.topicName}</option>
@@ -182,7 +202,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Đề xuất khác:</label>
                         </div>
                         <div className="col-md-8">
-                            <input type="text" className='inputInfo' {...register("choiceAnother")} id="" />
+                            <input type="text" className='inputInfo' {...register("LV2")} id="" />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -197,7 +217,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Kiến thức sinh viên thu nhập được:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("goalKnowledge", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
+                            <textarea {...register("Kiến thức sinh viên thu nhập được", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -207,7 +227,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Công nghệ sinh viên thu nhập được:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("goalTech", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
+                            <textarea {...register("Công nghệ sinh viên thu nhập được", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -217,7 +237,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Kỹ năng sinh viên phát triển được:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("goalSkill", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
+                            <textarea {...register("Kỹ năng sinh viên phát triển được", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -227,7 +247,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Sản phẩm kỳ vọng:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("goalProduct", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
+                            <textarea {...register("Sản phẩm kỳ vọng", { required: true })} id="" cols="105" rows="1" className='inputForm' ></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -237,7 +257,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Vấn đề thực tiễn đồ án giải quyết được:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("goalIssue", { required: true })} cols="105" rows="1" className='inputForm' ></textarea>
+                            <textarea {...register("Vấn đề thực tiễn đồ án giải quyết được", { required: true })} cols="105" rows="1" className='inputForm' ></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -255,7 +275,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content1D", { required: true })} id="" cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 1: Tìm hiểu tổng quan về bài toán, chi tiết", { required: true })} id="" cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -268,13 +288,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content1From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 1: Tìm hiểu tổng quan về bài toán, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content1To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 1: Tìm hiểu tổng quan về bài toán, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -289,7 +309,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content2D", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 2: Tìm hiểu tổng quan về công nghệ liên quan, chi tiết", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -302,13 +322,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content2From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 2: Tìm hiểu tổng quan về công nghệ liên quan, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content2To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 2: Tìm hiểu tổng quan về công nghệ liên quan, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -323,7 +343,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content3D", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 3: Phân tích thiết kế, chi tiết", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -336,13 +356,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content3From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 3: Phân tích thiết kế, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content3To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 3: Phân tích thiết kế, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -357,7 +377,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content4D", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 4: Xây dựng chương trình, chi tiết", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -370,13 +390,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content4From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 4: Xây dựng chương trình, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content4To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 4: Xây dựng chương trình, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -391,7 +411,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content5D", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 5: Thử nghiệm và đánh giá, chi tiết", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -404,13 +424,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content5From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 5: Thử nghiệm và đánh giá, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content5To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 5: Thử nghiệm và đánh giá, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -425,7 +445,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="">Chi tiết:</label>
                         </div>
                         <div className="col-md-8">
-                            <textarea {...register("content6D", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
+                            <textarea {...register("Nội dung 6: Triển khai trong thực tế và đánh giá của người dùng, chi tiết", { required: true })} cols="105" rows="1" className='inputForm'></textarea>
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -438,13 +458,13 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <span>từ tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content6From", { required: true })} className='inputInfo' s />
+                            <input type="number" {...register("Nội dung 6: Triển khai trong thực tế và đánh giá của người dùng, thời gian từ tuần", { required: true })} className='inputInfo' s />
                         </div>
                         <div className="col-md-1">
                             <span>đến tuần</span>
                         </div>
                         <div className="col-md-3">
-                            <input type="number" {...register("content6To", { required: true })} className='inputInfo' />
+                            <input type="number" {...register("Nội dung 6: Triển khai trong thực tế và đánh giá của người dùng, thời gian đến tuần", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>

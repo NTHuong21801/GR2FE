@@ -14,9 +14,9 @@ export default function FormEvaluate({ handleExportExcelFile }) {
         const fetchData = async () => {
             try{
                 const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
-                setValue("gvhd", res.body.teacherName);
+                setValue("GVHD", res.body.teacherName);
                 setValue("sign", res.body.teacherName);
-                setValue("teacherPos", res.body.locaatedName);
+                setValue("teacherPos", res.body.locatedName);
                 const res1 = await ApiService.getAllSemester();
                 setSemesterList(res1);
             }catch(e){
@@ -29,7 +29,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
         if(mssv){
             try{
                 const res = await ApiService.getStudentByMssv(mssv);
-                setValue("studentId", res.body.mssv);
+                setValue("studentID", res.body.mssv);
                 setValue("studentName", res.body.studentName);
 
             }catch(e){
@@ -56,7 +56,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Giảng viên đánh giá:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text"{...register("gvhd", { required: true })} className='inputInfo' />
+                            <input type="text"{...register("GVHD", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">
@@ -73,7 +73,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         </div>
                         <div className="col-md-3">
                             <input
-                                {...register("studentId")}
+                                {...register("studentID")}
                                 className='inputInfo'
                                 onChange={(e) => setMSSV(e.target.value)}
                                 onBlur={handleMSSVBlur}
@@ -118,7 +118,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Tên đồ án:</label>
                         </div>
                         <div className="col-md-9">
-                            <input type="text" {...register("topicName", { required: true })} className='inputInfo' />
+                            <input type="text" {...register("Tên đề tài", { required: true })} className='inputInfo' />
                         </div>
                     </div>
                     <div className="infoHeader">

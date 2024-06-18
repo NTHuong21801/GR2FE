@@ -10,8 +10,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
 import { useState } from "react";
+import Loading from "../component/Loading";
 export default function CreateEvaluate() {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -19,13 +21,17 @@ export default function CreateEvaluate() {
         setOpen(true);
     }
     const exportExcelFile = async (myData) => {
-        await ApiService.exportEvaluate(myData)
+        const fileType = "EXCEL_EVALUATE";
+        setLoading(true)
+        await ApiService.exportEvaluate(myData, fileType)
             .then(res => {
                 ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
+                setLoading(false)
             })
     }
     return (
         <>
+            {loading && <Loading />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />

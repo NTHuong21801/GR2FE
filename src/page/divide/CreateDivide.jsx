@@ -10,19 +10,19 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
+import ExportFile from '../component/ExportFile';
+import Loading from '../component/Loading';
 export default function CreateDivide() {
-    const [teacher, setTeacher] = useState();
-    useEffect(() => {
-        ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+    const [loading, setLoading] = useState(false);
+    const exportExcelFile = async (myData) => {
+        const fileType = "EXCEL_DIVIDE";
+        console.log(myData);
+        setLoading(true)
+        await ApiService.exportEvaluate(myData, fileType)
             .then(res => {
-                setTeacher(res.body);
+                ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
+                setLoading(false)
             })
-    }, [])
-    const exportExcelFile = (myData) => {
-        if (teacher) {
-            console.log(myData);
-        }
-
     }
     const [open, setOpen] = useState(false);
     const handleDrawerClose = () => {
@@ -33,6 +33,7 @@ export default function CreateDivide() {
     }
     return (
         <>
+            {loading && <Loading />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />
