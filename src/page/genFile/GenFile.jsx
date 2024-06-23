@@ -46,7 +46,6 @@ export default function GenFile() {
         try {
 
             const listUrl = await ApiService.writeDataToFile(formData)
-            console.log(listUrl);
             if(listUrl.responseMessage == "FILE NOT MATCH"){
                 setNotiErr(true);
                 setLoading(false);

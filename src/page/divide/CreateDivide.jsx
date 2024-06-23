@@ -12,8 +12,13 @@ import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
 import ExportFile from '../component/ExportFile';
 import Loading from '../component/Loading';
+import Noti from '../component/Noti';
 export default function CreateDivide() {
     const [loading, setLoading] = useState(false);
+    const [noti, setNoti] = useState(false);
+    const handCloseNoti = () => {
+        setNoti(false)
+    }
     const exportExcelFile = async (myData) => {
         const fileType = "EXCEL_DIVIDE";
         console.log(myData);
@@ -22,6 +27,7 @@ export default function CreateDivide() {
             .then(res => {
                 ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
                 setLoading(false)
+                setNoti(true);
             })
     }
     const [open, setOpen] = useState(false);
@@ -34,6 +40,7 @@ export default function CreateDivide() {
     return (
         <>
             {loading && <Loading />}
+            {noti && <Noti onCloseNoti={handCloseNoti} mess={"File đã được download thành công!"}/>}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />

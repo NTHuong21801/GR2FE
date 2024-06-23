@@ -171,9 +171,9 @@ const ApiService = {
       console.log(error)
     }
   },
-  async readFileToDB(file, fileType) {
+  async readFileToDB(file, fileType, mssv) {
     try {
-      const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}`, file, ApiService.getTokenType(file));
+      const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}&mssv=${mssv}`, file, ApiService.getTokenType(file));
       return response.data;
     } catch (error) {
       return error.response.data;
@@ -193,6 +193,42 @@ const ApiService = {
       return response.data;
     } catch (error) {
       return error.response.data;
+    }
+  },
+  async deleteStudent(id) {
+    try {
+      const token = localStorage.getItem("access_token");;
+      const response = await axios.post(
+        `${api}/user/teacher/deleteStudent/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error; 
+    }
+  },
+  async deleteExcel(id) {
+    try {
+      const token = localStorage.getItem("access_token");;
+      const response = await axios.post(
+        `${api}/user/teacher/deleteExcel/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error; 
     }
   },
 };

@@ -14,12 +14,16 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
+import DeleteIcon from '@mui/icons-material/Delete';
+import PopupConfirm from "../component/PopupConfirm";
 export default function ListStudent() {
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
     const [isPopupImport, setIsPopupImport] = useState(false);
     const [listExcel, setListExcel] = useState();
-    const [currentPage, setCurrentPage] = React.useState(0);
+    const [studentSelected, setStudentSelected] = useState();
+    const [confirm, setConfirm] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0);
     const email = localStorage.getItem('email');
     const handlePageChange = (page) => {
         console.log(page)
@@ -77,6 +81,25 @@ export default function ListStudent() {
         }
         window.location.reload();
     }
+    const handleCloseConfirm = () => {
+        setConfirm(false);
+    }
+    const handleDelete = (id) => {
+        setStudentSelected(id);
+        setConfirm(true);
+    }
+    const handleDeleteStudent = async () => {
+        if (studentSelected) {
+            try {
+                const res = await ApiService.deleteStudent(studentSelected);
+                if (res.responseCode == '200') {
+                    window.location.reload();
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>
@@ -115,10 +138,9 @@ export default function ListStudent() {
                                                         <TableCell>GV đồng ý bảo vệ</TableCell>
                                                         <TableCell>GVHD</TableCell>
                                                         <TableCell>Điểm GVHD</TableCell>
-                                                        <TableCell>Điểm QT</TableCell>
-                                                        <TableCell>Điểm CK</TableCell>
-                                                        <TableCell>Hội đồng / GVPB</TableCell>
+                                                        <TableCell>Điểm GVPB</TableCell>
                                                         <TableCell>File</TableCell>
+                                                        <TableCell>Action</TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -145,13 +167,15 @@ export default function ListStudent() {
                                                                 }
                                                             </TableCell>
                                                             <TableCell>{s.teacherName}</TableCell>
-                                                            <TableCell><p className="colorBlue">{s.teacherPoint}</p></TableCell>
-                                                            <TableCell><p className="colorBlue">{s.midtermPoint}</p></TableCell>
-                                                            <TableCell><p className="colorBlue">{s.finalPoint}</p></TableCell>
-                                                            <TableCell></TableCell>
+                                                            <TableCell><p className="colorBlue">{s.teacherEvaluatePoint}</p></TableCell>
+                                                            <TableCell><p className="colorBlue">{s.teacherDebatePoint}</p></TableCell>
                                                             <TableCell>
                                                                 {<p className="listFile" onClick={() => handleOpenPopupFile(s.excelFileList)}>File</p>}
                                                                 {isPopupFile && listExcel && <PopupFile onClose={handleClosePopupFile} data={listExcel} />}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <DeleteIcon className="btn-delete" onClick={() => handleDelete(s.studentId)} />
+                                                                {confirm && <PopupConfirm message={"Bạn có chắc chắn muốn xoá sinh viên này?"} onClose={handleCloseConfirm} handleDelete={handleDeleteStudent} />}
                                                             </TableCell>
                                                         </TableRow>
                                                     ))}

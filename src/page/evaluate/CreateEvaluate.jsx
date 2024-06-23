@@ -11,9 +11,14 @@ import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
 import { useState } from "react";
 import Loading from "../component/Loading";
+import Noti from "../component/Noti";
 export default function CreateEvaluate() {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [noti, setNoti] = useState(false);
+    const handCloseNoti = () => {
+        setNoti(false)
+    }
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -27,10 +32,12 @@ export default function CreateEvaluate() {
             .then(res => {
                 ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
                 setLoading(false)
+                setNoti(true);
             })
     }
     return (
         <>
+        {noti && <Noti onCloseNoti={handCloseNoti} mess={"File đã được download thành công!"}/>}
             {loading && <Loading />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />

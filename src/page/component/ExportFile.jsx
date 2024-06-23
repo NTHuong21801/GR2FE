@@ -16,7 +16,6 @@ const ExportFile = {
         a.download = fileName; 
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
         URL.revokeObjectURL(url);
     },
     async writeDataToListFile(student){

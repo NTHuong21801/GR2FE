@@ -6,7 +6,6 @@
 .btn{
     background-color: var(--main-color);
     color: #fff;
-    /* padding: 5px 20px; */
     cursor: pointer;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
     display: flex;
@@ -24,7 +23,6 @@
 .btn-logout{
     background-color: #fff;
     color: var(--main-color);
-    /* padding: 5px 20px; */
     cursor: pointer;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
     display: flex;
@@ -35,19 +33,9 @@
     z-index: 0;
 
 }
-/* .main{
-    background-color: rgba(204, 204, 204, 0.4);
-} */
-/* .mainForm{
-    background-color: #E4E2E2;
-} */
-.main .container{
-    /* background-color: #E4E2E2 ; */
-    /* padding: 20px 0; */
-}
+
 .mainForm .container{
     background-color: #fff ;
-    /* padding: 20px 0; */
 }
 @media (min-width: 1400px){
     .container{
@@ -332,4 +320,17 @@ th, td{
 }
 .btn-login:hover{
     color: var(--main-color);
+}
+.btn-delete:hover{
+    color: red;
+    cursor: pointer;
+}
+.width100{
+    width: 100%;
+}
+.rowFlex{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 30px;
 }

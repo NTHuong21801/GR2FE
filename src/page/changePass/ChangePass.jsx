@@ -54,7 +54,7 @@ export default function ChangePass() {
         const { currentPassword, newPassword, confirmPassword } = values;
         if(!validatePassword(newPassword)){
             setShowErr(true);
-            setErrorMessage("Mật khẩu cần có ít nhất 6 ký tự, bao gồm chữ cái in hoa, chữ thường vầ ký tự đặc biệt");
+            setErrorMessage("Mật khẩu cần có ít nhất 6 ký tự, bao gồm chữ cái in hoa, chữ thường và ký tự đặc biệt");
             return;
         }
         if (newPassword == '' || confirmPassword == '' || currentPassword == '') {

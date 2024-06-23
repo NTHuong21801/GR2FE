@@ -18,6 +18,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PopupConfirm from "../component/PopupConfirm";
 const Search = styled('div')({
     position: 'relative',
     borderRadius: '4px',
@@ -29,6 +31,8 @@ const Search = styled('div')({
 export default function Divide() {
     const [excel, setExcel] = useState([]);
     const [text, setText] = useState();
+    const [excelSelected, setExcelSelected] = useState();
+    const [confirm, setConfirm] = useState(false);
     const fetchData = async () => {
         try {
             const data = {
@@ -62,6 +66,25 @@ export default function Divide() {
             e.mssv.toLowerCase().includes(text)
         );
     }) : [];
+    const handleCloseConfirm = () => {
+        setConfirm(false);
+    }
+    const handleDelete = (id) => {
+        setExcelSelected(id);
+        setConfirm(true);
+    }
+    const handleDeleteExcel = async () => {
+        if (excelSelected) {
+            try {
+                const res = await ApiService.deleteExcel(excelSelected);
+                if (res.responseCode == '200') {
+                    window.location.reload();
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>
@@ -108,6 +131,7 @@ export default function Divide() {
                                                         <TableCell>MSSV</TableCell>
                                                         <TableCell>FileName</TableCell>
                                                         <TableCell>Link</TableCell>
+                                                        <TableCell>Action</TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -142,6 +166,10 @@ export default function Divide() {
                                                                         File
                                                                         <img src="assets/icon/download.png" alt="" />
                                                                     </a>
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <DeleteIcon className="btn-delete" onClick={() => handleDelete(s.excelId)} />
+                                                                    {confirm && <PopupConfirm message={"Bạn có chắc chắn muốn xoá file này?"} onClose={handleCloseConfirm} handleDelete={handleDeleteExcel} />}
                                                                 </TableCell>
                                                             </TableRow>
                                                         ))
