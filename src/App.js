@@ -17,6 +17,7 @@ import GenFile from './page/genFile/GenFile';
 import ChangePass from './page/changePass/ChangePass';
 import ForgotPass from './page/forgotPass/ForgotPass';
 import HomePage from './page/homePage/HomePage';
+import OtherFile from './page/otherFile/OtherFile';
 const PrivateRoute = ({ component: Component, ...rest }) => {
   if (!isAuthenticated()) {
     return <Navigate to="/" />;
@@ -80,6 +81,7 @@ function App() {
         <Route path="/home" element={<PrivateRoute component={HomePage}  />} />
         <Route path="/genFile" element={<PrivateRoute component={GenFile}  />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} />} />
+        <Route path="/other" element={<PrivateRoute component={OtherFile} />} />
         <Route path="/debate" element={<PrivateRoute component={Debate} />} />
         <Route path="/createDivide" element={<PrivateRoute component={CreateDivide} />} />
         <Route path="/createDebate" element={<PrivateRoute component={CreateDebate} />} />

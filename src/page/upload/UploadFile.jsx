@@ -54,10 +54,10 @@ export default function UploadFile() {
     const handleUploadListFile = async () => {
         if (listFile && typeFile && selectedFileJson) {
             var mssv = "";
-            if(typeFile == "EXCEL_OTHER"){
+            if (typeFile == "EXCEL_OTHER") {
                 if (studentSelect) {
                     mssv = studentSelect;
-                }else{
+                } else {
                     setNoti(true);
                     setErrMes("Bạn cần chọn mssv ứng với các file tải lên");
                     return;
@@ -71,23 +71,29 @@ export default function UploadFile() {
             formData.append('fileJson', selectedFileJson);
             try {
                 const json = await ApiService.readFileToDB(formData, typeFile, mssv);
-                setLoading(false);
-                setNoti(true);
-                setErrMes("Upload file successfully")
+                if (json == 'Done') {
+                    setLoading(false);
+                    setNoti(true);
+                    setErrMes("Upload file successfully")
+                    if (typeFile == "EXCEL_DIVIDE") {
+                        window.location.href = "divide";
+                    } else if (typeFile == "EXCEL_EVALUATE") {
+                        window.location.href = "evaluate";
+                    } else if (typeFile == "EXCEL_DEBATE") {
+                        window.location.href = "debate";
+                    } else {
+                        window.location.href = "student"
+                    }
+                } else {
+                    setLoading(false);
+                    setNoti(true);
+                    setErrMes("Upload file failed")
+                }
             } catch (e) {
                 console.error(e);
                 setLoading(false);
             }
-            if (typeFile == "EXCEL_DIVIDE") {
-                window.location.href = "divide";
-            } else if (typeFile == "EXCEL_EVALUATE") {
-                window.location.href = "evaluate";
-            } else if (typeFile == "EXCEL_DEBATE") {
-                window.location.href = "debate";
-            } else {
-                window.location.href = "student"
-            }
-        }else{
+        } else {
             setNoti(true);
             setErrMes("Bạn cần chọn đủ dạng file, upload file json và danh sách các file cần upload")
         }

@@ -23,6 +23,11 @@ const MenuModel = {
                 link: '/debate'
             },
             {
+                text: 'Phiếu khác',
+                icon: <InboxIcon />,
+                link: '/other'
+            },
+            {
                 text: 'Danh sách sinh viên',
                 icon: <FormatListBulletedIcon />,
                 link: '/student'

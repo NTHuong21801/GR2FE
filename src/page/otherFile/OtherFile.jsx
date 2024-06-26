@@ -30,7 +30,7 @@ const Search = styled('div')({
     width: '90%',
     border: 'solid 1px #ccc'
 });
-export default function Divide() {
+export default function OtherFile() {
     const [excel, setExcel] = useState([]);
     const [text, setText] = useState();
     const [excelSelected, setExcelSelected] = useState();
@@ -39,7 +39,7 @@ export default function Divide() {
         try {
             const data = {
                 "emailTeacher": localStorage.getItem("email"),
-                "excelType": "EXCEL_DIVIDE"
+                "excelType": "EXCEL_OTHER"
             }
             const res = await ApiService.getExcelType(data);
             setExcel(res);
@@ -104,24 +104,9 @@ export default function Divide() {
                     <DrawerHeader />
                     <div className="main">
                         <div className="container">
-                            <h2><strong>Phiếu phân công nhiệm vụ đồ án tốt nghiệp</strong></h2>
+                            <h2><strong>Các phiếu khác</strong></h2>
                             <div className='row marginTop20'>
-                                <div className='col-md-4'>
-                                    <Link className='textNone' to='/createDivide'>
-                                        <div className="btn">
-                                            Tạo phiếu phân công nhiệm vụ
-                                            <img src="assets/icon/writing.png" alt="" />
-                                        </div>
-                                    </Link>
-                                </div>
-                                <div className="col-md-4">
-                                    <Link className='textNone' to='/genFile'>
-                                        <div className="btn">
-                                            Tạo phiếu phân công nhiệm vụ ĐATN từ template
-                                            <img src="assets/icon/writing.png" alt="" />
-                                        </div>
-                                    </Link>
-                                </div>
+                                <div className="col-md-8"></div>
                                 <div className="col-md-4">
                                     <Search>
                                         <IconButton>

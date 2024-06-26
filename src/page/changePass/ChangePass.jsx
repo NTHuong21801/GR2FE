@@ -18,7 +18,7 @@ const validatePassword = (password) => {
     return regex.test(password);
   };
 export default function ChangePass() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
     };

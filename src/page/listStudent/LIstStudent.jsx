@@ -19,6 +19,7 @@ import PopupConfirm from "../component/PopupConfirm";
 import Footer from "../footer/Footer";
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 import PopupAnotation from "../component/PopupAnotation";
+import Noti from "../component/Noti";
 export default function ListStudent() {
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
@@ -97,6 +98,8 @@ export default function ListStudent() {
                 const res = await ApiService.deleteStudent(studentSelected);
                 if (res.responseCode == '200') {
                     window.location.reload();
+                }else {
+                    setNoti(true);
                 }
             } catch (e) {
                 console.error(e);
@@ -110,9 +113,14 @@ export default function ListStudent() {
     const handCloseAno = () => {
         setAno(false);
     }
+    const [noti, setNoti] = useState(false);
+    const handCloseNoti = () => {
+        setNoti(false)
+    }
     return (
         <>
-            {ano && <PopupAnotation  onClose={handCloseAno}/>}
+            {noti && <Noti onCloseNoti={handCloseNoti} mess={"Xảy ra lỗi trong quá trình xoá sinh viên!"} />}
+            {ano && <PopupAnotation onClose={handCloseAno} />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />
@@ -125,8 +133,8 @@ export default function ListStudent() {
                                 <div className="col-md-6">
                                     <h2>
                                         <strong>
-                                            Danh sách sinh viên 
-                                            <AnnouncementIcon className="announIcon" onClick={handlePopupAno}/> 
+                                            Danh sách sinh viên
+                                            <AnnouncementIcon className="announIcon" onClick={handlePopupAno} />
                                         </strong>
                                     </h2>
                                 </div>

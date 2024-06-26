@@ -21,6 +21,7 @@ import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopupConfirm from "../component/PopupConfirm";
 import Footer from '../footer/Footer';
+import Noti from '../component/Noti';
 const Search = styled('div')({
     position: 'relative',
     borderRadius: '4px',
@@ -80,14 +81,21 @@ export default function Divide() {
                 const res = await ApiService.deleteExcel(excelSelected);
                 if (res.responseCode == '200') {
                     window.location.reload();
+                } else {
+                    setNoti(true);
                 }
             } catch (e) {
                 console.error(e);
             }
         }
     }
+    const [noti, setNoti] = useState(false);
+    const handCloseNoti = () => {
+        setNoti(false)
+    }
     return (
         <>
+            {noti && <Noti onCloseNoti={handCloseNoti} mess={"Xảy ra lỗi trong quá trình xoá file!"} />}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />

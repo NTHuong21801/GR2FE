@@ -77,6 +77,8 @@ export default function MiniDrawer({open, handClose}) {
         state = '/genFile'
     }else if(state === "upload"){
         state = '/upload'
+    }else if(state === "other"){
+        state = '/other'
     }
     const theme = useTheme();
     const menuModel = MenuModel.menu();
@@ -84,7 +86,6 @@ export default function MiniDrawer({open, handClose}) {
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                 <div className="header-left">
-                    <img src="assets/img/logoBK.png" alt="" />
                 </div>
                     <IconButton onClick={handClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -111,7 +112,7 @@ export default function MiniDrawer({open, handClose}) {
                                     >
                                         {m.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={m.text} sx={{ opacity: open ? 1 : 0 }} />
+                                    <ListItemText primary={m.text} sx={{ opacity: open ? 1 : 0 }} className='textNone1'/>
                                 </ListItemButton>
                             </ListItem>
                         </Link>
