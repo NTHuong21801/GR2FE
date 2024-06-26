@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+import PopupAnoGenFile from "../component/PopupAnoGenFile";
 export default function GenFile() {
     const [selectedFileDSSV, setSelectedFileDSSV] = useState(null);
     const [selectedFileTemp, setSelectedFileTemp] = useState(null);
@@ -69,15 +71,23 @@ export default function GenFile() {
             setNoti(true)
         }
     }
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
     };
     const handleDrawerOpen = () => {
         setOpen(true);
     }
+    const [ano, setAno] = useState(true);
+    const handlePopupAno = () => {
+        setAno(true);
+    }
+    const handCloseAno = () => {
+        setAno(false);
+    }
     return (
         <>
+            {ano && <PopupAnoGenFile  onClose={handCloseAno}/>}
             {loading && <Loading />}
             {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"} />}
             {notiErr && <Noti onCloseNoti={handCloseNotiErr} mess={"Bạn cần chọn file template và file json đúng cấu hình!"} />}
@@ -91,6 +101,7 @@ export default function GenFile() {
                         <div className="container">
                             <div className="formHeader">
                                 GENERATE FILE
+                                <AnnouncementIcon className="announIcon" onClick={handlePopupAno}/> 
                             </div>
                             <div className="row">
                                 <div className="col-md-4">

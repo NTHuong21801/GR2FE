@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {Typography } from '@mui/material';
 import ApiService from "../../service/service";
 import Noti from "../component/Noti";
+import Footer from "../footer/Footer";
 const validatePassword = (password) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return regex.test(password);
@@ -173,6 +174,7 @@ export default function ChangePass() {
                     </div>
                 </Box>
             </Box>
+            <Footer />
         </>
     )
 }

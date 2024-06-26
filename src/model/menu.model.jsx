@@ -1,9 +1,9 @@
 import SummarizeIcon from '@mui/icons-material/Summarize';
-import AddIcon from '@mui/icons-material/Add';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ArticleIcon from '@mui/icons-material/Article';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 const MenuModel = {
     menu(){
         const object = [
@@ -34,7 +34,7 @@ const MenuModel = {
             },
             {
                 text: 'Upload File',
-                icon: <AddIcon />,
+                icon: <UploadFileIcon />,
                 link: '/upload'
             },
         ]

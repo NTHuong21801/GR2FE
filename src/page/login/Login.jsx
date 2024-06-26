@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
 import Divide from '../divide/Divide';
 import { Link } from 'react-router-dom';
+import HomePage from '../homePage/HomePage';
 export default function Login() {
     const [showErr, setShowErr] = useState(false);
     const [errMes, setErrMes] = useState('');
@@ -33,7 +34,7 @@ export default function Login() {
         }
     };
     if (isLoggedIn) {
-        return <Divide />
+        return <HomePage />
     } else {
         return (
             <form onSubmit={handleSubmit(onSubmit)}>

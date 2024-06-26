@@ -334,3 +334,38 @@ th, td{
     justify-content: space-around;
     margin-bottom: 30px;
 }
+.boldText{
+    color: #000;
+    font-weight: bold !important;
+}
+.announIcon{
+    color: var(--main-color);
+    cursor: pointer;
+    margin-left: 10px;
+}
+.noteText{
+    color: var(--main-color);
+}
+.listStyleNumber{
+    list-style-type: decimal;
+}
+.listStyleNumber > li{
+    font-weight: 600;
+}
+.listStyleNumber > li > ul > li{
+    font-weight: normal;
+}
+.strongLine{
+    color: #000;
+    font-weight: bold;
+}
+.imgEx{
+    width: 80%;
+    object-fit: contain;
+    display: block;
+}
+.gap10{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}

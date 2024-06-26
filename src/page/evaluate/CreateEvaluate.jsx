@@ -13,7 +13,7 @@ import { useState } from "react";
 import Loading from "../component/Loading";
 import Noti from "../component/Noti";
 export default function CreateEvaluate() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
     const [noti, setNoti] = useState(false);
     const handCloseNoti = () => {

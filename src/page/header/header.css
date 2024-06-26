@@ -84,6 +84,17 @@
     text-decoration: none;
     height: 55px;
 }
+.textNone .btn{
+    font-size: 14px;
+}
+.textNoneTop{
+    text-decoration: none;
+    height: 55px;
+    color: #fff !important;
+}
+.textNoneTop:hover{
+    color: #000 !important;
+}
 .textNone1{
     text-decoration: none;
 }

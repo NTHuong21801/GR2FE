@@ -30,7 +30,7 @@ export default function CreateDivide() {
                 setNoti(true);
             })
     }
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
     };

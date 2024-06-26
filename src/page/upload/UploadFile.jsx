@@ -11,14 +11,13 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
-import { Input } from "@mui/icons-material";
 export default function UploadFile() {
     const [loading, setLoading] = useState(false);
     const [typeFile, setTypeFile] = useState('');
     const [listFile, setListFile] = useState({});
     const [noti, setNoti] = useState(false);
     const [errMess, setErrMes] = useState('');
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [typeMSSV, setTypeMSSV] = useState(false);
     const [student, setStudent] = useState();
     const [studentSelect, setStudentSelect] = useState();

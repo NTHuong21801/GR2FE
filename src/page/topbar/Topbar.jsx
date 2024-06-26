@@ -67,7 +67,7 @@ export default function Topbar({ open, handleOpen }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        HUST
+                        <Link className='textNoneTop' to={"/home"}>XUHUONG</Link>
                     </Typography>
                 </div>
                 <div className='settingbtn'>

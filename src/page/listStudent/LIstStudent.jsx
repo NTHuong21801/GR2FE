@@ -16,6 +16,9 @@ import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopupConfirm from "../component/PopupConfirm";
+import Footer from "../footer/Footer";
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+import PopupAnotation from "../component/PopupAnotation";
 export default function ListStudent() {
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
@@ -64,7 +67,7 @@ export default function ListStudent() {
             console.log(err);
         }
     }
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -100,8 +103,16 @@ export default function ListStudent() {
             }
         }
     }
+    const [ano, setAno] = useState(true);
+    const handlePopupAno = () => {
+        setAno(true);
+    }
+    const handCloseAno = () => {
+        setAno(false);
+    }
     return (
         <>
+            {ano && <PopupAnotation  onClose={handCloseAno}/>}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Topbar open={open} handleOpen={handleDrawerOpen} />
@@ -112,7 +123,12 @@ export default function ListStudent() {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h2><strong>Danh sách sinh viên</strong></h2>
+                                    <h2>
+                                        <strong>
+                                            Danh sách sinh viên 
+                                            <AnnouncementIcon className="announIcon" onClick={handlePopupAno}/> 
+                                        </strong>
+                                    </h2>
                                 </div>
                                 <div className="btn col-md-2" onClick={handleOpenPopupImport}>
                                     Import Student List
@@ -130,17 +146,17 @@ export default function ListStudent() {
                                             <Table className="backgroundMint">
                                                 <TableHead className="positionFix">
                                                     <TableRow>
-                                                        <TableCell>STT</TableCell>
-                                                        <TableCell>Sinh viên</TableCell>
-                                                        <TableCell>Lớp sinh viên</TableCell>
-                                                        <TableCell>Mã lớp / Học phần</TableCell>
-                                                        <TableCell>Tên đề tài</TableCell>
-                                                        <TableCell>GV đồng ý bảo vệ</TableCell>
-                                                        <TableCell>GVHD</TableCell>
-                                                        <TableCell>Điểm GVHD</TableCell>
-                                                        <TableCell>Điểm GVPB</TableCell>
-                                                        <TableCell>File</TableCell>
-                                                        <TableCell>Action</TableCell>
+                                                        <TableCell className="boldText">STT</TableCell>
+                                                        <TableCell className="boldText">Sinh viên</TableCell>
+                                                        <TableCell className="boldText">Lớp sinh viên</TableCell>
+                                                        <TableCell className="boldText">Mã lớp / Học phần</TableCell>
+                                                        <TableCell className="boldText">Tên đề tài</TableCell>
+                                                        <TableCell className="boldText">GV đồng ý bảo vệ</TableCell>
+                                                        <TableCell className="boldText">GVHD</TableCell>
+                                                        <TableCell className="boldText">Điểm GVHD</TableCell>
+                                                        <TableCell className="boldText">Điểm GVPB</TableCell>
+                                                        <TableCell className="boldText">File</TableCell>
+                                                        <TableCell className="boldText">Action</TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -232,7 +248,7 @@ export default function ListStudent() {
                 </Box>
             </Box>
             {isPopupImport && <PopupImport onClose={handleClosePopupImport} />}
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }

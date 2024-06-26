@@ -1,6 +1,5 @@
 import "./list.css";
 export default function PopupFile({ onClose, data }) {
-    console.log(data)
     return (
         <>
             <div className="popupTable">

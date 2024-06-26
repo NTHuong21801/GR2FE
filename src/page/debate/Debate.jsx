@@ -20,6 +20,7 @@ import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopupConfirm from "../component/PopupConfirm";
+import Footer from '../footer/Footer';
 const Search = styled('div')({
     position: 'relative',
     borderRadius: '4px',
@@ -48,7 +49,7 @@ export default function Divide() {
     useEffect(() => {
         fetchData();
     }, [])
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -105,7 +106,15 @@ export default function Divide() {
                                         </div>
                                     </Link>
                                 </div>
-                                <div className="col-md-5"></div>
+                                <div className="col-md-4">
+                                    <Link className='textNone' to='/genFile'>
+                                        <div className="btn">
+                                            Tạo phiếu phản biện ĐATN từ template
+                                            <img src="assets/icon/writing.png" alt="" />
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div className="col-md-1"></div>
                                 <div className="col-md-4">
                                     <Search>
                                         <IconButton>
@@ -184,8 +193,7 @@ export default function Divide() {
                     </div>
                 </Box>
             </Box>
-
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }

@@ -65,7 +65,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer({open, handClose}) {
     const currentURL = window.location.href;
     var state = currentURL.split("/")[3];
-    if (state === "createDivide" || state === "divide" || state === "") {
+    if (state === "createDivide" || state === "divide") {
         state = '/divide';
     }else if (state === "createEvaluate" || state === "evaluate") {
         state = '/evaluate';
