@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useRoutes, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, useParams } from "react-router-dom";
 import Login from './page/login/Login';
 import "./main.css"
 import ListStudent from './page/listStudent/LIstStudent';
@@ -19,11 +19,14 @@ import ForgotPass from './page/forgotPass/ForgotPass';
 import HomePage from './page/homePage/HomePage';
 import OtherFile from './page/otherFile/OtherFile';
 import Profile from './page/profile/Profile';
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  if (!isAuthenticated()) {
-    return <Navigate to="/" />;
-  }
-  return <Component {...rest} />;
+  const location = useLocation();
+  return isAuthenticated() ? (
+    <Component />
+  ) : (
+    <Navigate to="/" state={{ from: location }} />
+  );
 };
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem('access_token');
@@ -42,32 +45,49 @@ function App() {
     const fetchData = async () => {
       const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
       const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
-
       const currentTimeInSeconds = Math.floor(Date.now());
-      if (accessToken && accessExpiredTime > currentTimeInSeconds) {
-      } else if (refreshToken && refreshExpiredTime > currentTimeInSeconds) {
-        try {
-          const data = {
-            "refreshToken": refreshToken
-          }
-          const res = await ApiService.getRefreshToken(data);
-          localStorage.setItem("access_token", res.accessToken);
-          localStorage.setItem("refresh_token", res.refreshToken);
-          localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
-          localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
-          setAccessToken(res.accessToken)
-          setRefreshToken(res.refreshToken)
+      console.log(accessExpiredTime)
+      console.log(refreshExpiredTime)
+      console.log(currentTimeInSeconds)
+      console.log(refreshExpiredTime < currentTimeInSeconds)
+      if (accessToken && accessExpiredTime < currentTimeInSeconds) {
+        if (refreshToken && refreshExpiredTime < currentTimeInSeconds) {
+          console.log("xuhuong testtttt")
+          try {
+            const data = {
+              "refreshToken": refreshToken
+            }
+            const res = await ApiService.getRefreshToken(data);
+            localStorage.setItem("access_token", res.accessToken);
+            localStorage.setItem("refresh_token", res.refreshToken);
+            localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
+            localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
+            setAccessToken(res.accessToken)
+            setRefreshToken(res.refreshToken)
 
-        } catch (err) {
-          console.log(err);
+          } catch (err) {
+            console.log(err);
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('accountId');
+            localStorage.removeItem('email');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('refreshExpiredTime');
+            localStorage.removeItem('accessExpiredTime');
+            setAccessToken(null);
+            setRefreshToken(null);
+            // window.location.href = "/"
+          }
+        } else {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('accountId');
+          localStorage.removeItem('email');
+          localStorage.removeItem('refresh_token');
+          localStorage.removeItem('refreshExpiredTime');
+          localStorage.removeItem('accessExpiredTime');
+          setAccessToken(null);
+          setRefreshToken(null);
+          window.location.reload();
         }
-      } else {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('accountId');
-        localStorage.removeItem('email');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('refreshExpiredTime');
-        localStorage.removeItem('accessExpiredTime');
       }
     }
     fetchData();
@@ -78,9 +98,9 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/forgotPass" element={<ForgotPass />} />
-        <Route path="/divide" element={<PrivateRoute component={Divide}  />} />
-        <Route path="/home" element={<PrivateRoute component={HomePage}  />} />
-        <Route path="/genFile" element={<PrivateRoute component={GenFile}  />} />
+        <Route path="/divide" element={<PrivateRoute component={Divide} />} />
+        <Route path="/home" element={<PrivateRoute component={HomePage} />} />
+        <Route path="/genFile" element={<PrivateRoute component={GenFile} />} />
         <Route path="/evaluate" element={<PrivateRoute component={Evaluate} />} />
         <Route path="/other" element={<PrivateRoute component={OtherFile} />} />
         <Route path="/debate" element={<PrivateRoute component={Debate} />} />

@@ -4,12 +4,14 @@ import './login.css'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
+import { useNavigate } from 'react-router-dom';
 import Divide from '../divide/Divide';
 import { Link } from 'react-router-dom';
 import HomePage from '../homePage/HomePage';
 export default function Login() {
     const [showErr, setShowErr] = useState(false);
     const [errMes, setErrMes] = useState('');
+    const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") != null);
     const { register, handleSubmit } = useForm();
     const onSubmit = async (d) => {
@@ -26,6 +28,7 @@ export default function Login() {
             localStorage.setItem("accessExpiredTime", res.token.accessExpiredTime);
             localStorage.setItem("refreshExpiredTime", res.token.refreshExpiredTime);
             setIsLoggedIn(true);
+            navigate('/home');
         } catch (error) {
             console.error(error);
             setIsLoggedIn(false);
@@ -33,9 +36,7 @@ export default function Login() {
             setErrMes("Mật khẩu hoặc tên đăng nhập không đúng. Vui lòng kiểm tra lại!");
         }
     };
-    if (isLoggedIn) {
-        return <HomePage />
-    } else {
+    
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="main">
@@ -68,6 +69,6 @@ export default function Login() {
                 </div>
             </form>
         )
-    }
+    
 
 }
