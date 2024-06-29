@@ -18,6 +18,7 @@ import ChangePass from './page/changePass/ChangePass';
 import ForgotPass from './page/forgotPass/ForgotPass';
 import HomePage from './page/homePage/HomePage';
 import OtherFile from './page/otherFile/OtherFile';
+import Profile from './page/profile/Profile';
 const PrivateRoute = ({ component: Component, ...rest }) => {
   if (!isAuthenticated()) {
     return <Navigate to="/" />;
@@ -89,6 +90,7 @@ function App() {
         <Route path="/student" element={<PrivateRoute component={ListStudent} />} />
         <Route path="/upload" element={<PrivateRoute component={UploadFile} />} />
         <Route path="/changePass" element={<PrivateRoute component={ChangePass} />} />
+        <Route path="/profile" element={<PrivateRoute component={Profile} />} />
       </Routes>
     </Router>
   )

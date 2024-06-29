@@ -89,7 +89,9 @@ export default function Topbar({ open, handleOpen }) {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Link to={'/profile'} className={`col-md-2 textNone`}>
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        </Link>
                         <Link to={'/changePass'} className={`col-md-2 textNone`}>
                             <MenuItem onClick={handleClose}>Change Password</MenuItem>
                         </Link>

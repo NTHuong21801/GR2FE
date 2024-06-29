@@ -117,7 +117,7 @@ export default function Divide() {
                                 <div className="col-md-4">
                                     <Link className='textNone' to='/genFile'>
                                         <div className="btn">
-                                            Tạo phiếu phân công nhiệm vụ ĐATN từ template
+                                            Tạo phiếu phân công nhiệm vụ từ template
                                             <img src="assets/icon/writing.png" alt="" />
                                         </div>
                                     </Link>
