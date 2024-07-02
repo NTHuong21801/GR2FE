@@ -18,6 +18,28 @@ const ExportFile = {
         a.click();
         URL.revokeObjectURL(url);
     },
+    downloadZip(zipCode){
+        try {
+            const byteCharacters = atob(zipCode);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/zip' });
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "zipFile";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);  // Ensure the element is removed
+            URL.revokeObjectURL(url);  // Clean up the URL object
+        } catch (error) {
+            console.error("Failed to create or download zip file:", error);
+        }
+    },
     async writeDataToListFile(student){
         try{
             var lists = [];

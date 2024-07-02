@@ -47,19 +47,18 @@ export default function GenFile() {
         formData.append('fileList', selectedFileDSSV);
         try {
 
-            const listUrl = await ApiService.writeDataToFile(formData)
-            if(listUrl.responseMessage == "FILE NOT MATCH"){
-                setNotiErr(true);
+            const response = await ApiService.writeDataToFile(formData)
+            console.log(response)
+            // if(listUrl.responseMessage == "FILE NOT MATCH"){
+            //     setNotiErr(true);
+            //     setLoading(false);
+            // }else if(listUrl.responseMessage == "File not found"){
+            //     setNoti(true);
+            //     setLoading(false);
+            // }else{
+                ExportFile.downloadZip(response);
                 setLoading(false);
-            }else if(listUrl.responseMessage == "File not found"){
-                setNoti(true);
-                setLoading(false);
-            }else{
-                listUrl.forEach(l => {
-                    ExportFile.downloadExcelFromBase64(l.base64, l.fileName);
-                })
-                setLoading(false);
-            }
+            // }
         } catch (e) {
             console.error(e)
         }

@@ -16,7 +16,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                 const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
                 setValue("GVHD", res.body.teacherName);
                 setValue("sign", res.body.teacherName);
-                setValue("teacherPos", res.body.locatedName);
+                setValue("BM", res.body.locatedName);
                 const res1 = await ApiService.getAllSemester();
                 setSemesterList(res1);
             }catch(e){
@@ -63,7 +63,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Đơn vị công tác:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text" {...register("teacherPos", { required: true })} className='inputInfo' />
+                            <input type="text" {...register("BM", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>
