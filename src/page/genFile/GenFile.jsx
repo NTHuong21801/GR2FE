@@ -48,17 +48,12 @@ export default function GenFile() {
         try {
 
             const response = await ApiService.writeDataToFile(formData)
-            console.log(response)
-            // if(listUrl.responseMessage == "FILE NOT MATCH"){
-            //     setNotiErr(true);
-            //     setLoading(false);
-            // }else if(listUrl.responseMessage == "File not found"){
-            //     setNoti(true);
-            //     setLoading(false);
-            // }else{
-                ExportFile.downloadZip(response);
+            if(response.responseCode === '200'){
+                ExportFile.downloadZip(response.body);
                 setLoading(false);
-            // }
+            }else{
+                
+            }
         } catch (e) {
             console.error(e)
         }
@@ -84,8 +79,13 @@ export default function GenFile() {
     const handCloseAno = () => {
         setAno(false);
     }
+    const [popup, setPopup] = useState(false);
+    const handleClosePopup = () => {
+        setPopup(false);
+    }
     return (
         <>
+            {popup &&  <Noti onCloseNoti={handleClosePopup} mess={"Có lỗi trong quá trình tạo File, vui lòng kiểm tra lại!"}/>}
             {ano && <PopupAnoGenFile  onClose={handCloseAno}/>}
             {loading && <Loading />}
             {noti && <Noti onCloseNoti={handCloseNoti} mess={"Bạn cần chọn đầy đủ các file!"} />}
