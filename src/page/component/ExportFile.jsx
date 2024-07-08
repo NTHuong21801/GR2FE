@@ -64,8 +64,8 @@ const ExportFile = {
                     "birthdate": s.studentBirth,
                     "classid": s.classCode,
                     "courseid": s.courseId,
-                    "Điểm hướng dẫn": s.teacherPoint,
-                    "Điểm quá trình": s.midtermPoint,
+                    "Điểm hướng dẫn": s.teacherEvaluatePoint,
+                    "Điểm phản biện": s.teacherDebatePoint,
                     "Điểm cuối kỳ": s.finalPoint,
                     "Đồng ý bảo vệ": status,
                     "name": thesisName,
@@ -75,7 +75,6 @@ const ExportFile = {
                     "phone": s.studentPhone,
                     "termid":s.semester
                 }
-                console.log(item);
                 lists.push(JSON.stringify(item));
             })
             const data = JSON.stringify({

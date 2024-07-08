@@ -167,6 +167,10 @@ export default function Divide() {
                                                                         <img src="assets/icon/download.png" alt="" />
                                                                     </a>
                                                                 </TableCell>
+                                                                <TableCell>
+                                                                    <DeleteIcon className="btn-delete" onClick={() => handleDelete(s.excelId)} />
+                                                                    {confirm && <PopupConfirm message={"Bạn có chắc chắn muốn xoá file này?"} onClose={handleCloseConfirm} handleDelete={handleDeleteExcel} />}
+                                                                </TableCell>
                                                             </TableRow>
                                                         ))
                                                     ) : (
