@@ -12,6 +12,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { Link } from 'react-router-dom';
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const validatePassword = (password) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return regex.test(password);
@@ -30,7 +31,11 @@ export default function Register() {
             const data = {
                 "username": d.email,
                 "password": d.password,
+                "fullName": d.fullname,
+                "locatedName": d.locatedName,
+                "phone": d.phone
             }
+            // console.log(data)
             ApiService.register(data)
                 .then(data => {
                     if (data.responseCode === '401') {
@@ -50,7 +55,10 @@ export default function Register() {
         }
     }
     const [values, setValues] = useState({
+        fullname: '',
         email: '',
+        phone: '',
+        locatedName: '',
         newPassword: '',
         confirmPassword: '',
         showNewPassword: false,
@@ -118,16 +126,6 @@ export default function Register() {
                                 }
                                 placeholder="Password"
                             />
-
-                            {/* <input type="password"
-                                {...register('password', {
-                                    required: 'Password is required',
-                                    minLength: {
-                                        value: 6,
-                                        message: 'Password should be at least 6 characters long',
-                                    },
-                                })}
-                                placeholder='Password' /> */}
                             {errors.password && <p className='validatePass'>{errors.password.message}</p>}
                         </div>
                         <div className="loginDetailRes">
@@ -155,13 +153,45 @@ export default function Register() {
                                 }
                                 placeholder="Confirm Password"
                             />
-                            {/* <input type="password"
-                                {...register('confirmPassword', {
-                                    validate: (value) =>
-                                        value === watch('password') || 'The passwords do not match',
-                                })}
-                                placeholder='Confirm password' /> */}
                             {errors.confirmPassword && <p className='validatePass'>{errors.confirmPassword.message}</p>}
+                        </div>
+                        <div className="loginDetailRes">
+                            <OutlinedInput
+                                {...register("fullname", { required: true })}
+                                fullWidth
+                                id="fullname"
+                                type='text'
+                                value={values.fullname}
+                                onChange={handleChange('fullname')}
+                                placeholder="Full Name"
+                            />
+                        </div>
+                        <div className="loginDetailRes">
+                            <OutlinedInput
+                                {...register("phone", { required: true })}
+                                fullWidth
+                                id="phone"
+                                type='text'
+                                value={values.phone}
+                                onChange={handleChange('phone')}
+                                placeholder="Phone"
+                            />
+                        </div>
+                        <div className="loginDetailRes">
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Khoa/Viện</InputLabel>
+                                <Select
+                                    {...register("locatedName", { required: true })}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values.locatedName}
+                                    label="Khoa/Viện"
+                                    onChange={handleChange('locatedName')}
+                                >
+                                    <MenuItem value="Khoa Học Máy Tính">Khoa Học Máy Tính</MenuItem>
+                                    <MenuItem value="Kỹ Thuật Máy Tính">Kỹ Thuật Máy Tính</MenuItem>
+                                </Select>
+                            </FormControl>
                         </div>
                         {showErr && <span className='errorMessage'>{errMes}</span>}
                         <div className="register">
