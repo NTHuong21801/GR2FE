@@ -15,31 +15,7 @@ export default function PopupAnoGenFile({ onClose }) {
                             <li>File danh sách sinh viên phải là file được lấy từ QLDT về.
                             </li>
                             <li>File excel template và file Json cần đứng ánh xạ đúng với nhau để có thể tạo hàng loạt file một cách đúng nhất dựa vào danh sách sinh viên.</li>
-                            <li>Đối với việc tạo 1 trong 3 phiếu: Phiếu đánh giá ĐATN, Phiếu phân công nhiệm vụ và Phiếu phản biện ĐATN tên file cần được để đúng định dạng.
-                                <ul>
-                                    <li>
-                                        Phiếu giao nhiệm vụ:
-                                        <ul>
-                                            <li>File excel: <span>Phiếu giao nhiệm vụ ĐATN.xlsx</span></li>
-                                            <li>File Json: Divide.json</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        Phiếu đánh giá ĐATN:
-                                        <ul>
-                                            <li>File excel: <span>Phiếu đánh giá ĐATN.xlsx</span></li>
-                                            <li>File Json: Evaluation.json</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        Phiếu phản biện ĐATN:
-                                        <ul>
-                                            <li>File excel: <span>Phiếu phản biện ĐATN.xlsx</span></li>
-                                            <li>File Json: Debate.json</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                        
                         </ul>
                     </div>
                 </div>
