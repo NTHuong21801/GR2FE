@@ -42,12 +42,14 @@ function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.accessToken);
   const tokenRef = useSelector((state) => state.refreshToken);
+  const refreshExpiredTime = useSelector((state) => state.refreshExpiredTime);
+  const accessExpiredTime = useSelector((state) => state.accessExpiredTime);
   const [accessToken, setAccessToken] = useState(token);
   const [refreshToken, setRefreshToken] = useState(tokenRef);
   useEffect(() => {
     const fetchData = async () => {
-      const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
-      const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
+      const refreshExpiredTime = parseInt(refreshExpiredTime, 10);
+      const accessExpiredTime = parseInt(accessExpiredTime, 10);
       const currentTimeInSeconds = Math.floor(Date.now());
       if (accessToken && accessExpiredTime < currentTimeInSeconds) {
         if (refreshToken && refreshExpiredTime < currentTimeInSeconds) {
