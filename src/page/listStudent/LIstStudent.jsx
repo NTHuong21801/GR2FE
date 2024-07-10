@@ -44,7 +44,7 @@ export default function ListStudent() {
             }
         }
         fetchData();
-    }, [currentPage])
+    }, [currentPage, list])
     const handleClosePopupFile = () => {
         setIsPopupFile(false);
     }
@@ -83,7 +83,6 @@ export default function ListStudent() {
         } catch (err) {
             console.log(err);
         }
-        window.location.reload();
     }
     const handleCloseConfirm = () => {
         setConfirm(false);
@@ -97,7 +96,7 @@ export default function ListStudent() {
             try {
                 const res = await ApiService.deleteStudent(studentSelected);
                 if (res.responseCode == '200') {
-                    window.location.reload();
+                    
                 }else {
                     setNoti(true);
                 }

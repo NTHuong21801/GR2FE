@@ -29,7 +29,7 @@ export default function Header() {
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('refreshExpiredTime');
             localStorage.removeItem('accessExpiredTime');
-            window.location.reload();
+            window.location.href("/");
         }
     }
     // useEffect(() => {

@@ -49,7 +49,7 @@ export default function Divide() {
     }
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [excel])
     const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
@@ -80,7 +80,7 @@ export default function Divide() {
             try {
                 const res = await ApiService.deleteExcel(excelSelected);
                 if (res.responseCode == '200') {
-                    window.location.reload();
+                    
                 }else {
                     setNoti(true);
                 }

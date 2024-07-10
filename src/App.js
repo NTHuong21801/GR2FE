@@ -86,7 +86,7 @@ function App() {
           localStorage.removeItem('accessExpiredTime');
           setAccessToken(null);
           setRefreshToken(null);
-          window.location.reload();
+          window.location.href="/";
         }
       }
     }

@@ -10,6 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const drawerWidth = 300;
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -29,6 +30,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 export default function Topbar({ open, handleOpen }) {
+    const navigate = useNavigate();
     const handleLogout = () => {
         const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
         if (shouldDelete) {
@@ -38,7 +40,7 @@ export default function Topbar({ open, handleOpen }) {
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('refreshExpiredTime');
             localStorage.removeItem('accessExpiredTime');
-            window.location.reload();
+            navigate("/");
         }
     }
     const [anchorEl, setAnchorEl] = React.useState(null);
