@@ -21,6 +21,7 @@ import AnnouncementIcon from '@mui/icons-material/Announcement';
 import PopupAnotation from "../component/PopupAnotation";
 import Noti from "../component/Noti";
 export default function ListStudent() {
+    const [student, setStudent] = useState();
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
     const [isPopupImport, setIsPopupImport] = useState(false);
@@ -30,15 +31,14 @@ export default function ListStudent() {
     const [currentPage, setCurrentPage] = useState(0);
     const email = localStorage.getItem('email');
     const handlePageChange = (page) => {
-        console.log(page)
         setCurrentPage(page);
     };
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await ApiService.getStudentByTeacherPaginate(email, currentPage);
-                console.log(res);
                 setList(res);
+                setStudent(res.studentResponseList);
             } catch (err) {
                 console.log(err);
             }
@@ -49,7 +49,6 @@ export default function ListStudent() {
         setIsPopupFile(false);
     }
     const handleOpenPopupFile = (data) => {
-        console.log(data);
         setIsPopupFile(true);
         setListExcel(data);
     }
@@ -97,7 +96,7 @@ export default function ListStudent() {
             try {
                 const res = await ApiService.deleteStudent(studentSelected);
                 if (res.responseCode == '200') {
-                    window.location.reload();
+                    setList(student.filter(student => student.id !== studentSelected));
                 }else {
                     setNoti(true);
                 }
@@ -168,7 +167,7 @@ export default function ListStudent() {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {list != null && list.studentResponseList.map(s => (
+                                                    {student != null && student.map(s => (
                                                         <TableRow key={s.studentId}>
                                                             <TableCell>{count++}</TableCell>
                                                             <TableCell>{s.studentName} - {s.mssv}</TableCell>
