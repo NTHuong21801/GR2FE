@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { setLogout } from '../../service/state';
+import "../header/header.css"
 const drawerWidth = 300;
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
