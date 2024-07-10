@@ -96,7 +96,7 @@ export default function ListStudent() {
             try {
                 const res = await ApiService.deleteStudent(studentSelected);
                 if (res.responseCode == '200') {
-                    setList(student.filter(student => student.id !== studentSelected));
+                    setStudent(student.filter(student => student.id !== studentSelected));
                     setConfirm(false);
                 }else {
                     setNoti(true);
