@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import axios from 'axios';
-const api = 'http://dev.techlinkvn.com:8090';
+const api = 'http://localhost:8090';
 const ApiService = {
   getToken() {
     const token = localStorage.getItem("access_token");

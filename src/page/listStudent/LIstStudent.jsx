@@ -33,16 +33,16 @@ export default function ListStudent() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await ApiService.getStudentByTeacherPaginate(email, currentPage);
-                setList(res);
-                setStudent(res.studentResponseList);
-            } catch (err) {
-                console.log(err);
-            }
+    const fetchData = async () => {
+        try {
+            const res = await ApiService.getStudentByTeacherPaginate(email, currentPage);
+            setList(res);
+            setStudent(res.studentResponseList);
+        } catch (err) {
+            console.log(err);
         }
+    }
+    useEffect(() => {
         fetchData();
     }, [currentPage])
     const handleClosePopupFile = () => {
@@ -54,6 +54,7 @@ export default function ListStudent() {
     }
     const handleClosePopupImport = () => {
         setIsPopupImport(false);
+        fetchData();
     }
     const handleOpenPopupImport = (data) => {
         setIsPopupImport(true);
@@ -78,11 +79,10 @@ export default function ListStudent() {
         var status = event.target.value;
         try {
             const res = await ApiService.updateStatus(id, status);
-            setList(res);
+            fetchData();
         } catch (err) {
             console.log(err);
         }
-        window.location.reload();
     }
     const handleCloseConfirm = () => {
         setConfirm(false);
@@ -96,7 +96,7 @@ export default function ListStudent() {
             try {
                 const res = await ApiService.deleteStudent(studentSelected);
                 if (res.responseCode == '200') {
-                    setStudent(student.filter(student => student.id !== studentSelected));
+                    setStudent(student.filter(student => student.studentId !== studentSelected));
                     setConfirm(false);
                 }else {
                     setNoti(true);
