@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ApiService from "../../service/service";
+import { useSelector } from "react-redux";
 export default function FormDebate({ handleExportExcelFile }) {
     const [semesterList, setSemesterList] = React.useState();
-    const [teacher, setTeacher] = useState();
+    const token = useSelector((state) => state.accessToken);
+    const accountId = useSelector((state) => state.accountId);
     const { register, setValue, handleSubmit } = useForm();
     const onSubmit = (d) => {
         handleExportExcelFile(d);
@@ -13,8 +15,8 @@ export default function FormDebate({ handleExportExcelFile }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res1 = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'));
-                const res2 = await ApiService.getAllSemester();
+                const res1 = await ApiService.getTeacherByAccount(accountId, token);
+                const res2 = await ApiService.getAllSemester(token);
                 setValue("GVPB", res1.body.teacherName);
                 setValue("Đơn vị công tác", res1.body.locatedName);
                 setSemesterList(res2);
@@ -59,7 +61,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                         </div>
                         <div className="col-md-3">
                             <input
-                                {...register("studentID", { required: true })}
+                                {...register("StudentID", { required: true })}
                                 className='inputInfo'
                             />
                         </div>
@@ -68,7 +70,7 @@ export default function FormDebate({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Họ và tên sinh viên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text" {...register("studentName", { required: true })} className='inputInfo' />
+                            <input type="text" {...register("studentname", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>

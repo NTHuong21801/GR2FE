@@ -19,19 +19,19 @@ import ForgotPass from './page/forgotPass/ForgotPass';
 import HomePage from './page/homePage/HomePage';
 import OtherFile from './page/otherFile/OtherFile';
 import Profile from './page/profile/Profile';
-
+import { useSelector,useDispatch } from "react-redux";
+import { setLogout, setLogin } from './service/state';
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
-  return isAuthenticated() ? (
+  const accessToken = useSelector((state) => state.accessToken);
+  const expiresAt = useSelector((state) => state.accessExpiredTime);
+  return isAuthenticated(accessToken, expiresAt) ? (
     <Component />
   ) : (
     <Navigate to="/" state={{ from: location }} />
   );
 };
-const isAuthenticated = () => {
-  const accessToken = localStorage.getItem('access_token');
-  const expiresAt = localStorage.getItem('accessExpiredTime');
-
+const isAuthenticated = (accessToken, expiresAt) => {
   if (!accessToken || !expiresAt) {
     return false;
   }
@@ -39,51 +39,43 @@ const isAuthenticated = () => {
   return Date.now() < expiresAtTime;
 };
 function App() {
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
-  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh_token'));
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.accessToken);
+  const tokenRef = useSelector((state) => state.refreshToken);
+  const [accessToken, setAccessToken] = useState(token);
+  const [refreshToken, setRefreshToken] = useState(tokenRef);
   useEffect(() => {
     const fetchData = async () => {
       const refreshExpiredTime = parseInt(localStorage.getItem('refreshExpiredTime'), 10);
       const accessExpiredTime = parseInt(localStorage.getItem('accessExpiredTime'), 10);
       const currentTimeInSeconds = Math.floor(Date.now());
-      console.log(accessExpiredTime)
-      console.log(refreshExpiredTime)
-      console.log(currentTimeInSeconds)
-      console.log(refreshExpiredTime < currentTimeInSeconds)
       if (accessToken && accessExpiredTime < currentTimeInSeconds) {
         if (refreshToken && refreshExpiredTime < currentTimeInSeconds) {
-          console.log("xuhuong testtttt")
           try {
             const data = {
               "refreshToken": refreshToken
             }
             const res = await ApiService.getRefreshToken(data);
-            localStorage.setItem("access_token", res.accessToken);
-            localStorage.setItem("refresh_token", res.refreshToken);
-            localStorage.setItem("accessExpiredTime", res.accessExpiredTime);
-            localStorage.setItem("refreshExpiredTime", res.refreshExpiredTime);
+            dispatch(
+              setLogin({
+                accessToken: res.token.accessToken,
+                refreshToken: res.token.refreshToken,
+                accessExpiredTime: res.token.accessExpiredTime,
+                refreshExpiredTime: res.token.refreshExpiredTime
+              })
+            );
             setAccessToken(res.accessToken)
             setRefreshToken(res.refreshToken)
 
           } catch (err) {
             console.log(err);
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('accountId');
-            localStorage.removeItem('email');
-            localStorage.removeItem('refresh_token');
-            localStorage.removeItem('refreshExpiredTime');
-            localStorage.removeItem('accessExpiredTime');
+            dispatch(setLogout());
             setAccessToken(null);
             setRefreshToken(null);
             // window.location.href = "/"
           }
         } else {
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('accountId');
-          localStorage.removeItem('email');
-          localStorage.removeItem('refresh_token');
-          localStorage.removeItem('refreshExpiredTime');
-          localStorage.removeItem('accessExpiredTime');
+          dispatch(setLogout());
           setAccessToken(null);
           setRefreshToken(null);
           window.location.href="/";
@@ -95,7 +87,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/forgotPass" element={<ForgotPass />} />
         <Route path="/divide" element={<PrivateRoute component={Divide} />} />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "../header/Header";
+
 import Footer from "../footer/Footer";
 import "./genFile.css"
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
@@ -14,7 +14,9 @@ import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 import PopupAnoGenFile from "../component/PopupAnoGenFile";
+import { useSelector } from "react-redux";
 export default function GenFile() {
+    const token = useSelector((state) => state.accessToken);
     const [selectedFileDSSV, setSelectedFileDSSV] = useState(null);
     const [selectedFileTemp, setSelectedFileTemp] = useState(null);
     const [selectedFileJson, setSelectedFileJson] = useState(null);
@@ -47,7 +49,7 @@ export default function GenFile() {
         formData.append('fileList', selectedFileDSSV);
         try {
 
-            const response = await ApiService.writeDataToFile(formData)
+            const response = await ApiService.writeDataToFile(formData, token)
             if(response.responseCode === '200'){
                 ExportFile.downloadZip(response.body);
                 setLoading(false);

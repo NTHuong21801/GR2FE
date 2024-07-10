@@ -3,7 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ApiService from "../../service/service";
+import { useSelector } from "react-redux";
 export default function FormEvaluate({ handleExportExcelFile }) {
+    const token = useSelector((state) => state.accessToken);
+    const accountId = useSelector((state) => state.accountId);
     const [semesterList, setSemesterList] = React.useState();
     const { register, setValue, handleSubmit } = useForm();
     const [mssv, setMSSV] = React.useState();
@@ -13,11 +16,11 @@ export default function FormEvaluate({ handleExportExcelFile }) {
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+                const res = await ApiService.getTeacherByAccount(accountId, token)
                 setValue("GVHD", res.body.teacherName);
                 setValue("sign", res.body.teacherName);
                 setValue("BM", res.body.locatedName);
-                const res1 = await ApiService.getAllSemester();
+                const res1 = await ApiService.getAllSemester(token);
                 setSemesterList(res1);
             }catch(e){
                 console.log(e)
@@ -28,9 +31,9 @@ export default function FormEvaluate({ handleExportExcelFile }) {
     const handleMSSVBlur = async () => {
         if(mssv){
             try{
-                const res = await ApiService.getStudentByMssv(mssv);
-                setValue("studentID", res.body.mssv);
-                setValue("studentName", res.body.studentName);
+                const res = await ApiService.getStudentByMssv(mssv, token);
+                setValue("StudentID", res.body.mssv);
+                setValue("studentname", res.body.studentName);
 
             }catch(e){
                 alert("Mã số sinh viên không tồn tại");
@@ -73,7 +76,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                         </div>
                         <div className="col-md-3">
                             <input
-                                {...register("studentID")}
+                                {...register("StudentID")}
                                 className='inputInfo'
                                 onChange={(e) => setMSSV(e.target.value)}
                                 onBlur={handleMSSVBlur}
@@ -84,7 +87,7 @@ export default function FormEvaluate({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Họ và tên sinh viên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input type="text" {...register("studentName", { required: true })} className='inputInfo' />
+                            <input type="text" {...register("studentname", { required: true })} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                     </div>

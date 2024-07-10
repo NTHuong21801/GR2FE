@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Topbar from '../topbar/Topbar';
 import DrawerHeader from "../component/DrawerHeader";
+import { useSelector } from "react-redux";
 export default function UploadFile() {
     const [loading, setLoading] = useState(false);
     const [typeFile, setTypeFile] = useState('');
@@ -22,11 +23,12 @@ export default function UploadFile() {
     const [student, setStudent] = useState();
     const [studentSelect, setStudentSelect] = useState();
     const [selectedFileJson, setSelectedFileJson] = useState(null);
-    const email = localStorage.getItem('email');
+    const token = useSelector((state) => state.accessToken);
+    const email = useSelector((state) => state.email);
     useEffect(() => {
         const fetchStudent = async () => {
             try {
-                const res = await ApiService.getStudentByTeacherEmail(email);
+                const res = await ApiService.getStudentByTeacherEmail(email, token);
                 setStudent(res.body);
             } catch (err) {
                 console.log(err);
@@ -70,7 +72,7 @@ export default function UploadFile() {
             });
             formData.append('fileJson', selectedFileJson);
             try {
-                const json = await ApiService.readFileToDB(formData, typeFile, mssv);
+                const json = await ApiService.readFileToDB(formData, typeFile, mssv, token);
                 if (json == 'Done') {
                     setLoading(false);
                     setNoti(true);

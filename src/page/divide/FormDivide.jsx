@@ -3,7 +3,10 @@ import React from "react";
 import './divide.css'
 import { useEffect } from "react";
 import ApiService from "../../service/service";
+import { useSelector } from "react-redux";
 export default function FormDivide({ handleExportExcelFile }) {
+    const token = useSelector((state) => state.accessToken);
+    const accountId = useSelector((state) => state.accountId);
     const [semesterList, setSemesterList] = React.useState();
     const [choice, setChoice] = React.useState();
     const [mssv, setMSSV] = React.useState();
@@ -14,11 +17,11 @@ export default function FormDivide({ handleExportExcelFile }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await ApiService.getAllChoice();
+                const res = await ApiService.getAllChoice(token);
                 setChoice(res);
-                const res1 = await ApiService.getAllSemester();
+                const res1 = await ApiService.getAllSemester(token);
                 setSemesterList(res1);
-                const re2 = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'))
+                const re2 = await ApiService.getTeacherByAccount(accountId, token)
                 setValue("GVHD", re2.body.teacherName);
                 setValue("sign", re2.body.teacherName);
                 setValue("Địa điểm", re2.body.locatedName);
@@ -31,10 +34,10 @@ export default function FormDivide({ handleExportExcelFile }) {
     const handleMSSVBlur = async () => {
         if (mssv) {
             try {
-                const data = await ApiService.getStudentByMssv(mssv);
-                setValue("studentID", data.body.mssv);
+                const data = await ApiService.getStudentByMssv(mssv, token);
+                setValue("StudentID", data.body.mssv);
                 setValue("Email", data.body.studentEmail);
-                setValue("studentName", data.body.studentName);
+                setValue("studentname", data.body.studentName);
                 setValue("phone", data.body.studentPhone);
                 setValue("Lớp", data.body.className);
 
@@ -79,7 +82,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                         </div>
                         <div className="col-md-3">
                             <input
-                                {...register("studentID")}
+                                {...register("StudentID")}
                                 className='inputInfo'
                                 onChange={(e) => setMSSV(e.target.value)}
                                 onBlur={handleMSSVBlur}
@@ -99,7 +102,7 @@ export default function FormDivide({ handleExportExcelFile }) {
                             <label htmlFor="" className='label'>Họ và tên:</label>
                         </div>
                         <div className="col-md-3">
-                            <input {...register("studentName")} className='inputInfo' />
+                            <input {...register("studentname")} className='inputInfo' />
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-2">

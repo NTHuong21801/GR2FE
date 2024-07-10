@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ApiService from '../../service/service';
 import { useNavigate } from 'react-router-dom';
-import Divide from '../divide/Divide';
+import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
-import HomePage from '../homePage/HomePage';
+import { setLogin } from '../../service/state';
 export default function Login() {
     const [showErr, setShowErr] = useState(false);
     const [errMes, setErrMes] = useState('');
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") != null);
     const { register, handleSubmit } = useForm();
+    const dispatch = useDispatch();
     const onSubmit = async (d) => {
         try {
             const data = {
@@ -21,17 +21,19 @@ export default function Login() {
                 "password": d.pass
             }
             const res = await ApiService.login(data);
-            localStorage.setItem("access_token", res.token.accessToken);
-            localStorage.setItem("accountId", res.accountId);
-            localStorage.setItem("email", res.token.userName);
-            localStorage.setItem("refresh_token", res.token.refreshToken);
-            localStorage.setItem("accessExpiredTime", res.token.accessExpiredTime);
-            localStorage.setItem("refreshExpiredTime", res.token.refreshExpiredTime);
-            setIsLoggedIn(true);
+            dispatch(
+                setLogin({
+                  accessToken: res.token.accessToken,
+                  accountId: res.accountId,
+                  email: res.token.userName,
+                  refreshToken: res.token.refreshToken,
+                  accessExpiredTime: res.token.accessExpiredTime,
+                  refreshExpiredTime: res.token.refreshExpiredTime
+                })
+              );
             navigate('/home');
         } catch (error) {
             console.error(error);
-            setIsLoggedIn(false);
             setShowErr(true);
             setErrMes("Mật khẩu hoặc tên đăng nhập không đúng. Vui lòng kiểm tra lại!");
         }

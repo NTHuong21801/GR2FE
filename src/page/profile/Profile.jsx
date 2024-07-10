@@ -8,6 +8,7 @@ import Footer from '../footer/Footer';
 import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import ApiService from '../../service/service';
+import { useSelector } from "react-redux";
 const Search = styled('div')({
     position: 'relative',
     borderRadius: '4px',
@@ -17,6 +18,8 @@ const Search = styled('div')({
     border: 'solid 1px #ccc'
 });
 export default function Profile(){
+    const token = useSelector((state) => state.accessToken);
+    const accountId = useSelector((state) => state.accountId);
     const [teacher, setTeacher] = useState();
     const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
@@ -28,7 +31,7 @@ export default function Profile(){
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const res = await ApiService.getTeacherByAccount(localStorage.getItem('accountId'));
+                const res = await ApiService.getTeacherByAccount(accountId, token);
                 setTeacher(res.body);
             }catch(e){
                 console.log(e)

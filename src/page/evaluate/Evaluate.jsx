@@ -22,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PopupConfirm from "../component/PopupConfirm";
 import Footer from '../footer/Footer';
 import Noti from '../component/Noti';
+import { useSelector } from "react-redux";
 const Search = styled('div')({
     position: 'relative',
     borderRadius: '4px',
@@ -31,6 +32,8 @@ const Search = styled('div')({
     border: 'solid 1px #ccc'
 });
 export default function Divide() {
+    const token = useSelector((state) => state.accessToken);
+    const email = useSelector((state) => state.email);
     const [excel, setExcel] = useState([]);
     const [text, setText] = useState();
     const [excelSelected, setExcelSelected] = useState();
@@ -38,10 +41,10 @@ export default function Divide() {
     const fetchData = async () => {
         try {
             const data = {
-                "emailTeacher": localStorage.getItem("email"),
+                "emailTeacher": email,
                 "excelType": "EXCEL_EVALUATE"
             }
-            const res = await ApiService.getExcelType(data);
+            const res = await ApiService.getExcelType(data, token);
             setExcel(res);
         } catch (err) {
             console.log(err);
@@ -78,7 +81,7 @@ export default function Divide() {
     const handleDeleteExcel = async () => {
         if (excelSelected) {
             try {
-                const res = await ApiService.deleteExcel(excelSelected);
+                const res = await ApiService.deleteExcel(excelSelected, token);
                 if (res.responseCode == '200') {
                     setExcel(excel.filter(excel => excel.excelId !== excelSelected))
                 }else {

@@ -1,5 +1,5 @@
 import ApiService from "../../service/service";
-
+import { useSelector } from "react-redux";
 const ExportFile = {
     downloadExcelFromBase64(base64String, fileName) {
         const byteCharacters = atob(base64String);
@@ -40,7 +40,7 @@ const ExportFile = {
             console.error("Failed to create or download zip file:", error);
         }
     },
-    async writeDataToListFile(student){
+    async writeDataToListFile(student, token){
         try{
             var lists = [];
             student.forEach(s => {
@@ -55,8 +55,8 @@ const ExportFile = {
                 let thesisName = s.thesisName == null ? "" : s.thesisName;
                 let thesisType = s.thesisType == null ? "" : s.thesisType;
                 const item = {
-                    "studentID": s.mssv,
-                    "studentName": s.studentName,
+                    "StudentID": s.mssv,
+                    "studentname": s.studentName,
                     "Email": s.studentEmail,
                     "GVHD": s.teacherName,
                     "Lớp": s.className,
@@ -80,7 +80,7 @@ const ExportFile = {
             const data = JSON.stringify({
                 "json": lists
             });
-            const res = await ApiService.writeDataToListFile(data);
+            const res = await ApiService.writeDataToListFile(data, token);
             ExportFile.downloadExcelFromBase64(res.base64, res.fileName)
         }catch(e) {
             console.error(e);

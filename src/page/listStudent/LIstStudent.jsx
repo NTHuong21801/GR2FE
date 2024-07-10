@@ -20,7 +20,10 @@ import Footer from "../footer/Footer";
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 import PopupAnotation from "../component/PopupAnotation";
 import Noti from "../component/Noti";
+import { useSelector } from "react-redux";
 export default function ListStudent() {
+    const token = useSelector((state) => state.accessToken);
+    const email = useSelector((state) => state.email);
     const [student, setStudent] = useState();
     const [list, setList] = useState();
     const [isPopupFile, setIsPopupFile] = useState(false);
@@ -29,13 +32,12 @@ export default function ListStudent() {
     const [studentSelected, setStudentSelected] = useState();
     const [confirm, setConfirm] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
-    const email = localStorage.getItem('email');
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
     const fetchData = async () => {
         try {
-            const res = await ApiService.getStudentByTeacherPaginate(email, currentPage);
+            const res = await ApiService.getStudentByTeacherPaginate(email, currentPage, token);
             setList(res);
             setStudent(res.studentResponseList);
         } catch (err) {
@@ -62,8 +64,8 @@ export default function ListStudent() {
     var count = 1;
     const handleExportAll = async () => {
         try {
-            const res = await ApiService.getStudentByTeacherEmail(email);
-            ExportFile.writeDataToListFile(res.body);
+            const res = await ApiService.getStudentByTeacherEmail(email, token);
+            ExportFile.writeDataToListFile(res.body, token);
         } catch (err) {
             console.log(err);
         }
@@ -78,7 +80,7 @@ export default function ListStudent() {
     const handleChangeStatus = async (event, id) => {
         var status = event.target.value;
         try {
-            const res = await ApiService.updateStatus(id, status);
+            const res = await ApiService.updateStatus(id, status, token);
             fetchData();
         } catch (err) {
             console.log(err);
@@ -94,7 +96,7 @@ export default function ListStudent() {
     const handleDeleteStudent = async () => {
         if (studentSelected) {
             try {
-                const res = await ApiService.deleteStudent(studentSelected);
+                const res = await ApiService.deleteStudent(studentSelected, token);
                 if (res.responseCode == '200') {
                     setStudent(student.filter(student => student.studentId !== studentSelected));
                     setConfirm(false);

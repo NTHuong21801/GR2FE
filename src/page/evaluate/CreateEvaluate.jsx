@@ -1,5 +1,5 @@
 import Footer from "../footer/Footer";
-import Header from "../header/Header";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormEvaluate from "./FormEvaluate";
 import ApiService from "../../service/service";
@@ -12,7 +12,9 @@ import DrawerHeader from "../component/DrawerHeader";
 import { useState } from "react";
 import Loading from "../component/Loading";
 import Noti from "../component/Noti";
+import { useSelector } from "react-redux";
 export default function CreateEvaluate() {
+    const token = useSelector((state) => state.accessToken);
     const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
     const [noti, setNoti] = useState(false);
@@ -28,7 +30,7 @@ export default function CreateEvaluate() {
     const exportExcelFile = async (myData) => {
         const fileType = "EXCEL_EVALUATE";
         setLoading(true)
-        await ApiService.exportEvaluate(myData, fileType)
+        await ApiService.exportEvaluate(myData, fileType, token)
             .then(res => {
                 ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
                 setLoading(false)

@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 import axios from 'axios';
-const api = 'http://dev.techlinkvn.com:8090';
+const api = 'http://localhost:8090';
 const ApiService = {
-  getToken() {
-    const token = localStorage.getItem("access_token");
+  getToken(token) {
     const configAuth = {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -12,8 +11,7 @@ const ApiService = {
     }
     return configAuth;
   },
-  getTokenType(file) {
-    const token = localStorage.getItem("access_token");
+  getTokenType(file, token) {
     const configAuth = {
       headers: {
         'Content-Type': file.type,
@@ -22,8 +20,7 @@ const ApiService = {
     }
     return configAuth;
   },
-  getTokenJson() {
-    const token = localStorage.getItem("access_token");
+  getTokenJson(token) {
     const configAuth = {
       headers: {
         'Content-Type': 'application/json',
@@ -32,17 +29,17 @@ const ApiService = {
     }
     return configAuth;
   },
-  async getAllChoice() {
+  async getAllChoice(token) {
     try {
-      const response = await axios.get(`${api}/user/get-all-topic`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-topic`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async getAllSemester() {
+  async getAllSemester(token) {
     try {
-      const response = await axios.get(`${api}/user/get-all-semester`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/get-all-semester`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
@@ -72,50 +69,49 @@ const ApiService = {
       return error.response.data;
     }
   },
-  async getStudentByMssv(mssv) {
+  async getStudentByMssv(mssv, token) {
     try {
-      const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/student/get-student-by-mssv/${mssv}`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async getStudentByTeacher(email) {
+  async getStudentByTeacher(email, token) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async getStudentByTeacherPaginate(email, page) {
+  async getStudentByTeacherPaginate(email, page, token) {
     try {
-      const response = await axios.get(`${api}/user/teacher?email=${email}&page=${page}&size=5`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher?email=${email}&page=${page}&size=5`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async getStudentByTeacherEmail(email) {
+  async getStudentByTeacherEmail(email, token) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-student-by-teacher-email/${email}`, ApiService.getToken(token));
       return response.data;
 
     } catch (error) {
       console.log(error)
     }
   },
-  async getTeacherByAccount(account) {
+  async getTeacherByAccount(account, token) {
     try {
-      const response = await axios.get(`${api}/user/teacher/get-teacher-by-account/${account}`, ApiService.getToken());
+      const response = await axios.get(`${api}/user/teacher/get-teacher-by-account/${account}`, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async updateStatus(id, status) {
+  async updateStatus(id, status, token) {
     try {
-      const token = localStorage.getItem("access_token");; // Assume this returns the token string
       const response = await axios.post(
         `${api}/user/teacher/updateStatus/${id}?status=${status}`,
         {},
@@ -131,9 +127,9 @@ const ApiService = {
       throw error; // Rethrow the error to be caught in handleChangeStatus
     }
   },
-  async getExcelType(data) {
+  async getExcelType(data, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/get-file-by-email-and-type`, data, ApiService.getToken());
+      const response = await axios.post(`${api}/user/excel/get-file-by-email-and-type`, data, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
@@ -147,57 +143,56 @@ const ApiService = {
       console.log(error)
     }
   },
-  async exportEvaluate(data, fileType) {
+  async exportEvaluate(data, fileType, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/exportEvaluate/${fileType}`, data, ApiService.getToken());
+      const response = await axios.post(`${api}/user/excel/exportEvaluate/${fileType}`, data, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async writeDataToFile(file) {
+  async writeDataToFile(file, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/writeFile`, file, ApiService.getTokenType(file));
+      const response = await axios.post(`${api}/user/excel/writeFile`, file, ApiService.getTokenType(file, token));
       return response.data;
     } catch (error) {
       return error.response.data;
     }
   },
-  async writeDataToListFile(data) {
+  async writeDataToListFile(data, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/listDSSV`, data, ApiService.getTokenJson());
+      const response = await axios.post(`${api}/user/excel/listDSSV`, data, ApiService.getTokenJson(token));
       return response.data;
     } catch (error) {
       console.log(error)
     }
   },
-  async readFileToDB(file, fileType, mssv) {
+  async readFileToDB(file, fileType, mssv, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}&mssv=${mssv}`, file, ApiService.getTokenType(file));
+      const response = await axios.post(`${api}/user/excel/readFileDb?fileType=${fileType}&mssv=${mssv}`, file, ApiService.getTokenType(file, token));
       return response.data;
     } catch (error) {
       return error.response.data;
     }
   },
-  async readListFileAndStoreDB(file) {
+  async readListFileAndStoreDB(file, token) {
     try {
-      const response = await axios.post(`${api}/user/excel/readFileAndStoreDB`, file, ApiService.getTokenType(file));
+      const response = await axios.post(`${api}/user/excel/readFileAndStoreDB`, file, ApiService.getTokenType(file, token));
       return response.data;
     } catch (error) {
       return error.response.data;
     }
   },
-  async changePassword(data) {
+  async changePassword(data, token) {
     try {
-      const response = await axios.put(`${api}/user/teacher/change-password`, data, ApiService.getToken());
+      const response = await axios.put(`${api}/user/teacher/change-password`, data, ApiService.getToken(token));
       return response.data;
     } catch (error) {
       return error.response.data;
     }
   },
-  async deleteStudent(id) {
+  async deleteStudent(id, token) {
     try {
-      const token = localStorage.getItem("access_token");;
       const response = await axios.post(
         `${api}/user/teacher/deleteStudent/${id}`,
         {},
@@ -213,9 +208,8 @@ const ApiService = {
       throw error; 
     }
   },
-  async deleteExcel(id) {
+  async deleteExcel(id, token) {
     try {
-      const token = localStorage.getItem("access_token");;
       const response = await axios.post(
         `${api}/user/teacher/deleteExcel/${id}`,
         {},

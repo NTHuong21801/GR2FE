@@ -11,6 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { setLogout } from '../../service/state';
 const drawerWidth = 300;
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -31,15 +33,11 @@ const AppBar = styled(MuiAppBar, {
 }));
 export default function Topbar({ open, handleOpen }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleLogout = () => {
         const shouldDelete = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
         if (shouldDelete) {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('accountId');
-            localStorage.removeItem('email');
-            localStorage.removeItem('refresh_token');
-            localStorage.removeItem('refreshExpiredTime');
-            localStorage.removeItem('accessExpiredTime');
+            dispatch(setLogout());
             navigate("/");
         }
     }

@@ -2,7 +2,9 @@ import { useState } from "react";
 import "./list.css";
 import ApiService from "../../service/service";
 import Noti from "../component/Noti";
+import { useSelector } from "react-redux";
 export default function PopupImport({ onClose}) {
+    const token = useSelector((state) => state.accessToken);
     const [selectedFileDSSV, setSelectedFileDSSV] = useState(null);
     const [noti, setNoti] = useState(false);
     const [notiMes, setNotiMes] = useState('');
@@ -18,7 +20,7 @@ export default function PopupImport({ onClose}) {
         const formData = new FormData();
         formData.append('file', selectedFileDSSV);
         try{
-            const res = await ApiService.readListFileAndStoreDB(formData);
+            const res = await ApiService.readListFileAndStoreDB(formData, token);
             if(res.responseCode == '200'){
                 setNotiMes("Import List Student Successfully. You can see list of students in the table.");
                 setNoti(true);

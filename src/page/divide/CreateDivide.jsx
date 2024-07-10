@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Footer from '../footer/Footer'
-import Header from '../header/Header'
+
 import FormDivide from './FormDivide';
 import './divide.css'
 import React, { useEffect, useState } from "react";
@@ -13,7 +13,9 @@ import DrawerHeader from "../component/DrawerHeader";
 import ExportFile from '../component/ExportFile';
 import Loading from '../component/Loading';
 import Noti from '../component/Noti';
+import { useSelector } from "react-redux";
 export default function CreateDivide() {
+    const token = useSelector((state) => state.accessToken);
     const [loading, setLoading] = useState(false);
     const [noti, setNoti] = useState(false);
     const handCloseNoti = () => {
@@ -23,7 +25,7 @@ export default function CreateDivide() {
         const fileType = "EXCEL_DIVIDE";
         console.log(myData);
         setLoading(true)
-        await ApiService.exportEvaluate(myData, fileType)
+        await ApiService.exportEvaluate(myData, fileType, token)
             .then(res => {
                 ExportFile.downloadExcelFromBase64(res.base64, res.fileName);
                 setLoading(false)

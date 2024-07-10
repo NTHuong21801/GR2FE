@@ -13,11 +13,13 @@ import {Typography } from '@mui/material';
 import ApiService from "../../service/service";
 import Noti from "../component/Noti";
 import Footer from "../footer/Footer";
+import { useSelector } from "react-redux";
 const validatePassword = (password) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return regex.test(password);
   };
 export default function ChangePass() {
+    const token = useSelector((state) => state.accessToken);
     const [open, setOpen] = useState(true);
     const handleDrawerClose = () => {
         setOpen(false);
@@ -70,7 +72,7 @@ export default function ChangePass() {
                     "currentPass": currentPassword,
                     "newPass": newPassword
                 }
-                const res = await ApiService.changePassword(data);
+                const res = await ApiService.changePassword(data, token);
                 if (res.responseMessage == 'Pass not match') {
                     setShowErr(true);
                     setErrorMessage("The current password is wrong!")
